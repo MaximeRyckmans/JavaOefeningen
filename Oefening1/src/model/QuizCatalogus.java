@@ -1,29 +1,22 @@
 package model;
 
-import java.util.LinkedList;
 import java.util.List;
-
+/**
+ * 
+ * @author Maxime Ryckmans
+ * @version 1.0
+ *
+ */
 public class QuizCatalogus {
+	
+	private List<Quiz> quizzen;
 
-	private List<Quiz> quizCatalogus = new LinkedList<Quiz>();
-
-	public QuizCatalogus() {
-
+	public List<Quiz> getQuizzen() {
+		return quizzen;
 	}
 
-	public void addQuiz(Quiz quiz) {
-		try {
-			quizCatalogus.add(quiz);
-		} catch (NullPointerException ex) {
-			System.out.println(ex);
-		}
+	public void setQuizzen(List<Quiz> quizzen) {
+		this.quizzen = quizzen;
 	}
 	
-	public void removeQuiz(Quiz quiz){
-		try {
-			quizCatalogus.remove(quiz);
-		} catch (NullPointerException ex) {
-			System.out.println(ex);
-		}
-	}
 }
