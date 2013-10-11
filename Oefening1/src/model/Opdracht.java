@@ -6,7 +6,7 @@ public class Opdracht {
 	private String antwoord;
 	private int maxAantalPogingen;
 	private String antwoordHint;
-	private int maxAntwoordTijd;  ///ee
+	private int maxAntwoordTijd;
 	
 	public Opdracht(){
 	}
@@ -25,6 +25,58 @@ public class Opdracht {
 
 	public void setVraag(String vraag) {
 		this.vraag = vraag;
+	}
+
+	@Override
+	public String toString() {
+		return "Opdracht [Vraag=" + vraag + "/nAntwoord=" + antwoord
+				+ "/nMaximum aantal pogingen=" + maxAantalPogingen
+				+ "/nHint=" + antwoordHint + "/nMaximum antwoord tijd="
+				+ maxAntwoordTijd + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((antwoord == null) ? 0 : antwoord.hashCode());
+		result = prime * result
+				+ ((antwoordHint == null) ? 0 : antwoordHint.hashCode());
+		result = prime * result + maxAantalPogingen;
+		result = prime * result + maxAntwoordTijd;
+		result = prime * result + ((vraag == null) ? 0 : vraag.hashCode());
+		return result;
+	}
+
+	public boolean equals(Opdracht o) {
+		if (this == o)
+			return true;
+		if (o == null)
+			return false;
+		if (getClass() != o.getClass())
+			return false;
+		Opdracht other = (Opdracht) o;
+		if (antwoord == null) {
+			if (other.antwoord != null)
+				return false;
+		} else if (!antwoord.equals(other.antwoord))
+			return false;
+		if (antwoordHint == null) {
+			if (other.antwoordHint != null)
+				return false;
+		} else if (!antwoordHint.equals(other.antwoordHint))
+			return false;
+		if (maxAantalPogingen != other.maxAantalPogingen)
+			return false;
+		if (maxAntwoordTijd != other.maxAntwoordTijd)
+			return false;
+		if (vraag == null) {
+			if (other.vraag != null)
+				return false;
+		} else if (!vraag.equals(other.vraag))
+			return false;
+		return true;
 	}
 
 	public String getAntwoord() {
