@@ -1,5 +1,10 @@
 package model;
 
+/**
+ * @author Pulinx Davy
+ * @version 1.0
+ */
+
 public class Opdracht {
 	
 	private String vraag;
