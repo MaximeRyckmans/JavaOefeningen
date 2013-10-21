@@ -1,6 +1,5 @@
 package model;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class Quiz {
@@ -10,7 +9,7 @@ public class Quiz {
 	private Leraar leraar;
 	private String onderwerp;
 	private QuizStatus quizStatus;
-	private List<Opdracht> opdrachten = new LinkedList<Opdracht>();
+	private List<Opdracht> opdrachten;
 
 	public Quiz() {
 	}
