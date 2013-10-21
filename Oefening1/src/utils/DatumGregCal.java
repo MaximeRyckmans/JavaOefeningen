@@ -5,6 +5,7 @@ package utils;
  * @version 2.0
  */
 
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -123,6 +124,38 @@ public class DatumGregCal {
 		return String.format("%d %s %d", 
 				calender.get(Calendar.DAY_OF_MONTH), namenMaand[calender.get(Calendar.MONTH)], calender.get(Calendar.YEAR));
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((calender == null) ? 0 : calender.hashCode());
+		result = prime * result + Arrays.hashCode(namenMaand);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DatumGregCal other = (DatumGregCal) obj;
+		if (calender == null) {
+			if (other.calender != null)
+				return false;
+		} else if (!calender.equals(other.calender))
+			return false;
+		if (!Arrays.equals(namenMaand, other.namenMaand))
+			return false;
+		return true;
+	}
 	
+	public boolean kleinerDan(DatumGregCal d) {
+		return true;
+	}
 	
 }
