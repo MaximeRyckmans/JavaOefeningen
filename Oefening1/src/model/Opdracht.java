@@ -1,12 +1,19 @@
 package model;
 
+import java.io.Serializable;
+
 /**
  * @author Pulinx Davy
  * @version 1.0
  */
 
-public class Opdracht {
+public abstract class Opdracht implements Cloneable, Comparable<Opdracht>, Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private int id;
 	private String vraag;
 	private String antwoord;
 	private int maxAantalPogingen;
@@ -115,13 +122,16 @@ public class Opdracht {
 	public void setmaxAntwoordTijd(int maxAntwoordTijd) {
 		this.maxAntwoordTijd = maxAntwoordTijd;
 	}
-	
-	public boolean isJuisteAntwoord(String antwoord) {
-		if (this.antwoord == antwoord) {
-			return true;
-		}
-		
-		return false;
+	public int getId() {
+		return id;
 	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public abstract boolean isJuisteAntwoord(String antwoord);
+
+	
 	
 }
