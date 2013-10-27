@@ -18,5 +18,15 @@ public class QuizCatalogus {
 	public void setQuizzen(List<Quiz> quizzen) {
 		this.quizzen = quizzen;
 	}
+	public void addQuizToList(Quiz quiz){
+		if(!quizzen.equals(null) || !quizzen.contains(quiz)){
+			this.quizzen.add(quiz);
+		}
+	}
+	public void removeQuizFromList(Quiz quiz){
+		if(quizzen.contains(quiz)){
+			this.quizzen.remove(quiz);
+		}
+	}
 	
 }

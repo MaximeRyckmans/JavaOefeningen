@@ -1,6 +1,6 @@
 package model;
 
-public class Meerkeuze extends Opdracht implements Valideerbaar {
+public class Meerkeuze extends Opdracht implements Valideerbaar{
 
 	/**
 	 * 

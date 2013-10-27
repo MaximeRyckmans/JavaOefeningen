@@ -2,18 +2,38 @@ package test;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import model.Meerkeuze;
+import model.Opdracht;
+import model.OpdrachtCatalogus;
+
+import org.junit.Before;
 import org.junit.Test;
 
 public class OpdrachtCatalogusTest {
 
+	OpdrachtCatalogus catalogus = new OpdrachtCatalogus();
+	List<Opdracht>opdrachten = new ArrayList<Opdracht>();
+	
+	@Before
+	public void setUp() throws Exception 
+	{
+		
+	}
 	@Test
 	public void testGetOpdrachten() {
+		
 		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testSetOpdrachten() {
-		fail("Not yet implemented");
+		Opdracht e = new Meerkeuze();
+		opdrachten.add(e);
+		catalogus.setOpdrachten(opdrachten);
+		assertNotNull(catalogus.getOpdrachten());
 	}
 
 	@Test
