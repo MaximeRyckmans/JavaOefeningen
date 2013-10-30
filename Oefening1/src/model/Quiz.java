@@ -80,6 +80,20 @@ public class Quiz implements Cloneable, Comparable<Quiz>, Iterable<Opdracht> {
 		this.quizStatus = quizStatus;
 	}
 
+	/**
+	 * @return the opdrachten
+	 */
+	public List<Opdracht> getOpdrachten() {
+		return opdrachten;
+	}
+
+	/**
+	 * @param opdrachten the opdrachten to set
+	 */
+	public void setOpdrachten(List<Opdracht> opdrachten) {
+		this.opdrachten = opdrachten;
+	}
+
 	public void addOpdracht(List<Opdracht> opdracht) {
 		try {
 			for (Opdracht o : opdracht) {

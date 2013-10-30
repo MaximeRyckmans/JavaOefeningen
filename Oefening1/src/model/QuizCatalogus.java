@@ -1,7 +1,11 @@
 package model;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Scanner;
 /**
  * 
  * @author Maxime Ryckmans
@@ -93,5 +97,57 @@ public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iter
 		return "QuizCatalogus [id=" + id + ", quizzen=" + quizzen + "]";
 	}
 	
+	public void schrijfQuizzenNaarBestand() {
+		File file = new File("bestanden\\quizzen.txt");
+		try {
+			PrintWriter writer = new PrintWriter(file);
+			for (int i = 0; i < this.getQuizzen().size(); i++) {
+				Quiz quiz = quizzen.get(i);
+				String lijn = quiz.getId() + "," + quiz.getAantalDeelnames()
+						+ "," + quiz.getLeerjaar() + ","
+						+ quiz.getLeraar() + ","
+						+ quiz.getOnderwerp() + ","
+						+ quiz.getQuizStatus()+","+quiz.getOpdrachten();
+				writer.println(lijn);
+			}
+			if (writer != null)
+				writer.close();
+		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+	public void leesQuizzenVanBestand(){
+		  File file = new File("bestanden\\opdrachten.txt");
+		  try{
+			Scanner scanner = new Scanner(file);
+			while (scanner.hasNext()){
+		          String lijn = scanner.nextLine();
+			  String [] velden = lijn.split(",");
+			  int id = Integer.parseInt(velden[0]);
+			  int aantalDeelnames=Integer.parseInt(velden[1]);
+			  int leerjaar=Integer.parseInt(velden[2]);
+			//  Leraar leraar
+			  String onderwerp=velden[4];
+			//QuizStatus quizStatus;
+			//List<Opdracht> opdrachten;
+			  String vraag= velden[1];
+			  String antwoord = velden[2];
+			  int maxAantalPogingen = Integer.parseInt(velden[3]);
+			  String antwoordHint=velden[4];
+			  int maxAntwoordTijd=Integer.parseInt(velden[4]);
+			//  Opdracht opdracht=new Opdracht(vraag,antwoord,maxAantalPogingen,antwoordHint, maxAntwoordTijd);
+			//  this.opdrachten.add(opdracht);
+			}
+			if (scanner!=null){
+			  scanner.close();
+			}
+		  }
+		  catch(FileNotFoundException ex){
+		    System.out.println("bestand niet gevonden");
+		  }
+		  catch(Exception ex){
+		    System.out.println(ex.getMessage());
+		  }
+		}
 	
 }
