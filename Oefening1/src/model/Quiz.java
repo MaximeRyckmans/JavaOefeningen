@@ -1,7 +1,6 @@
 package model;
 
 
-import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 
@@ -11,12 +10,8 @@ import java.util.List;
  *
  */
 
-public class Quiz implements Cloneable, Comparable<Quiz>, Iterable<Opdracht>, Serializable {
+public class Quiz implements Cloneable, Comparable<Quiz>, Iterable<Opdracht> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3919725715637621366L;
 	private int id;
 	private int aantalDeelnames;
 	private int leerjaar;

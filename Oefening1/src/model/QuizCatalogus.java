@@ -3,7 +3,6 @@ package model;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
@@ -13,11 +12,7 @@ import java.util.Scanner;
  * @version 1.0
  *
  */
-public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iterable<Quiz>, Serializable {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4229668138051335943L;
+public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iterable<Quiz> {
 	private int id;
 	private List<Quiz> quizzen;
 
@@ -101,6 +96,7 @@ public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iter
 	public String toString() {
 		return "QuizCatalogus [id=" + id + ", quizzen=" + quizzen + "]";
 	}
+	
 	public void schrijfQuizzenNaarBestand() {
 		File file = new File("bestanden\\quizzen.txt");
 		try {
@@ -153,7 +149,5 @@ public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iter
 		    System.out.println(ex.getMessage());
 		  }
 		}
-	
-	
 	
 }

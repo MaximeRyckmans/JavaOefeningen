@@ -2,24 +2,11 @@ package test;
 
 import static org.junit.Assert.*;
 
-import javax.net.ssl.SSLEngineResult.Status;
-
-import model.Leraar;
-import model.Quiz;
-import model.QuizStatus;
-
-import org.junit.Before;
 import org.junit.Test;
 
 public class QuizTest {
-	private Quiz quiz;
-	
-	@Before
-	public void setUp(){
-		quiz = new Quiz(4, 3, Leraar.JoskeVermeulen, "Talen", QuizStatus.OPENGESTELD, null);
-	}
 
-	/*@Test
+	@Test
 	public void testHashCode() {
 		fail("Not yet implemented");
 	}
@@ -27,73 +14,64 @@ public class QuizTest {
 	@Test
 	public void testQuiz() {
 		fail("Not yet implemented");
-	}*/
+	}
 
 	@Test
 	public void testQuizIntIntLeraarStringQuizStatusListOfOpdracht() {
-		assertEquals(4, quiz.getAantalDeelnames());
-		assertEquals(3, quiz.getLeerjaar());
-		assertEquals(Leraar.JoskeVermeulen , quiz.getLeraar());
-		assertEquals("Talen", quiz.getOnderwerp());
-		assertEquals(QuizStatus.OPENGESTELD, quiz.getQuizStatus());
+		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testGetAantalDeelnames() {
-		assertEquals(4, quiz.getAantalDeelnames());
+		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testSetAantalDeelnames() {
-		quiz.setAantalDeelnames(2);
-		assertEquals(2, quiz.getAantalDeelnames());
+		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testGetLeerjaar() {
-		assertEquals(3, quiz.getLeerjaar());
+		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testSetLeerjaar() {
-		quiz.setLeerjaar(6);
-		assertEquals(6, quiz.getLeerjaar());
+		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testGetLeraar() {
-		assertEquals(Leraar.JoskeVermeulen, quiz.getLeraar());
+		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testSetLeraar() {
-		quiz.setLeraar(Leraar.PietSnot);
-		assertEquals(Leraar.PietSnot, quiz.getLeraar());
+		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testGetOnderwerp() {
-		assertEquals("Talen", quiz.getOnderwerp());
+		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testSetOnderwerp() {
-		quiz.setOnderwerp("hoofdsteden");
-		assertEquals("hoofdsteden", quiz.getOnderwerp());
+		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testGetQuizStatus() {
-		assertEquals(QuizStatus.OPENGESTELD, quiz.getQuizStatus());
+		fail("Not yet implemented");
 	}
 
 	@Test
 	public void testSetQuizStatus() {
-		quiz.setQuizStatus(QuizStatus.LAATSTEKANS);
-		assertEquals(QuizStatus.LAATSTEKANS, quiz.getQuizStatus());
+		fail("Not yet implemented");
 	}
 
-	/*@Test
+	@Test
 	public void testAddOpdracht() {
 		fail("Not yet implemented");
 	}
@@ -161,6 +139,6 @@ public class QuizTest {
 	@Test
 	public void testFinalize() {
 		fail("Not yet implemented");
-	}*/
+	}
 
 }

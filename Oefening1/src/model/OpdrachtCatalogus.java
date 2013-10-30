@@ -3,22 +3,19 @@ package model;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+
 /**
  * 
  * @author Maxime Ryckmans
  * @version 1.0
- *
+ * 
  */
-public class OpdrachtCatalogus implements Cloneable,Comparable<OpdrachtCatalogus>, Iterable<Opdracht>, Serializable{
+public class OpdrachtCatalogus implements Cloneable,
+		Comparable<OpdrachtCatalogus>, Iterable<Opdracht> {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -8220101486039682153L;
 	private List<Opdracht> opdrachten;
 	private int id;
 
@@ -29,8 +26,7 @@ public class OpdrachtCatalogus implements Cloneable,Comparable<OpdrachtCatalogus
 	public void setOpdrachten(List<Opdracht> opdrachten) {
 		this.opdrachten = opdrachten;
 	}
-	
-	
+
 	public int getId() {
 		return id;
 	}
@@ -39,13 +35,14 @@ public class OpdrachtCatalogus implements Cloneable,Comparable<OpdrachtCatalogus
 		this.id = id;
 	}
 
-	public void addOpdrachtToList(Opdracht opdracht){
-		if(!opdracht.equals(null) || !opdrachten.contains(opdracht)){
+	public void addOpdrachtToList(Opdracht opdracht) {
+		if (!opdracht.equals(null) || !opdrachten.contains(opdracht)) {
 			this.opdrachten.add(opdracht);
 		}
 	}
-	public void removeOpdrachtFromList(Opdracht opdracht){
-		if(opdrachten.contains(opdracht)){
+
+	public void removeOpdrachtFromList(Opdracht opdracht) {
+		if (opdrachten.contains(opdracht)) {
 			this.opdrachten.remove(opdracht);
 		}
 	}
@@ -53,13 +50,15 @@ public class OpdrachtCatalogus implements Cloneable,Comparable<OpdrachtCatalogus
 	@Override
 	public int compareTo(OpdrachtCatalogus o) {
 		final int BEFORE = -1;
-		final int  EQUAL = 0;
+		final int EQUAL = 0;
 		final int AFTER = 1;
-		
-		if(this == o) return EQUAL;
-		
-		if (this.id < o.id) return BEFORE;
-		return AFTER;		
+
+		if (this == o)
+			return EQUAL;
+
+		if (this.id < o.id)
+			return BEFORE;
+		return AFTER;
 	}
 
 	@Override
@@ -144,6 +143,4 @@ public class OpdrachtCatalogus implements Cloneable,Comparable<OpdrachtCatalogus
 		    System.out.println(ex.getMessage());
 		  }
 		}
-	
-	
 }

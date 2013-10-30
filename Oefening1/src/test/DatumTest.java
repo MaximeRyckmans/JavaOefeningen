@@ -7,12 +7,6 @@ import org.junit.Test;
 
 import utils.Datum;
 
-/**
- * @author Nicolas Goossens
- * @version 1.0
- *
- */
-
 public class DatumTest {
 	private Datum datum, datum_1;
 	
@@ -23,7 +17,8 @@ public class DatumTest {
 	}
 
 	@Test
-	public void testDatumIntIntInt() {				
+	public void testDatumIntIntInt() {
+				
 		assertEquals(1, datum_1.getDag());
 		assertEquals (3, datum_1.getMaand());
 		assertEquals (2013, datum_1.getJaar());
@@ -31,19 +26,22 @@ public class DatumTest {
 
 	@Test
 	public void testSetDag() {
-		datum.setDag(1);		
+		datum.setDag(1);
+		
 		assertEquals(1, datum.getDag());
 	}
 
 	@Test
 	public void testSetMaand() {
-		datum.setMaand(5);		
+		datum.setMaand(5);
+		
 		assertEquals (5, datum.getMaand());
 	}
 
 	@Test
 	public void testSetJaar() {
-		datum.setJaar(1950);		
+		datum.setJaar(1950);
+		
 		assertEquals(1950, datum.getJaar());
 	}
 	
