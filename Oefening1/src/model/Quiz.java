@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -8,8 +9,9 @@ import java.util.List;
  *
  */
 
-public class Quiz {
+public class Quiz implements Cloneable, Comparable<Quiz>, Iterable<Opdracht> {
 
+	private int id;
 	private int aantalDeelnames;
 	private int leerjaar;
 	private Leraar leraar;
@@ -27,6 +29,14 @@ public class Quiz {
 		this.onderwerp = onderwerp;
 		this.quizStatus = quizStatus;
 		this.opdrachten = opdrachten;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public int getAantalDeelnames() {
@@ -131,6 +141,24 @@ public class Quiz {
 				+ leerjaar + ", leraar=" + leraar + ", onderwerp=" + onderwerp
 				+ ", quizStatus=" + quizStatus + ", opdrachten=" + opdrachten
 				+ "]";
+	}
+
+	@Override
+	public Iterator<Opdracht> iterator() {
+		return opdrachten.iterator();
+	}
+
+	@Override
+	public int compareTo(Quiz o) {
+		final int BEFORE = -1;
+		final int EQUAL = 0;
+		final int AFTER = 1;
+		
+		if(this.id == o.id) return EQUAL;
+		
+		if(this.id < o.id) return BEFORE;
+		return AFTER;
+		
 	}
 	
 }
