@@ -2,6 +2,12 @@ package model;
 
 import java.util.List;
 
+/**
+ * @author Nicolas Goossens
+ * @version 1.0
+ *
+ */
+
 public class Quiz {
 	private int id;
 	private int aantalDeelnames;
