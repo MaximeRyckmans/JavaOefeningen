@@ -7,33 +7,47 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class OpdrachtTest {
+	private Opdracht opdracht;
+	
 	@Before
 	public void setUp()
 	{
-	
+		opdracht = new Opdracht("Hoe lang is een Chinees?", "10 meter", 5, "Geen 11 meter", 120) {
+			
+			@Override
+			public boolean isJuisteAntwoord(String antwoord) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+		};
 	}
 
-	@Test
+	/*@Test
 	public void testOpdracht() {
 		fail("Not yet implemented");
-	}
+	}*/
 
 	@Test
 	public void testOpdrachtStringStringIntStringInt() {
-		fail("Not yet implemented");
+		assertEquals("Hoe lang is een Chinees?", opdracht.getVraag());
+		assertEquals("10 meter", opdracht.getAntwoord());
+		assertEquals(5, opdracht.getMaxAantalPogingen());
+		assertEquals("Geen 11 meter", opdracht.getAntwoordHint());
+		assertEquals(120, opdracht.getmaxAntwoordTijd());
 	}
 
 	@Test
 	public void testGetVraag() {
-		fail("Not yet implemented");
+		assertEquals("Hoe lang is een Chinees?", opdracht.getVraag());
 	}
 
 	@Test
 	public void testSetVraag() {
-		fail("Not yet implemented");
+		opdracht.setVraag("Hoeveel landen telt Europa?");
+		assertEquals("Hoeveel landen telt Europa?", opdracht.getVraag());
 	}
 
-	@Test
+	/*@Test
 	public void testToString() {
 		fail("Not yet implemented");
 	}
@@ -41,49 +55,53 @@ public class OpdrachtTest {
 	@Test
 	public void testEqualsOpdracht() {
 		fail("Not yet implemented");
-	}
+	}*/
 
 	@Test
 	public void testGetAntwoord() {
-		fail("Not yet implemented");
+		assertEquals("10 meter", opdracht.getAntwoord());
 	}
 
 	@Test
 	public void testSetAntwoord() {
-		fail("Not yet implemented");
+		opdracht.setAntwoord("45");
+		assertEquals("45", opdracht.getAntwoord());
 	}
 
 	@Test
 	public void testGetMaxAantalPogingen() {
-		fail("Not yet implemented");
+		assertEquals(5, opdracht.getMaxAantalPogingen());
 	}
 
 	@Test
 	public void testSetMaxAantalPogingen() {
-		fail("Not yet implemented");
+		opdracht.setMaxAantalPogingen(85);
+		assertEquals(85, opdracht.getMaxAantalPogingen());
 	}
 
 	@Test
 	public void testGetAntwoordHint() {
-		fail("Not yet implemented");
+		assertEquals("Geen 11 meter", opdracht.getAntwoordHint());
 	}
 
 	@Test
 	public void testSetAntwoordHint() {
-		fail("Not yet implemented");
+		opdracht.setAntwoordHint("Zo oud als de meester");
+		assertEquals("Zo oud als de meester", opdracht.getAntwoordHint());
 	}
 
 	@Test
 	public void testGetmaxAntwoordTijd() {
-		fail("Not yet implemented");
+		assertEquals(120, opdracht.getmaxAntwoordTijd());
 	}
 
 	@Test
 	public void testSetmaxAntwoordTijd() {
-		fail("Not yet implemented");
+		opdracht.setmaxAntwoordTijd(60);
+		assertEquals(60, opdracht.getmaxAntwoordTijd());
 	}
 
-	@Test
+	/*@Test
 	public void testIsJuisteAntwoord() {
 		fail("Not yet implemented");
 	}
@@ -141,6 +159,6 @@ public class OpdrachtTest {
 	@Test
 	public void testFinalize() {
 		fail("Not yet implemented");
-	}
+	}*/
 
 }

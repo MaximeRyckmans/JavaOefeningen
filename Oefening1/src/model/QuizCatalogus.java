@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 /**
@@ -8,7 +9,11 @@ import java.util.List;
  * @version 1.0
  *
  */
-public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iterable<Quiz> {
+public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iterable<Quiz>, Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4229668138051335943L;
 	private int id;
 	private List<Quiz> quizzen;
 
