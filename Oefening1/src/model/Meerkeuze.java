@@ -6,7 +6,8 @@ import java.util.Map;
 public class Meerkeuze extends Opdracht implements Valideerbaar {
 
 	/**
-	 * 
+	 * @author Davy Pulinx
+	 * @version 1.0 
 	 */
 	private static final long serialVersionUID = 1L;
 	private Map<Integer, String> keuzesMap;
