@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
 /**
@@ -8,8 +9,12 @@ import java.util.List;
  * @version 1.0
  *
  */
-public class OpdrachtCatalogus implements Cloneable,Comparable<OpdrachtCatalogus>, Iterable<Opdracht>{
+public class OpdrachtCatalogus implements Cloneable,Comparable<OpdrachtCatalogus>, Iterable<Opdracht>, Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8220101486039682153L;
 	private List<Opdracht> opdrachten;
 	private int id;
 
