@@ -131,7 +131,18 @@ public abstract class Opdracht implements Cloneable, Comparable<Opdracht>, Seria
 	}
 	
 	public abstract boolean isJuisteAntwoord(String antwoord);
-
+	
+	@Override
+	public int compareTo(Opdracht o){
+		final int BEFORE = -1;
+		final int  EQUAL = 0;
+		final int AFTER = 1;
+		
+		if(this == o) return EQUAL;
+		
+		if (this.id < o.id) return BEFORE;
+		return AFTER;
+	}
 	
 	
 }
