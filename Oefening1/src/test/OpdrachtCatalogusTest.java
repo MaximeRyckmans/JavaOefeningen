@@ -14,18 +14,18 @@ import org.junit.Test;
 
 public class OpdrachtCatalogusTest {
 
-	OpdrachtCatalogus catalogus = new OpdrachtCatalogus();
+	OpdrachtCatalogus catalogus;
 	List<Opdracht>opdrachten = new ArrayList<Opdracht>();
 	
 	@Before
 	public void setUp() throws Exception 
 	{
-		
+		catalogus = new OpdrachtCatalogus();
 	}
 	@Test
 	public void testGetOpdrachten() {
-		
-		fail("Not yet implemented");
+		catalogus.setOpdrachten(opdrachten);
+		assertEquals(opdrachten, catalogus.getOpdrachten());
 	}
 
 	@Test
@@ -38,7 +38,7 @@ public class OpdrachtCatalogusTest {
 
 	@Test
 	public void testAddOpdrachtToList() {
-		fail("Not yet implemented");
+		
 	}
 
 	@Test

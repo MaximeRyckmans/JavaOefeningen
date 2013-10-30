@@ -1,14 +1,16 @@
 package test;
 
 import static org.junit.Assert.*;
+import model.Opdracht;
 
+import org.junit.Before;
 import org.junit.Test;
 
 public class OpdrachtTest {
-
-	@Test
-	public void testHashCode() {
-		fail("Not yet implemented");
+	@Before
+	public void setUp()
+	{
+	
 	}
 
 	@Test

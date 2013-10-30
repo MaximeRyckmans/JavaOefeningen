@@ -3,7 +3,7 @@ package model;
 import java.util.List;
 
 public class Quiz {
-
+	private int id;
 	private int aantalDeelnames;
 	private int leerjaar;
 	private Leraar leraar;
@@ -71,6 +71,14 @@ public class Quiz {
 		} catch (NullPointerException ex) {
 			System.out.println(ex);
 		}
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	@Override
