@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Iterator;
 import java.util.List;
 /**
  * 
@@ -7,9 +8,10 @@ import java.util.List;
  * @version 1.0
  *
  */
-public class OpdrachtCatalogus implements Cloneable,Comparable<OpdrachtCatalogus>{
+public class OpdrachtCatalogus implements Cloneable,Comparable<OpdrachtCatalogus>, Iterable<Opdracht>{
 
 	private List<Opdracht> opdrachten;
+	private int id;
 
 	public List<Opdracht> getOpdrachten() {
 		return opdrachten;
@@ -18,6 +20,16 @@ public class OpdrachtCatalogus implements Cloneable,Comparable<OpdrachtCatalogus
 	public void setOpdrachten(List<Opdracht> opdrachten) {
 		this.opdrachten = opdrachten;
 	}
+	
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public void addOpdrachtToList(Opdracht opdracht){
 		if(!opdracht.equals(null) || !opdrachten.contains(opdracht)){
 			this.opdrachten.add(opdracht);
@@ -31,8 +43,14 @@ public class OpdrachtCatalogus implements Cloneable,Comparable<OpdrachtCatalogus
 
 	@Override
 	public int compareTo(OpdrachtCatalogus o) {
-		// TODO Auto-generated method stub
-		return 0;
+		final int BEFORE = -1;
+		final int  EQUAL = 0;
+		final int AFTER = 1;
+		
+		if(this == o) return EQUAL;
+		
+		if (this.id < o.id) return BEFORE;
+		return AFTER;		
 	}
 
 	@Override
@@ -63,6 +81,11 @@ public class OpdrachtCatalogus implements Cloneable,Comparable<OpdrachtCatalogus
 		} else if (!opdrachten.equals(other.opdrachten))
 			return false;
 		return true;
+	}
+
+	@Override
+	public Iterator<Opdracht> iterator() {
+		return opdrachten.iterator();
 	}
 	
 }
