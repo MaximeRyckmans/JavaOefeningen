@@ -10,7 +10,7 @@ import java.io.Serializable;
 public abstract class Opdracht implements Cloneable, Comparable<Opdracht>, Serializable {
 	
 	/**
-	 * 
+	 * Categorie van opdracht moet nog toegevoegd worden??
 	 */
 	private static final long serialVersionUID = 1L;
 	private int id;
@@ -23,11 +23,28 @@ public abstract class Opdracht implements Cloneable, Comparable<Opdracht>, Seria
 	public Opdracht(){
 	}
 	
-	public Opdracht(String vraag, String antwoord, int maxAantalPogingen, String antwoordHint, int maxAntwoordTijd) {
+	public Opdracht(String vraag, String antwoord, int maxAantalPogingen){
 		this.vraag = vraag;
 		this.antwoord = antwoord;
-		this.maxAantalPogingen = maxAantalPogingen;
+		if (maxAantalPogingen > 1) {
+			this.maxAantalPogingen = maxAantalPogingen;
+		}else {
+			this.maxAantalPogingen = 1;
+		}
+	}
+	
+	public Opdracht(String vraag, String antwoord, int maxAantalPogingen, String antwoordHint) {
+		this(vraag, antwoord, maxAantalPogingen);
 		this.antwoordHint = antwoordHint;
+	}
+	
+	public Opdracht(String vraag, String antwoord, int maxAantalPogingen, int maxAntwoordTijd) {
+		this(vraag, antwoord, maxAantalPogingen);
+		this.maxAntwoordTijd = maxAntwoordTijd;
+	}
+	
+	public Opdracht(String vraag, String antwoord, int maxAantalPogingen, String antwoordHint, int maxAntwoordTijd) {
+		this(vraag, antwoord, maxAantalPogingen, antwoordHint);
 		this.maxAntwoordTijd = maxAntwoordTijd;
 	}
 

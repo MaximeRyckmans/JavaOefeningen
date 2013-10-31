@@ -13,22 +13,57 @@ public class Meerkeuze extends Opdracht implements Valideerbaar {
 	private Map<Integer, String> keuzesMap;
 	private String valideerTekst = "Nog niet gevalideerd";
 	
+	/*
+	 * Constructors
+	 */
 	public Meerkeuze(){
 		
 	}
 	
-	public Meerkeuze(String vraag, String antwoord, int maxAantalPogingen, String antwoordHint, int maxAntwoordTijd, 
-			String alleKeuzes){
+	public Meerkeuze(String vraag, String antwoord, int maxAantalPogingen, String alleKeuzes){
+		super(vraag, antwoord, maxAantalPogingen);
+		
+		samenstellenKeuzes(alleKeuzes);
+		isAntwoordInKeuzes(antwoord);
+	}
+	
+	public Meerkeuze(String vraag, String antwoord, int maxAantalPogingen, String alleKeuzes, String antwoordHint) {
+		super(vraag, antwoord, maxAantalPogingen, antwoordHint);
+		
+		samenstellenKeuzes(alleKeuzes);
+		isAntwoordInKeuzes(antwoord);
+	}
+	
+	public Meerkeuze(String vraag, String antwoord, int maxAantalPogingen, String alleKeuzes, int maxAntwoordTijd) {
+		super(vraag, antwoord, maxAantalPogingen, maxAntwoordTijd);
+		
+		samenstellenKeuzes(alleKeuzes);
+		isAntwoordInKeuzes(antwoord);
+	}
+	
+	public Meerkeuze(String vraag, String antwoord, int maxAantalPogingen, String alleKeuzes, String antwoordHint, int maxAntwoordTijd) {
 		super(vraag, antwoord, maxAantalPogingen, antwoordHint, maxAntwoordTijd);
 		
 		samenstellenKeuzes(alleKeuzes);
-		
-		if (!keuzesMap.containsValue(antwoord)) {
-			keuzesMap.clear();
-			throw new IllegalArgumentException("De gegeven keuzes bevatten niet het juiste antwoord");
-		}
+		isAntwoordInKeuzes(antwoord);
 	}
 	
+	/*
+	 * Methode om te checken of het juiste antwoord wel in de keuzes aanwezig is.
+	 */
+	public boolean isAntwoordInKeuzes(String antwoord){
+		if (!keuzesMap.containsValue(antwoord)) {
+			keuzesMap.clear();
+			return false;
+			//throw new IllegalArgumentException("De gegeven keuzes bevatten niet het juiste antwoord");
+		}
+		return true;
+	}
+	
+	/*
+	 * (non-Javadoc)
+	 * @see model.Opdracht#isJuisteAntwoord(java.lang.String)
+	 */
 	@Override
 	public boolean isJuisteAntwoord(String antwoord) {
 		try{
@@ -44,6 +79,10 @@ public class Meerkeuze extends Opdracht implements Valideerbaar {
 		return false;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see model.Valideerbaar#isValide(java.lang.String)
+	 */
 	@Override
 	public boolean isValide(String antwoord) {
 		try{
@@ -62,11 +101,19 @@ public class Meerkeuze extends Opdracht implements Valideerbaar {
 			}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see model.Valideerbaar#getValideerTekst()
+	 */
 	@Override
 	public String getValideerTekst() {
 		return valideerTekst;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see model.Opdracht#compareTo(model.Opdracht)
+	 */
 	@Override
 	public int compareTo(Opdracht o) {
 		final int BEFORE = -1;
@@ -98,6 +145,10 @@ public class Meerkeuze extends Opdracht implements Valideerbaar {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see model.Opdracht#toString()
+	 */
 	@Override
 	public String toString() {
 		return super.toString() + "/nMeerkeuze [keuzesMap=" + keuzesMap + "]";

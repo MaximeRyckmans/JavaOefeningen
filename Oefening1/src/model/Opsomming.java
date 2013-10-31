@@ -3,13 +3,25 @@ package model;
 public class Opsomming extends Opdracht implements Valideerbaar{
 
 	/**
-	 * 
+	 * @author Davy Pulinx
+	 * @version 1.0
 	 */
 	private static final long serialVersionUID = 1L;
+	private String valideerTekst = "Nog niet gevalideerd";
+	
+	public Opsomming() {
+		
+	}
+	
+	public Opsomming(String vraag, String antwoord, int maxAantalPogingen, String antwoordHint, int maxAntwoordTijd) {
+		super(vraag, antwoord, maxAantalPogingen, antwoordHint, maxAntwoordTijd);
+	}
 
 	@Override
 	public boolean isJuisteAntwoord(String antwoord) {
-		// TODO Auto-generated method stub
+		if (super.getAntwoord().toLowerCase() == antwoord.toLowerCase()) {
+			return true;
+		}
 		return false;
 	}
 
