@@ -20,8 +20,7 @@ public abstract class Opdracht implements Cloneable, Comparable<Opdracht>, Seria
 	private String antwoordHint;
 	private int maxAntwoordTijd;
 	
-	public Opdracht(){
-	}
+	public Opdracht(){}
 	
 	public Opdracht(String vraag, String antwoord, int maxAantalPogingen){
 		this.vraag = vraag;

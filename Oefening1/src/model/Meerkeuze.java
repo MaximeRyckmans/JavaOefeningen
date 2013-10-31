@@ -16,9 +16,7 @@ public class Meerkeuze extends Opdracht implements Valideerbaar {
 	/*
 	 * Constructors
 	 */
-	public Meerkeuze(){
-		
-	}
+	public Meerkeuze(){}
 	
 	public Meerkeuze(String vraag, String antwoord, int maxAantalPogingen, String alleKeuzes){
 		super(vraag, antwoord, maxAantalPogingen);

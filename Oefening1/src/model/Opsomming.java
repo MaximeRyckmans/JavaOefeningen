@@ -9,14 +9,31 @@ public class Opsomming extends Opdracht implements Valideerbaar{
 	private static final long serialVersionUID = 1L;
 	private String valideerTekst = "Nog niet gevalideerd";
 	
-	public Opsomming() {
-		
+	/*
+	 * Constructors
+	 */
+	public Opsomming() {}
+	
+	public Opsomming(String vraag, String antwoord, int maxAantalPogingen){
+		super(vraag, antwoord, maxAantalPogingen);
+	}
+	
+	public Opsomming(String vraag, String antwoord, int maxAantalPogingen, String antwoordHint) {
+		super(vraag, antwoord, maxAantalPogingen, antwoordHint);
+	}
+	
+	public Opsomming(String vraag, String antwoord, int maxAantalPogingen, int maxAntwoordTijd){
+		super(vraag, antwoord, maxAantalPogingen, maxAntwoordTijd);
 	}
 	
 	public Opsomming(String vraag, String antwoord, int maxAantalPogingen, String antwoordHint, int maxAntwoordTijd) {
 		super(vraag, antwoord, maxAantalPogingen, antwoordHint, maxAntwoordTijd);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see model.Opdracht#isJuisteAntwoord(java.lang.String)
+	 */
 	@Override
 	public boolean isJuisteAntwoord(String antwoord) {
 		if (super.getAntwoord().toLowerCase() == antwoord.toLowerCase()) {
@@ -24,23 +41,65 @@ public class Opsomming extends Opdracht implements Valideerbaar{
 		}
 		return false;
 	}
-
+	
+	/*
+	 * (non-Javadoc)
+	 * @see model.Valideerbaar#isValide(java.lang.String) 
+	 */
 	@Override
 	public boolean isValide(String antwoord) {
-		// TODO Auto-generated method stub
+		String delimiter = ";";
+		String[] tempAntwoord = antwoord.split(delimiter);
+		String[] tempJuistAntwoord = super.getAntwoord().split(delimiter);
+		
+		if (tempJuistAntwoord.length > 1) {
+			if (!antwoord.contains(delimiter)) {
+				this.valideerTekst = "Het antwoord is niet gesplitst met de het nodige ';' teken";
+				return false;
+			}else if (tempAntwoord.length < tempJuistAntwoord.length) {
+				this.valideerTekst = "Het antwoord bevat niet genoeg waarden";
+				return false;
+			}else if (tempAntwoord.length > tempJuistAntwoord.length) {
+				this.valideerTekst = "Het antwoord bevat te veel waarden";
+			}
+		}
 		return false;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see model.Valideerbaar#getValideerTekst() 
+	 */
 	@Override
 	public String getValideerTekst() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.valideerTekst;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see model.Opdracht#compareTo(model.Opdracht) 
+	 */
 	@Override
 	public int compareTo(Opdracht o) {
-		// TODO Auto-generated method stub
-		return 0;
+		final int BEFORE = -1;
+		final int  EQUAL = 0;
+		final int AFTER = 1;
+		
+		if(this == o) return EQUAL;
+		
+		if (super.getId() < o.getId()) return BEFORE;
+		return AFTER;
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see model.Opdracht#toString()
+	 */
+	@Override
+	public String toString() {
+		return super.toString() + "/nOpsomming [valideerTekst=" + valideerTekst + "]";
+	}
+	
+	
 
 }
