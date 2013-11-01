@@ -61,9 +61,20 @@ public class Opsomming extends Opdracht implements Valideerbaar{
 				return false;
 			}else if (tempAntwoord.length > tempJuistAntwoord.length) {
 				this.valideerTekst = "Het antwoord bevat te veel waarden";
+				return false;
+			}else {
+				this.valideerTekst = "Het antwoord bevat het juiste aantal waarden";
+				return true;
+			}
+		}else {
+			if (tempAntwoord.length > 1) {
+				this.valideerTekst = "Het antwoord bevat te veel waarden";
+				return false;
+			}else {
+				this.valideerTekst = "Het antwoord bevat het juiste aantal waarden";
+				return true;
 			}
 		}
-		return false;
 	}
 
 	/*
