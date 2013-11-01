@@ -56,14 +56,6 @@ public abstract class Opdracht implements Cloneable, Comparable<Opdracht>, Seria
 	}
 
 	@Override
-	public String toString() {
-		return "Opdracht [Vraag=" + vraag + "/nAntwoord=" + antwoord
-				+ "/nMaximum aantal pogingen=" + maxAantalPogingen
-				+ "/nHint=" + antwoordHint + "/nMaximum antwoord tijd="
-				+ maxAntwoordTijd + "]";
-	}
-
-	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
@@ -160,5 +152,11 @@ public abstract class Opdracht implements Cloneable, Comparable<Opdracht>, Seria
 		return AFTER;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "Opdracht /n----------/nVraag=" + vraag + "/nAntwoord=" + antwoord
+				+ "/nMaximum aantal pogingen=" + maxAantalPogingen
+				+ "/nHint=" + antwoordHint + "/nMaximum antwoord tijd="
+				+ maxAntwoordTijd;
+	}
 }

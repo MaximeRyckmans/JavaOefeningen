@@ -108,7 +108,7 @@ public class Opsomming extends Opdracht implements Valideerbaar{
 	 */
 	@Override
 	public String toString() {
-		return super.toString() + "/nOpsomming [valideerTekst=" + valideerTekst + "]";
+		return super.toString() + "/nType= Opsomming /nvalideerTekst=" + valideerTekst;
 	}
 	
 	
