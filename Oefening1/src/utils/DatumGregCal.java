@@ -10,7 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-public class DatumGregCal {
+public class DatumGregCal implements Comparable<DatumGregCal> {
 	
 	private String[] namenMaand = {"januari", "februari", "maart", "april", "mei", "juni", "juli", "augustus", "september", "oktober", "november", "december"};
 	private GregorianCalendar calender;
@@ -118,13 +118,77 @@ public class DatumGregCal {
 				calender.get(Calendar.DAY_OF_MONTH), calender.get(Calendar.MONTH)+1, calender.get(Calendar.YEAR));
 	}
 	
-	//toString methode
-	@Override
-	public String toString(){
-		return String.format("%d %s %d", 
-				calender.get(Calendar.DAY_OF_MONTH), namenMaand[calender.get(Calendar.MONTH)], calender.get(Calendar.YEAR));
+	public boolean kleinerDan(DatumGregCal d) {
+		if (d.getCalender().getTimeInMillis() < this.getCalender().getTimeInMillis()) {
+			return true;
+		}
+		return false;
 	}
+	
+	public int verschilInJaren(DatumGregCal d) {
+		double MILLIS_IN_DAY = 1000 * 60 * 60 * 24;
+		double MILLIS_IN_YEAR = 1000 * 60 * 60 * 24 * 365.25;
+		int verschilInJaren = 0;
+		double dagenInMilis;
 
+		dagenInMilis = (verschilInDagen(d) * MILLIS_IN_DAY);
+		verschilInJaren = (int) (dagenInMilis / MILLIS_IN_YEAR);
+				
+		return verschilInJaren;
+	}
+	
+	public int verschilInMaanden(DatumGregCal d) {
+		int verschilInMaanden = 0;
+		
+		verschilInMaanden = verschilInJaren(d) * 12;
+		
+		return verschilInMaanden;
+	}
+	
+	public int verschilInDagen(DatumGregCal d) {  
+		 int MILLIS_IN_DAY = 1000 * 60 * 60 * 24; 
+		 DatumGregCal startDate;
+		 DatumGregCal endDate;
+		 
+		 if (this.kleinerDan(d)) {
+			startDate = d;
+			endDate = this;
+		 }else {
+			startDate = this;
+			endDate = d;
+		 }
+		 
+		 long endInstant = endDate.getCalender().getTimeInMillis();
+		 int presumedDays = (int) ((endInstant - startDate.getCalender().getTimeInMillis()) / MILLIS_IN_DAY);
+		 Calendar cursor = (Calendar) startDate.getCalender().clone();
+		 cursor.add(Calendar.DAY_OF_YEAR, presumedDays);
+		 long instant = cursor.getTimeInMillis();
+		 if (instant == endInstant)  
+			  return presumedDays;  
+		 final int step = instant < endInstant ? 1 : -1;  
+		 do {  
+			 cursor.add(Calendar.DAY_OF_MONTH, step);  
+			 presumedDays += step;  
+			} while (cursor.getTimeInMillis() != endInstant);  
+		 return presumedDays;
+	}
+	
+	public void veranderDatum(int aantalDagen){
+		calender.add(Calendar.DAY_OF_MONTH, aantalDagen);
+	}
+	
+	@Override
+	public int compareTo(DatumGregCal o) {
+		final int BEFORE = -1;
+		final int  EQUAL = 0;
+		final int AFTER = 1;
+		
+		if(this == o) return EQUAL;
+		
+		if (this.kleinerDan(o)) return BEFORE;
+		return AFTER;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -154,8 +218,11 @@ public class DatumGregCal {
 		return true;
 	}
 	
-	public boolean kleinerDan(DatumGregCal d) {
-		return true;
-	}
+	//toString methode
+		@Override
+		public String toString(){
+			return String.format("%d %s %d", 
+					calender.get(Calendar.DAY_OF_MONTH), namenMaand[calender.get(Calendar.MONTH)], calender.get(Calendar.YEAR));
+		}
 	
 }

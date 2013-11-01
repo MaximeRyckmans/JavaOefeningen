@@ -49,7 +49,7 @@ public class Meerkeuze extends Opdracht implements Valideerbaar {
 	/*
 	 * Methode om te checken of het juiste antwoord wel in de keuzes aanwezig is.
 	 */
-	public boolean isAntwoordInKeuzes(String antwoord){
+	private boolean isAntwoordInKeuzes(String antwoord){
 		if (!keuzesMap.containsValue(antwoord)) {
 			keuzesMap.clear();
 			return false;
@@ -132,7 +132,7 @@ public class Meerkeuze extends Opdracht implements Valideerbaar {
 		this.keuzesMap = keuzesMap;
 	}
 	
-	public void samenstellenKeuzes(String alleKeuzes){
+	private void samenstellenKeuzes(String alleKeuzes){
 		String delimiter = ";";
 		String[] temp = alleKeuzes.split(delimiter);
 		
