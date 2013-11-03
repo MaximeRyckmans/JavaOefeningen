@@ -68,11 +68,8 @@ public class Reproductie extends Opdracht {
 			}
 			else if (i++ >= minAantalJuisteTrefwoorden) {
 				return true;
-			}else {
-				break;
 			}
-		}
-		
+		}	
 		return false;
 	}
 
