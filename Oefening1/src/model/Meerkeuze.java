@@ -46,6 +46,13 @@ public class Meerkeuze extends Opdracht implements Valideerbaar {
 		isAntwoordInKeuzes(antwoord);
 	}
 	
+	public Meerkeuze(int id, String vraag, String antwoord, int maxAantalPogingen, String alleKeuzes, String antwoordHint, int maxAntwoordTijd) {
+		super(id, vraag, antwoord, maxAantalPogingen, antwoordHint, maxAntwoordTijd);
+		
+		samenstellenKeuzes(alleKeuzes);
+		isAntwoordInKeuzes(antwoord);
+	}
+	
 	/*
 	 * Methode om te checken of het juiste antwoord wel in de keuzes aanwezig is.
 	 */
