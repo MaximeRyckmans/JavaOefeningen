@@ -139,7 +139,7 @@ public class OpdrachtCatalogus implements Cloneable,
 				  String trefwoorden=velden[6];
 				  int minAantalJuisteTrefwoorden= Integer.parseInt(velden[7]);
 				  opdracht= new Reproductie(vraag, antwoordHint, maxAantalPogingen, antwoordHint, maxAntwoordTijd, trefwoorden, minAantalJuisteTrefwoorden);
-			  }
+			  }//write other if for other opdrachten
 			  this.opdrachten.add(opdracht);
 			}
 			if (scanner!=null){
