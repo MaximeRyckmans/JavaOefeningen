@@ -6,6 +6,8 @@ import java.io.PrintWriter;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+
+import test.LeraarTest;
 /**
  * 
  * @author Maxime Ryckmans
@@ -126,17 +128,14 @@ public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iter
 			  int id = Integer.parseInt(velden[0]);
 			  int aantalDeelnames=Integer.parseInt(velden[1]);
 			  int leerjaar=Integer.parseInt(velden[2]);
-			//  Leraar leraar
-			  String onderwerp=velden[4];
-			//QuizStatus quizStatus;
-			//List<Opdracht> opdrachten;
-			  String vraag= velden[1];
-			  String antwoord = velden[2];
-			  int maxAantalPogingen = Integer.parseInt(velden[3]);
-			  String antwoordHint=velden[4];
-			  int maxAntwoordTijd=Integer.parseInt(velden[4]);
-			//  Opdracht opdracht=new Opdracht(vraag,antwoord,maxAantalPogingen,antwoordHint, maxAntwoordTijd);
-			//  this.opdrachten.add(opdracht);
+			
+			  String onderwerp=velden[3];
+			  String quizStatus = velden[4];
+			  String leraarNaam=velden[5]+velden[6];
+			  Leraar leraar = Leraar.valueOf(leraarNaam);
+			  //need some more work --> read all the opdrachten from a quiz via their id.
+			  Quiz quiz = new Quiz(aantalDeelnames, leerjaar, leraar, onderwerp, quizStatus, opdrachten);
+			  quizzen.add(quiz);
 			}
 			if (scanner!=null){
 			  scanner.close();

@@ -115,7 +115,7 @@ public class OpdrachtCatalogus implements Cloneable,
 			System.out.println(ex.getMessage());
 		}
 	}
-	//Reads opdrachten from a text file, each line in the file is a new opdacht object. Currently having trouble with how to cope with the different opdrachten.
+	
 	public void leesOpdrachtenVanBestand(){
 		  File file = new File("bestanden\\opdrachten.txt");
 		  try{
@@ -139,7 +139,9 @@ public class OpdrachtCatalogus implements Cloneable,
 				  String trefwoorden=velden[6];
 				  int minAantalJuisteTrefwoorden= Integer.parseInt(velden[7]);
 				  opdracht= new Reproductie(vraag, antwoordHint, maxAantalPogingen, antwoordHint, maxAntwoordTijd, trefwoorden, minAantalJuisteTrefwoorden);
-			  }//write other if for other opdrachten
+			  }else if(klasNaam.equals("Opsomming")){
+				  opdracht = new Opsomming(vraag, antwoord, maxAantalPogingen, antwoordHint, maxAntwoordTijd);
+			  }
 			  this.opdrachten.add(opdracht);
 			}
 			if (scanner!=null){
