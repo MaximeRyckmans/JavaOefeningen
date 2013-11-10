@@ -134,8 +134,8 @@ public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iter
 			  String leraarNaam=velden[5]+velden[6];
 			  Leraar leraar = Leraar.valueOf(leraarNaam);
 			  //need some more work --> read all the opdrachten from a quiz via their id.
-			  Quiz quiz = new Quiz(aantalDeelnames, leerjaar, leraar, onderwerp, quizStatus, opdrachten);
-			  quizzen.add(quiz);
+			 // Quiz quiz = new Quiz(aantalDeelnames, leerjaar, leraar, onderwerp, quizStatus, opdrachten);
+			 // quizzen.add(quiz);
 			}
 			if (scanner!=null){
 			  scanner.close();
