@@ -3,6 +3,7 @@ package model;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
@@ -119,6 +120,7 @@ public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iter
 		}
 	}
 	public void leesQuizzenVanBestand(){
+		OpdrachtCatalogus opdrc = new OpdrachtCatalogus();
 		  File file = new File("bestanden\\opdrachten.txt");
 		  try{
 			Scanner scanner = new Scanner(file);
@@ -130,12 +132,17 @@ public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iter
 			  int leerjaar=Integer.parseInt(velden[2]);
 			
 			  String onderwerp=velden[3];
-			  String quizStatus = velden[4];
+			  String quizStatusNaam = velden[4];
+			  QuizStatus quizStatus= QuizStatus.valueOf(quizStatusNaam);
 			  String leraarNaam=velden[5]+velden[6];
 			  Leraar leraar = Leraar.valueOf(leraarNaam);
-			  //need some more work --> read all the opdrachten from a quiz via their id.
-			 // Quiz quiz = new Quiz(aantalDeelnames, leerjaar, leraar, onderwerp, quizStatus, opdrachten);
-			 // quizzen.add(quiz);
+			  List<Integer>ids = new ArrayList<Integer>();
+			  for(int i=7; i< velden.length;i++){
+				  ids.add(Integer.parseInt(velden[i]));
+			  }
+			  List<Opdracht> opdrachten = opdrc.LeesBepaaldeOpdrachtenVanBestand(ids);
+			  Quiz quiz = new Quiz(aantalDeelnames, leerjaar, leraar, onderwerp, quizStatus, opdrachten);
+			  quizzen.add(quiz);
 			}
 			if (scanner!=null){
 			  scanner.close();
