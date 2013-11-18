@@ -19,12 +19,14 @@ public abstract class Opdracht implements Cloneable, Comparable<Opdracht>, Seria
 	private int maxAantalPogingen;
 	private String antwoordHint;
 	private int maxAntwoordTijd;
+	private Categorie categorie;
 	
 	public Opdracht(){}
 	
-	public Opdracht(String vraag, String antwoord, int maxAantalPogingen){
+	public Opdracht(String vraag, String antwoord, int maxAantalPogingen, Categorie categorie){
 		this.vraag = vraag;
 		this.antwoord = antwoord;
+		this.categorie = categorie;
 		if (maxAantalPogingen > 1) {
 			this.maxAantalPogingen = maxAantalPogingen;
 		}else {
@@ -32,23 +34,23 @@ public abstract class Opdracht implements Cloneable, Comparable<Opdracht>, Seria
 		}
 	}
 	
-	public Opdracht(String vraag, String antwoord, int maxAantalPogingen, String antwoordHint) {
-		this(vraag, antwoord, maxAantalPogingen);
+	public Opdracht(String vraag, String antwoord, int maxAantalPogingen, String antwoordHint, Categorie categorie) {
+		this(vraag, antwoord, maxAantalPogingen, categorie);
 		this.antwoordHint = antwoordHint;
 	}
 	
-	public Opdracht(String vraag, String antwoord, int maxAantalPogingen, int maxAntwoordTijd) {
-		this(vraag, antwoord, maxAantalPogingen);
+	public Opdracht(String vraag, String antwoord, int maxAantalPogingen, int maxAntwoordTijd, Categorie categorie) {
+		this(vraag, antwoord, maxAantalPogingen, categorie);
 		this.maxAntwoordTijd = maxAntwoordTijd;
 	}
 	
-	public Opdracht(String vraag, String antwoord, int maxAantalPogingen, String antwoordHint, int maxAntwoordTijd) {
-		this(vraag, antwoord, maxAantalPogingen, antwoordHint);
+	public Opdracht(String vraag, String antwoord, int maxAantalPogingen, String antwoordHint, int maxAntwoordTijd, Categorie categorie) {
+		this(vraag, antwoord, maxAantalPogingen, antwoordHint, categorie);
 		this.maxAntwoordTijd = maxAntwoordTijd;
 	}
 	
-	public Opdracht(int id, String vraag, String antwoord, int maxAantalPogingen, String antwoordHint, int maxAntwoordTijd) {
-		this(vraag, antwoord, maxAantalPogingen, antwoordHint);
+	public Opdracht(int id, String vraag, String antwoord, int maxAantalPogingen, String antwoordHint, int maxAntwoordTijd, Categorie categorie) {
+		this(vraag, antwoord, maxAantalPogingen, antwoordHint, categorie);
 		this.id = id;
 		this.maxAntwoordTijd = maxAntwoordTijd;
 	}
@@ -164,5 +166,13 @@ public abstract class Opdracht implements Cloneable, Comparable<Opdracht>, Seria
 				+ "/nMaximum aantal pogingen=" + maxAantalPogingen
 				+ "/nHint=" + antwoordHint + "/nMaximum antwoord tijd="
 				+ maxAntwoordTijd;
+	}
+
+	public Categorie getCategorie() {
+		return categorie;
+	}
+
+	public void setCategorie(Categorie categorie) {
+		this.categorie = categorie;
 	}
 }
