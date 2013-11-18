@@ -17,6 +17,7 @@ public class QuizCreatieView extends JFrame {
     private JPanel createContentPane()
     {
         JPanel totalGUI = new JPanel();
+       // totalGUI.setSize(500, 200);
         totalGUI.setOpaque(true);
         return totalGUI;
     }
@@ -25,11 +26,11 @@ public class QuizCreatieView extends JFrame {
     {
         JFrame.setDefaultLookAndFeelDecorated(true);
         JFrame frame = new JFrame("Quiz");
-
+        frame.setSize(500, 200);
         // Set the content pane.
         frame.setContentPane(createContentPane());
+        
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.pack();
         frame.setVisible(true);
     }
 }
