@@ -3,6 +3,7 @@ package model;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
@@ -18,7 +19,11 @@ public class OpdrachtCatalogus implements Cloneable,
 
 	private List<Opdracht> opdrachten;
 	private int id;
-
+	
+	public OpdrachtCatalogus(){
+		opdrachten = new ArrayList<Opdracht>();
+	}
+	
 	public List<Opdracht> getOpdrachten() {
 		return opdrachten;
 	}
