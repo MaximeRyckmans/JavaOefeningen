@@ -3,6 +3,8 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
@@ -13,7 +15,7 @@ import model.Leraar;
  * @version 1.0
  *
  */
-public class QuizCreatieView extends JFrame {
+public class QuizCreatieView extends JFrame implements ActionListener {
 	private JLabel onderwerpL, klasL, auteurL, categorieL,
 			aantalToegevoegdeOpdrL, sorteerOpdrL;
 	private JTextField onderwerpText, aantalToegevoegdeOpdr;
@@ -365,6 +367,12 @@ public class QuizCreatieView extends JFrame {
 	 */
 	public void setToegevoegdeOpdr(JTable toegevoegdeOpdr) {
 		this.toegevoegdeOpdr = toegevoegdeOpdr;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
