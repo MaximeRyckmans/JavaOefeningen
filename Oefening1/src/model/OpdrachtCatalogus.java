@@ -123,7 +123,9 @@ public class OpdrachtCatalogus implements Cloneable,
 	}
 
 	public void leesOpdrachtenVanBestand() {
-		File file = new File("bestanden\\opdrachten.txt");
+		//File file = new File("bestanden/opdrachten.txt");
+		File file = new File("bestanden/opdrachten.txt");
+		System.out.println(file.getAbsolutePath());
 		try {
 			Scanner scanner = new Scanner(file);
 			while (scanner.hasNext()) {
