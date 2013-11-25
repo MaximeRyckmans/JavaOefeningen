@@ -4,6 +4,7 @@ import model.OpdrachtCatalogus;
 import model.QuizCatalogus;
 import controller.QuizCreatieController;
 import view.QuizCreatieView;
+import view.QuizListView;
 
 public class Start {
 
