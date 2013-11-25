@@ -6,7 +6,7 @@ import view.QuizListView;
 public class Start {
 
 	public static void main(String[] args) {
-		QuizListView view = new QuizListView();
+		QuizCreatieView view = new QuizCreatieView();
 	}
 
 }
