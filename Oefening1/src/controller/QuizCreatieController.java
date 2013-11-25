@@ -1,11 +1,14 @@
 package controller;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import model.OpdrachtCatalogus;
 import model.Quiz;
 import model.QuizCatalogus;
 import view.QuizCreatieView;
 
-public class QuizCreatieController {
+public class QuizCreatieController implements ActionListener {
 
 	private QuizCreatieView quizCreatieView;
 	private Quiz quiz;
@@ -23,7 +26,18 @@ public class QuizCreatieController {
 		this.opdrachtCatalogusModel.leesOpdrachtenVanBestand();
 		this.quizCatalogusModel.leesQuizzenVanBestand();
 		
+		quizCreatieView.buttonActionListener(this);
 	//	this.quizCreatieView.setOpdrachten(opdrachtCatalogusModel.getOpdrachten());
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String action = e.getActionCommand();
+		System.out.println("this is: "+ action);
+		if(action.equals(">>>>")){
+			System.out.println("button is pressed");
+		}
+		
 	}
 
 }

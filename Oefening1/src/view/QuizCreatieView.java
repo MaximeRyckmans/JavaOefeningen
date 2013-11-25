@@ -5,25 +5,26 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.*;
 
 import model.Leraar;
+import model.Opdracht;
+
 /**
  * 
  * @author Maxime Ryckmans
  * @version 1.0
- *
+ * 
  */
 public class QuizCreatieView extends JFrame implements ActionListener {
 	private JLabel onderwerpL, klasL, auteurL, categorieL,
-			aantalToegevoegdeOpdrL, sorteerOpdrL;
-	private JTextField onderwerpText, aantalToegevoegdeOpdr;
+			aantalToegevoegdeOpdrL, sorteerOpdrL, aantalToegevoegdeOpdr;
+	private JTextField onderwerpText;
 	private JComboBox<String> klas, categorie, sorteerOpdr;
 	private JComboBox<Leraar> auteur;
 	private JButton nieuweQuiz, naarBoven, naarLinks, naarRechts;
 	private JPanel upperPanel, lowerPanel;
-	private JTable opdrachten, toegevoegdeOpdr;
+	private JList<Opdracht> opdrachten, toegevoegdeOpdr;
 
 	/**
 	 * 
@@ -72,14 +73,15 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 		categorieL = new JLabel("Toon opdrachten van:");
 		categorie = new JComboBox<String>();
 		aantalToegevoegdeOpdrL = new JLabel("Aantal toegevoegde opdrachten:");
-		aantalToegevoegdeOpdr = new JTextField(2);
+		aantalToegevoegdeOpdr = new JLabel("0");
 		sorteerOpdrL = new JLabel("Sorteer opdrachten op:");
 		sorteerOpdr = new JComboBox<String>();
 		naarBoven = new JButton("^^^^");
-		opdrachten = new JTable();
+		opdrachten = new JList<Opdracht>();
 		naarRechts = new JButton(">>>>");
 		naarLinks = new JButton("<<<<");
-		toegevoegdeOpdr = new JTable();
+		toegevoegdeOpdr = new JList<Opdracht>();
+
 		lowerPanel.add(categorieL);
 		lowerPanel.add(categorie);
 		lowerPanel.add(aantalToegevoegdeOpdrL);
@@ -91,9 +93,24 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 		lowerPanel.add(naarRechts);
 		lowerPanel.add(naarLinks);
 		lowerPanel.add(toegevoegdeOpdr);
+
 		return lowerPanel;
+
+	}
+
+	public void buttonActionListener(ActionListener al) {
 		
+		nieuweQuiz.setActionCommand(nieuweQuiz.getName());
+		nieuweQuiz.addActionListener(al);
 		
+		naarBoven.setActionCommand(naarBoven.getName());
+		naarBoven.addActionListener(al);
+		
+		naarLinks.setActionCommand(naarLinks.getName());
+		naarLinks.addActionListener(al);
+		
+		naarRechts.setActionCommand(naarRechts.getName());
+		naarRechts.addActionListener(al);
 	}
 
 	/**
@@ -209,7 +226,8 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * @param categorieL the categorieL to set
+	 * @param categorieL
+	 *            the categorieL to set
 	 */
 	public void setCategorieL(JLabel categorieL) {
 		this.categorieL = categorieL;
@@ -223,7 +241,8 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * @param aantalToegevoegdeOpdrL the aantalToegevoegdeOpdrL to set
+	 * @param aantalToegevoegdeOpdrL
+	 *            the aantalToegevoegdeOpdrL to set
 	 */
 	public void setAantalToegevoegdeOpdrL(JLabel aantalToegevoegdeOpdrL) {
 		this.aantalToegevoegdeOpdrL = aantalToegevoegdeOpdrL;
@@ -237,7 +256,8 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * @param sorteerOpdrL the sorteerOpdrL to set
+	 * @param sorteerOpdrL
+	 *            the sorteerOpdrL to set
 	 */
 	public void setSorteerOpdrL(JLabel sorteerOpdrL) {
 		this.sorteerOpdrL = sorteerOpdrL;
@@ -246,14 +266,15 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	/**
 	 * @return the aantalToegevoegdeOpdr
 	 */
-	public JTextField getAantalToegevoegdeOpdr() {
+	public JLabel getAantalToegevoegdeOpdr() {
 		return aantalToegevoegdeOpdr;
 	}
 
 	/**
-	 * @param aantalToegevoegdeOpdr the aantalToegevoegdeOpdr to set
+	 * @param aantalToegevoegdeOpdr
+	 *            the aantalToegevoegdeOpdr to set
 	 */
-	public void setAantalToegevoegdeOpdr(JTextField aantalToegevoegdeOpdr) {
+	public void setAantalToegevoegdeOpdr(JLabel aantalToegevoegdeOpdr) {
 		this.aantalToegevoegdeOpdr = aantalToegevoegdeOpdr;
 	}
 
@@ -265,7 +286,8 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * @param categorie the categorie to set
+	 * @param categorie
+	 *            the categorie to set
 	 */
 	public void setCategorie(JComboBox<String> categorie) {
 		this.categorie = categorie;
@@ -279,7 +301,8 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * @param sorteerOpdr the sorteerOpdr to set
+	 * @param sorteerOpdr
+	 *            the sorteerOpdr to set
 	 */
 	public void setSorteerOpdr(JComboBox<String> sorteerOpdr) {
 		this.sorteerOpdr = sorteerOpdr;
@@ -293,7 +316,8 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * @param naarBoven the naarBoven to set
+	 * @param naarBoven
+	 *            the naarBoven to set
 	 */
 	public void setNaarBoven(JButton naarBoven) {
 		this.naarBoven = naarBoven;
@@ -307,7 +331,8 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * @param naarLinks the naarLinks to set
+	 * @param naarLinks
+	 *            the naarLinks to set
 	 */
 	public void setNaarLinks(JButton naarLinks) {
 		this.naarLinks = naarLinks;
@@ -321,7 +346,8 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * @param naarRechts the naarRechts to set
+	 * @param naarRechts
+	 *            the naarRechts to set
 	 */
 	public void setNaarRechts(JButton naarRechts) {
 		this.naarRechts = naarRechts;
@@ -335,7 +361,8 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	}
 
 	/**
-	 * @param upperPanel the upperPanel to set
+	 * @param upperPanel
+	 *            the upperPanel to set
 	 */
 	public void setUpperPanel(JPanel upperPanel) {
 		this.upperPanel = upperPanel;
@@ -344,35 +371,37 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	/**
 	 * @return the opdrachten
 	 */
-	public JTable getOpdrachten() {
+	public JList<Opdracht> getOpdrachten() {
 		return opdrachten;
 	}
 
 	/**
-	 * @param opdrachten the opdrachten to set
+	 * @param opdrachten
+	 *            the opdrachten to set
 	 */
-	public void setOpdrachten(JTable opdrachten) {
+	public void setOpdrachten(JList<Opdracht> opdrachten) {
 		this.opdrachten = opdrachten;
 	}
 
 	/**
 	 * @return the toegevoegdeOpdr
 	 */
-	public JTable getToegevoegdeOpdr() {
+	public JList<Opdracht> getToegevoegdeOpdr() {
 		return toegevoegdeOpdr;
 	}
 
 	/**
-	 * @param toegevoegdeOpdr the toegevoegdeOpdr to set
+	 * @param toegevoegdeOpdr
+	 *            the toegevoegdeOpdr to set
 	 */
-	public void setToegevoegdeOpdr(JTable toegevoegdeOpdr) {
+	public void setToegevoegdeOpdr(JList<Opdracht> toegevoegdeOpdr) {
 		this.toegevoegdeOpdr = toegevoegdeOpdr;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
