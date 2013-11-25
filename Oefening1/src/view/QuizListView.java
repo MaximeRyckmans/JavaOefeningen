@@ -21,8 +21,6 @@ import model.QuizCatalogus;
  */
 
 public class QuizListView extends JFrame {
-	
-	
 
 	private JTree tree;
 	private QuizCatalogus quizCatalogus;
@@ -45,28 +43,34 @@ public class QuizListView extends JFrame {
 	}
 	
 	private void createNodes(DefaultMutableTreeNode top){
-		//try {
+		try {
 			DefaultMutableTreeNode quiz = null;
 			DefaultMutableTreeNode opdracht = null;
 	    
 			for (Iterator<Quiz> i = quizCatalogus.getQuizzen().iterator(); i.hasNext();) {
-				Quiz tempQuiz = i.next();
-				int nameQuiz = tempQuiz.getId();
-			
-				quiz = new DefaultMutableTreeNode(nameQuiz);
-				top.add(quiz);
-			
-				for (Iterator<Opdracht> iter = tempQuiz.getOpdrachten().iterator(); iter.hasNext();) {
-					Opdracht tempOpdracht = iter.next();
-					String nameOpdracht = tempOpdracht.getVraag();
+				if (i.next() != null) {
 				
-					opdracht = new DefaultMutableTreeNode(nameOpdracht);
-					quiz.add(opdracht);
+					Quiz tempQuiz = i.next();
+					int nameQuiz = tempQuiz.getId();
+			
+					quiz = new DefaultMutableTreeNode(nameQuiz);
+					top.add(quiz);
+			
+					for (Iterator<Opdracht> iter = tempQuiz.getOpdrachten().iterator(); iter.hasNext();) {
+						Opdracht tempOpdracht = iter.next();
+						String nameOpdracht = tempOpdracht.getVraag();
+				
+						opdracht = new DefaultMutableTreeNode(nameOpdracht);
+						quiz.add(opdracht);
+					}
+				}
+				else {
+					top.add(new DefaultMutableTreeNode("Nog geen quizen in het systeem"));
 				}
 			}
-		/*} catch (Exception e) {
-			// TODO: handle exception
-		}*/
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 	
 	
