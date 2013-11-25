@@ -2,7 +2,9 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import model.Opdracht;
 import model.OpdrachtCatalogus;
 import model.Quiz;
 import model.QuizCatalogus;
@@ -27,7 +29,11 @@ public class QuizCreatieController implements ActionListener {
 		this.quizCatalogusModel.leesQuizzenVanBestand();
 		
 		quizCreatieView.buttonActionListener(this);
-	//	this.quizCreatieView.setOpdrachten(opdrachtCatalogusModel.getOpdrachten());
+		String[] list = new String[5];
+		for(Opdracht opdr : opdrachtCatalogusModel.getOpdrachten()){
+			list[0] = opdr.getVraag();
+		}
+		this.quizCreatieView.getOpdrachten().setListData(list);
 	}
 
 	@Override

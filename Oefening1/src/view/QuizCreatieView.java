@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
 import model.Leraar;
@@ -24,7 +25,8 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	private JComboBox<Leraar> auteur;
 	private JButton nieuweQuiz, naarBoven, naarLinks, naarRechts;
 	private JPanel upperPanel, lowerPanel;
-	private JList<Opdracht> opdrachten, toegevoegdeOpdr;
+	JList<String> opdrachten;
+	private JList<Opdracht> toegevoegdeOpdr;
 
 	/**
 	 * 
@@ -77,11 +79,10 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 		sorteerOpdrL = new JLabel("Sorteer opdrachten op:");
 		sorteerOpdr = new JComboBox<String>();
 		naarBoven = new JButton("^^^^");
-		opdrachten = new JList<Opdracht>();
+		opdrachten = new JList<String>();
 		naarRechts = new JButton(">>>>");
 		naarLinks = new JButton("<<<<");
 		toegevoegdeOpdr = new JList<Opdracht>();
-
 		lowerPanel.add(categorieL);
 		lowerPanel.add(categorie);
 		lowerPanel.add(aantalToegevoegdeOpdrL);
@@ -371,7 +372,7 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	/**
 	 * @return the opdrachten
 	 */
-	public JList<Opdracht> getOpdrachten() {
+	public JList<String> getOpdrachten() {
 		return opdrachten;
 	}
 
@@ -379,7 +380,7 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	 * @param opdrachten
 	 *            the opdrachten to set
 	 */
-	public void setOpdrachten(JList<Opdracht> opdrachten) {
+	public void setOpdrachten(JList<String> opdrachten) {
 		this.opdrachten = opdrachten;
 	}
 
