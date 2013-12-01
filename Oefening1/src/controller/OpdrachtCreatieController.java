@@ -1,8 +1,11 @@
 package controller;
 
+import model.Categorie;
 import model.Meerkeuze;
 import model.Opdracht;
+import model.Reproductie;
 import view.OpdrachtCreatieView;
+import view.QuizCreatieView;
 
 /**
  * @author Goossens Nicolas
@@ -11,11 +14,18 @@ import view.OpdrachtCreatieView;
 
 public class OpdrachtCreatieController {
 	private Opdracht opdracht;
+	private Reproductie reproductie;
+	private OpdrachtCreatieView opdrCreatieView;
 
 	public OpdrachtCreatieController(OpdrachtCreatieView opdrCreatieView){
-		//opdracht = 
+		this.opdrCreatieView = opdrCreatieView; 
 	}
 	
 	public void createOpdracht(){
+		if (opdrCreatieView.getCategorie().toString() == Categorie.Reproductie.toString()){
+			reproductie = new Reproductie(opdrCreatieView.getVraagT().toString(), opdrCreatieView.getAntwoordT().toString(), Integer.parseInt(opdrCreatieView.getMaxAantalPogingenC().toString()),
+					opdrCreatieView.getAntwoordHintT().toString(), Integer.parseInt(opdrCreatieView.getMaxAntwoordTijdC().toString()));
+		}
+		
 	}
 }

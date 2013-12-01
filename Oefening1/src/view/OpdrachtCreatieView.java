@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,11 +20,20 @@ import model.Categorie;
  * @version 1.0
  */
 
+/**
+ * @author java
+ *
+ */
 public class OpdrachtCreatieView extends JFrame implements ActionListener {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4522864890874195880L;
 	private JLabel vraagL, antwoordL, maxAantalPogingenL, antwoordHintL, maxAntwoordTijdL;
 	private JTextField vraagT, antwoordT, antwoordHintT;
-	private JComboBox maxAantalPogingenC, maxAntwoordTijdC;
+	private JComboBox maxAantalPogingenC, maxAntwoordTijdC, categorie;
+	private JButton toevoegen;
 	String[] aantalPogingen = { "", "1", "2", "3", "4", "5" };
 	String[] tijd = { "" ,"30", "60", "90", "120"};
 	
@@ -38,7 +48,8 @@ public class OpdrachtCreatieView extends JFrame implements ActionListener {
 	
 	public JPanel createPanel() {
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(11, 1));
+		panel.setLayout(new GridLayout(13, 1));
+		categorie = new JComboBox(Categorie.values());
 		vraagL = new JLabel("Vraag :");
 		vraagT = new JTextField(20);
 		antwoordL = new JLabel("Antwoord :");
@@ -49,8 +60,9 @@ public class OpdrachtCreatieView extends JFrame implements ActionListener {
 		antwoordHintT = new JTextField(20);
 		maxAntwoordTijdL = new JLabel("Maximum tijd in seconden :");
 		maxAntwoordTijdC = new JComboBox(tijd);
+		toevoegen = new JButton("Toevoegen");
 		
-		panel.add(new JComboBox(Categorie.values()));
+		panel.add(categorie);
 		panel.add(vraagL);
 		panel.add(vraagT);
 		panel.add(antwoordL);
@@ -61,6 +73,7 @@ public class OpdrachtCreatieView extends JFrame implements ActionListener {
 		panel.add(antwoordHintT);
 		panel.add(maxAntwoordTijdL);
 		panel.add(maxAntwoordTijdC);
+		panel.add(toevoegen);
 		return panel;
 	}
 
@@ -120,14 +133,6 @@ public class OpdrachtCreatieView extends JFrame implements ActionListener {
 		this.antwoordT = antwoordT;
 	}
 
-	public JComboBox getMaxAantalpogingenC() {
-		return maxAantalPogingenC;
-	}
-
-	public void setMaxAantalpogingenC(JComboBox maxAantalPogingenC) {
-		this.maxAantalPogingenC = maxAantalPogingenC;
-	}
-
 	public JTextField getAntwoordHintT() {
 		return antwoordHintT;
 	}
@@ -141,6 +146,46 @@ public class OpdrachtCreatieView extends JFrame implements ActionListener {
 	}
 
 	public void setMaxAntwoordTijdT(JComboBox maxAntwoordTijdC) {
+		this.maxAntwoordTijdC = maxAntwoordTijdC;
+	}
+
+	public JComboBox getMaxAantalPogingenC() {
+		return maxAantalPogingenC;
+	}
+
+	public void setMaxAantalPogingenC(JComboBox maxAantalPogingenC) {
+		this.maxAantalPogingenC = maxAantalPogingenC;
+	}
+
+	public JComboBox getCategorie() {
+		return categorie;
+	}
+
+	public void setCategorie(JComboBox categorie) {
+		this.categorie = categorie;
+	}
+
+	public String[] getAantalPogingen() {
+		return aantalPogingen;
+	}
+
+	public void setAantalPogingen(String[] aantalPogingen) {
+		this.aantalPogingen = aantalPogingen;
+	}
+
+	public String[] getTijd() {
+		return tijd;
+	}
+
+	public void setTijd(String[] tijd) {
+		this.tijd = tijd;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public void setMaxAntwoordTijdC(JComboBox maxAntwoordTijdC) {
 		this.maxAntwoordTijdC = maxAntwoordTijdC;
 	}
 
