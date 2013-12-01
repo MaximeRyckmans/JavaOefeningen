@@ -27,6 +27,7 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	private JPanel upperPanel, lowerPanel;
 	JList<String> opdrachten;
 	private JList<Opdracht> toegevoegdeOpdr;
+	String[] klassenjaar = { "", "1" ,"2", "3", "4", "5", "6"};
 
 	/**
 	 * 
@@ -54,9 +55,9 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 		onderwerpL = new JLabel("Onderwerp:");
 		onderwerpText = new JTextField(20);
 		klasL = new JLabel("Klas:");
-		klas = new JComboBox<String>();
+		klas = new JComboBox(klassenjaar);
 		auteurL = new JLabel("Auteur:");
-		auteur = new JComboBox<Leraar>();
+		auteur = new JComboBox(Leraar.values());
 		nieuweQuiz = new JButton("Registreer nieuwe quiz");
 		upperPanel.add(onderwerpL);
 		upperPanel.add(onderwerpText);
