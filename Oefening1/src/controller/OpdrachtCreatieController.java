@@ -1,5 +1,6 @@
 package controller;
 
+import model.Meerkeuze;
 import model.Opdracht;
 import view.OpdrachtCreatieView;
 
@@ -9,9 +10,12 @@ import view.OpdrachtCreatieView;
  */
 
 public class OpdrachtCreatieController {
-	Opdracht opdracht;
+	private Opdracht opdracht;
 
 	public OpdrachtCreatieController(OpdrachtCreatieView opdrCreatieView){
-		
+		//opdracht = 
+	}
+	
+	public void createOpdracht(){
 	}
 }

@@ -102,7 +102,7 @@ public class OpdrachtCatalogus implements Cloneable,
 	}
 
 	public void schrijfOpdrachtenNaarBestand() {
-		File file = new File("bestanden\\opdrachten");
+		File file = new File("bestanden/opdrachten");
 		try {
 			PrintWriter writer = new PrintWriter(file);
 			for (int i = 0; i < this.getOpdrachten().size(); i++) {
@@ -174,7 +174,7 @@ public class OpdrachtCatalogus implements Cloneable,
 
 	public List<Opdracht> LeesBepaaldeOpdrachtenVanBestand(List<Integer> ids) {
 
-		File file = new File("bestanden\\opdrachten.txt");
+		File file = new File("bestanden/opdrachten");
 		try {
 			Scanner scanner = new Scanner(file);
 			while (scanner.hasNext()) {

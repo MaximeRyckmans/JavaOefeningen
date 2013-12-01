@@ -12,6 +12,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import model.Categorie;
+
 /**
  * @author Goossens Nicolas
  * @version 1.0
@@ -22,8 +24,8 @@ public class OpdrachtCreatieView extends JFrame implements ActionListener {
 	private JLabel vraagL, antwoordL, maxAantalPogingenL, antwoordHintL, maxAntwoordTijdL;
 	private JTextField vraagT, antwoordT, antwoordHintT;
 	private JComboBox maxAantalPogingenC, maxAntwoordTijdC;
-	String[] aantalPogingen = { "1", "2", "3", "4", "5" };
-	String[] tijd = { "30", "60", "90", "120"};
+	String[] aantalPogingen = { "", "1", "2", "3", "4", "5" };
+	String[] tijd = { "" ,"30", "60", "90", "120"};
 	
 	public OpdrachtCreatieView(){
 		
@@ -36,7 +38,7 @@ public class OpdrachtCreatieView extends JFrame implements ActionListener {
 	
 	public JPanel createPanel() {
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(10, 1));
+		panel.setLayout(new GridLayout(11, 1));
 		vraagL = new JLabel("Vraag :");
 		vraagT = new JTextField(20);
 		antwoordL = new JLabel("Antwoord :");
@@ -48,6 +50,7 @@ public class OpdrachtCreatieView extends JFrame implements ActionListener {
 		maxAntwoordTijdL = new JLabel("Maximum tijd in seconden :");
 		maxAntwoordTijdC = new JComboBox(tijd);
 		
+		panel.add(new JComboBox(Categorie.values()));
 		panel.add(vraagL);
 		panel.add(vraagT);
 		panel.add(antwoordL);
