@@ -121,7 +121,7 @@ public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iter
 	}
 	public void leesQuizzenVanBestand(){
 		OpdrachtCatalogus opdrc = new OpdrachtCatalogus();
-		  File file = new File("bestanden\\opdrachten.txt");
+		  File file = new File("bestanden\\quizzen.txt");
 		  try{
 			Scanner scanner = new Scanner(file);
 			while (scanner.hasNext()){
