@@ -17,7 +17,7 @@ import test.LeraarTest;
  */
 public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iterable<Quiz> {
 	private int id;
-	private List<Quiz> quizzen;
+	private List<Quiz> quizzen	=new	ArrayList<Quiz>();
 
 	public List<Quiz> getQuizzen() {
 		return quizzen;
@@ -122,6 +122,7 @@ public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iter
 	public void leesQuizzenVanBestand(){
 		OpdrachtCatalogus opdrc = new OpdrachtCatalogus();
 		  File file = new File("bestanden/quizzen");
+		  List<Opdracht> opdrachten = new ArrayList<Opdracht>();
 		  try{
 			Scanner scanner = new Scanner(file);
 			while (scanner.hasNext()){
@@ -138,11 +139,11 @@ public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iter
 			  Leraar leraar = Leraar.valueOf(leraarNaam);
 			  List<Integer>ids = new ArrayList<Integer>();
 			  
-			  for(int i=7; i<= velden.length;i++){
+			  for(int i=7; i< velden.length;i++){
 				  ids.add(Integer.parseInt(velden[i]));
 			  }
-			  List<Opdracht> opdrachten = new ArrayList<Opdracht>();
-			  for(int i = 0; i<= ids.size(); i++){
+			  
+			  for(int i = 0; i< ids.size(); i++){
 				  opdrachten.add(opdrc.LeesBepaaldeOpdrachtenVanBestand(ids));
 			  }
 			//  List<Opdracht> opdrachten = opdrc.LeesBepaaldeOpdrachtenVanBestand(ids);
