@@ -118,6 +118,7 @@ public class DatumGregCal implements Comparable<DatumGregCal> {
 				calender.get(Calendar.DAY_OF_MONTH), calender.get(Calendar.MONTH)+1, calender.get(Calendar.YEAR));
 	}
 	
+	// kleinerDan methode
 	public boolean kleinerDan(DatumGregCal d) {
 		if (d.getCalender().getTimeInMillis() < this.getCalender().getTimeInMillis()) {
 			return true;
@@ -125,6 +126,7 @@ public class DatumGregCal implements Comparable<DatumGregCal> {
 		return false;
 	}
 	
+	// verschil In Jaren methode
 	public int verschilInJaren(DatumGregCal d) {
 		double MILLIS_IN_DAY = 1000 * 60 * 60 * 24;
 		double MILLIS_IN_YEAR = 1000 * 60 * 60 * 24 * 365.25;
@@ -137,6 +139,7 @@ public class DatumGregCal implements Comparable<DatumGregCal> {
 		return verschilInJaren;
 	}
 	
+	// verschil in maanden methode
 	public int verschilInMaanden(DatumGregCal d) {
 		int verschilInMaanden = 0;
 		
@@ -145,6 +148,7 @@ public class DatumGregCal implements Comparable<DatumGregCal> {
 		return verschilInMaanden;
 	}
 	
+	// verschil in dagen methode
 	public int verschilInDagen(DatumGregCal d) {  
 		 int MILLIS_IN_DAY = 1000 * 60 * 60 * 24; 
 		 DatumGregCal startDate;
@@ -173,8 +177,17 @@ public class DatumGregCal implements Comparable<DatumGregCal> {
 		 return presumedDays;
 	}
 	
+	// verander datum methode
 	public void veranderDatum(int aantalDagen){
 		calender.add(Calendar.DAY_OF_MONTH, aantalDagen);
+	}
+	
+	// verander datum methode met een DatumGregCal als return waarde
+	public DatumGregCal veranderDatum2(int aantalDagen) {
+		DatumGregCal tempDatumGregCal = new DatumGregCal();
+		tempDatumGregCal.calender.add(Calendar.DAY_OF_MONTH, aantalDagen);
+		
+		return tempDatumGregCal;
 	}
 	
 	@Override
