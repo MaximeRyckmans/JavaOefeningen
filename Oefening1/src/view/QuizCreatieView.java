@@ -5,11 +5,29 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JPanel;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
+import controller.QuizCreatieController;
 import model.Leraar;
 import model.Opdracht;
+import model.OpdrachtCatalogus;
+import model.OpdrachtCategorie;
+import model.OpdrachtTableModel;
+import model.QuizStatus;
 
 /**
  * 
@@ -21,14 +39,24 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	private JLabel onderwerpL, klasL, auteurL, categorieL,
 			aantalToegevoegdeOpdrL, sorteerOpdrL, aantalToegevoegdeOpdr;
 	private JTextField onderwerpText;
-	private JComboBox<String> klas, categorie, sorteerOpdr;
+	private JComboBox<String> klas, sorteerOpdr;
+	private JComboBox<OpdrachtCategorie> categorie;
+	@SuppressWarnings("rawtypes")
+	private JComboBox quizStatus;
 	private JComboBox<Leraar> auteur;
 	private JButton nieuweQuiz, naarBoven, naarLinks, naarRechts;
 	private JPanel upperPanel, lowerPanel;
-	JList<String> opdrachten;
+	private TableColumnModel tcm;
+//	private JTable opdrachten;
 	private JList<Opdracht> toegevoegdeOpdr;
-	String[] klassenjaar = { "", "1" ,"2", "3", "4", "5", "6"};
+	private String[] klassen = { "1A", "1B", "1C", "2A", "2B", "2C", "3A",
+			"3B", "4A", "5A", "6A" };
+	private String[] sorterenOp = { "geen", "categorie", "vraag" };
+	private QuizCreatieController controller = new QuizCreatieController();
 
+	private OpdrachtCatalogus opdrachtCatalogus = new OpdrachtCatalogus();
+	private List<Opdracht> opdrachtenLijst;
+	String[] klassenjaar = { "", "1" ,"2", "3", "4", "5", "6"};
 	/**
 	 * 
 	 */
@@ -36,7 +64,7 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 
 	public QuizCreatieView() {
 		JFrame frame = new JFrame("Aanmaken nieuwe Quiz");
-		frame.setSize(800, 600);
+		frame.setSize(900, 900);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		setLayout(new FlowLayout());
@@ -48,23 +76,33 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	}
 
 	// Create the content pane which displays the buttons and widgets on-screen.
+	@SuppressWarnings("unchecked")
 	private JPanel createUpperPanel() {
 
 		JPanel upperPanel = new JPanel();
-		upperPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		upperPanel.setBorder(new EmptyBorder(10, 10, 50, 10));
+
+		upperPanel.setSize(400, 400);
 		onderwerpL = new JLabel("Onderwerp:");
 		onderwerpText = new JTextField(20);
 		klasL = new JLabel("Klas:");
+		klas = new JComboBox<String>();
+		klas.setModel(new DefaultComboBoxModel<>(klassen));
 		klas = new JComboBox(klassenjaar);
 		auteurL = new JLabel("Auteur:");
+		auteur = new JComboBox<Leraar>();
+		auteur.setModel(new DefaultComboBoxModel<>(Leraar.values()));
+		quizStatus = new JComboBox(QuizStatus.values());
 		auteur = new JComboBox(Leraar.values());
 		nieuweQuiz = new JButton("Registreer nieuwe quiz");
+
 		upperPanel.add(onderwerpL);
 		upperPanel.add(onderwerpText);
 		upperPanel.add(klasL);
 		upperPanel.add(klas);
 		upperPanel.add(auteurL);
 		upperPanel.add(auteur);
+		upperPanel.add(quizStatus);
 		upperPanel.add(nieuweQuiz);
 		upperPanel.setVisible(true);
 		return upperPanel;
@@ -73,16 +111,26 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	private JPanel createLowerPanel() {
 		JPanel lowerPanel = new JPanel();
 		lowerPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		lowerPanel.setSize(450, 450);
 		categorieL = new JLabel("Toon opdrachten van:");
-		categorie = new JComboBox<String>();
+		categorie = new JComboBox<OpdrachtCategorie>();
+		categorie.setModel(new DefaultComboBoxModel<>(OpdrachtCategorie
+				.values()));
 		aantalToegevoegdeOpdrL = new JLabel("Aantal toegevoegde opdrachten:");
 		aantalToegevoegdeOpdr = new JLabel("0");
 		sorteerOpdrL = new JLabel("Sorteer opdrachten op:");
 		sorteerOpdr = new JComboBox<String>();
+		sorteerOpdr.setModel(new DefaultComboBoxModel<>(sorterenOp));
 		naarBoven = new JButton("^^^^");
-		opdrachten = new JList<String>();
+		opdrachtenLijst = opdrachtCatalogus.getOpdrachten();
+/*
+		opdrachten = new JTable();
+		opdrachten.setModel(controller.getOpdrachtTableModel());
+
+*/
 		naarRechts = new JButton(">>>>");
 		naarLinks = new JButton("<<<<");
+
 		toegevoegdeOpdr = new JList<Opdracht>();
 		lowerPanel.add(categorieL);
 		lowerPanel.add(categorie);
@@ -90,8 +138,9 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 		lowerPanel.add(aantalToegevoegdeOpdr);
 		lowerPanel.add(sorteerOpdrL);
 		lowerPanel.add(sorteerOpdr);
+	//	lowerPanel.add(opdrachten);
 		lowerPanel.add(naarBoven);
-		lowerPanel.add(opdrachten);
+
 		lowerPanel.add(naarRechts);
 		lowerPanel.add(naarLinks);
 		lowerPanel.add(toegevoegdeOpdr);
@@ -101,16 +150,16 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	}
 
 	public void buttonActionListener(ActionListener al) {
-		
+
 		nieuweQuiz.setActionCommand(nieuweQuiz.getName());
 		nieuweQuiz.addActionListener(al);
-		
+
 		naarBoven.setActionCommand(naarBoven.getName());
 		naarBoven.addActionListener(al);
-		
+
 		naarLinks.setActionCommand(naarLinks.getName());
 		naarLinks.addActionListener(al);
-		
+
 		naarRechts.setActionCommand(naarRechts.getName());
 		naarRechts.addActionListener(al);
 	}
@@ -283,7 +332,7 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	/**
 	 * @return the categorie
 	 */
-	public JComboBox<String> getCategorie() {
+	public JComboBox<OpdrachtCategorie> getCategorie() {
 		return categorie;
 	}
 
@@ -291,7 +340,7 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	 * @param categorie
 	 *            the categorie to set
 	 */
-	public void setCategorie(JComboBox<String> categorie) {
+	public void setCategorie(JComboBox<OpdrachtCategorie> categorie) {
 		this.categorie = categorie;
 	}
 
@@ -373,7 +422,8 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	/**
 	 * @return the opdrachten
 	 */
-	public JList<String> getOpdrachten() {
+	/*
+	public JTable getOpdrachten() {
 		return opdrachten;
 	}
 
@@ -381,10 +431,11 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	 * @param opdrachten
 	 *            the opdrachten to set
 	 */
-	public void setOpdrachten(JList<String> opdrachten) {
+	/*
+	public void setOpdrachten(JTable opdrachten) {
 		this.opdrachten = opdrachten;
 	}
-
+*/
 	/**
 	 * @return the toegevoegdeOpdr
 	 */
@@ -398,6 +449,21 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	 */
 	public void setToegevoegdeOpdr(JList<Opdracht> toegevoegdeOpdr) {
 		this.toegevoegdeOpdr = toegevoegdeOpdr;
+	}
+
+	/**
+	 * @return the quizStatus
+	 */
+	public JComboBox<String> getQuizStatus() {
+		return quizStatus;
+	}
+
+	/**
+	 * @param quizStatus
+	 *            the quizStatus to set
+	 */
+	public void setQuizStatus(JComboBox<String> quizStatus) {
+		this.quizStatus = quizStatus;
 	}
 
 	@Override
