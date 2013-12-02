@@ -10,7 +10,7 @@ import view.QuizListView;
 public class Start {
 
 	public static void main(String[] args) {
-	//	QuizCreatieView view = new QuizCreatieView();
+		//QuizCreatieView view = new QuizCreatieView();
 		OpdrachtCreatieView viewOp = new OpdrachtCreatieView();
 		OpdrachtCatalogus cat = new OpdrachtCatalogus();
 		QuizCatalogus qcat = new QuizCatalogus();

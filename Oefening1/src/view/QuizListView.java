@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Container;
 import java.awt.FlowLayout;
 import java.util.Iterator;
 
@@ -26,20 +27,20 @@ public class QuizListView extends JFrame {
 	private QuizCatalogus quizCatalogus;
 	
 	public QuizListView(){
-		JFrame frame = new JFrame("Aanmaken nieuwe Quiz");
-		frame.setSize(800, 600);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+		
+		Container content = getContentPane();
 		setLayout(new FlowLayout());
 		
 		DefaultMutableTreeNode top =
 				new DefaultMutableTreeNode("Lijst van Quizen");
 		createNodes(top);
 		
-		JScrollPane treeViewJScrollPane = new JScrollPane(tree);
+		tree = new JTree(top);
 		
-		frame.add(treeViewJScrollPane);		
-		frame.setVisible(true);
+		content.add(new JScrollPane(tree), BorderLayout.CENTER);
+		setSize(275,300);
+		setVisible(true);
+		
 	}
 	
 	private void createNodes(DefaultMutableTreeNode top){
