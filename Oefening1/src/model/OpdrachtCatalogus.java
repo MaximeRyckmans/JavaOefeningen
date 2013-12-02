@@ -172,9 +172,10 @@ public class OpdrachtCatalogus implements Cloneable,
 		}
 	}
 
-	public List<Opdracht> LeesBepaaldeOpdrachtenVanBestand(List<Integer> ids) {
+	public Opdracht LeesBepaaldeOpdrachtenVanBestand(List<Integer> ids) {
 
 		File file = new File("bestanden/opdrachten");
+		Opdracht opdracht = null;
 		try {
 			Scanner scanner = new Scanner(file);
 			while (scanner.hasNext()) {
@@ -186,19 +187,19 @@ public class OpdrachtCatalogus implements Cloneable,
 					String antwoord = velden[2];
 					int maxAantalPogingen = Integer.parseInt(velden[3]);
 					String antwoordHint = velden[4];
-					int maxAntwoordTijd = Integer.parseInt(velden[4]);
-					String klasNaam = velden[5];
-					Opdracht opdracht = null;
+					int maxAntwoordTijd = Integer.parseInt(velden[5]);
+					String klasNaam = velden[6];
+					
 					if (klasNaam.equals("Meerkeuze")) {
-						String alleKeuzes = velden[6];
+						String alleKeuzes = velden[7];
 						opdracht = new Meerkeuze(vraag, antwoord,
 								maxAantalPogingen, alleKeuzes, antwoordHint,
 								maxAntwoordTijd);
 						opdracht.setId(id);
 					} else if (klasNaam.equals("Reproductie")) {
-						String trefwoorden = velden[6];
+						String trefwoorden = velden[7];
 						int minAantalJuisteTrefwoorden = Integer
-								.parseInt(velden[7]);
+								.parseInt(velden[8]);
 						opdracht = new Reproductie(vraag, antwoordHint,
 								maxAantalPogingen, antwoordHint,
 								maxAntwoordTijd, trefwoorden,
@@ -208,12 +209,13 @@ public class OpdrachtCatalogus implements Cloneable,
 								maxAantalPogingen, antwoordHint,
 								maxAntwoordTijd);
 					}
-					this.opdrachten.add(opdracht);
+					
 				}
 			}
 			if (scanner != null) {
 				scanner.close();
 			}
+			
 		} catch (FileNotFoundException ex) {
 			System.out.println("bestand niet gevonden");
 		} catch (NullPointerException ex) {
@@ -221,6 +223,6 @@ public class OpdrachtCatalogus implements Cloneable,
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 		}
-		return this.opdrachten;
+		return opdracht;
 	}
 }

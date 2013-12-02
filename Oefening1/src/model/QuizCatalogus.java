@@ -101,7 +101,7 @@ public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iter
 	}
 	
 	public void schrijfQuizzenNaarBestand() {
-		File file = new File("bestanden\\quizzen.txt");
+		File file = new File("bestanden/quizzen");
 		try {
 			PrintWriter writer = new PrintWriter(file);
 			for (int i = 0; i < this.getQuizzen().size(); i++) {
@@ -121,7 +121,7 @@ public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iter
 	}
 	public void leesQuizzenVanBestand(){
 		OpdrachtCatalogus opdrc = new OpdrachtCatalogus();
-		  File file = new File("bestanden\\quizzen.txt");
+		  File file = new File("bestanden/quizzen");
 		  try{
 			Scanner scanner = new Scanner(file);
 			while (scanner.hasNext()){
@@ -137,10 +137,15 @@ public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iter
 			  String leraarNaam=velden[5]+velden[6];
 			  Leraar leraar = Leraar.valueOf(leraarNaam);
 			  List<Integer>ids = new ArrayList<Integer>();
-			  for(int i=7; i< velden.length;i++){
+			  
+			  for(int i=7; i<= velden.length;i++){
 				  ids.add(Integer.parseInt(velden[i]));
 			  }
-			  List<Opdracht> opdrachten = opdrc.LeesBepaaldeOpdrachtenVanBestand(ids);
+			  List<Opdracht> opdrachten = new ArrayList<Opdracht>();
+			  for(int i = 0; i<= ids.size(); i++){
+				  opdrachten.add(opdrc.LeesBepaaldeOpdrachtenVanBestand(ids));
+			  }
+			//  List<Opdracht> opdrachten = opdrc.LeesBepaaldeOpdrachtenVanBestand(ids);
 			  Quiz quiz = new Quiz(aantalDeelnames, leerjaar, leraar, onderwerp, quizStatus, opdrachten);
 			  quizzen.add(quiz);
 			}
