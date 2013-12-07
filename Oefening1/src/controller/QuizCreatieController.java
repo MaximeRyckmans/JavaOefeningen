@@ -5,13 +5,17 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 
+import model.Leraar;
 import model.Opdracht;
 import model.OpdrachtCatalogus;
+import model.OpdrachtCategorie;
 import model.OpdrachtTableModel;
 import model.Quiz;
 import model.QuizCatalogus;
+import model.QuizStatus;
 import view.QuizCreatieView;
 
 public class QuizCreatieController implements ActionListener {
@@ -21,6 +25,9 @@ public class QuizCreatieController implements ActionListener {
 	private OpdrachtCatalogus opdrachtCatalogusModel;
 	private QuizCatalogus quizCatalogusModel;
 	private List<Opdracht> opdrachten;
+	private String[] klassen = { "1A", "1B", "1C", "2A", "2B", "2C", "3A",
+			"3B", "4A", "5A", "6A" };
+	private String[] sorterenOp = { "geen", "categorie", "vraag" };
 	//private OpdrachtTableModel opdrachtTableModel;
 	
 	public QuizCreatieController(){
@@ -92,7 +99,29 @@ public class QuizCreatieController implements ActionListener {
 		
 	}
 	private void setInitiëleWaardenQuizCreatieView(){
+		//Set the text of all labels in the quizCreatieView
+		quizCreatieView.getOnderwerpL().setText("Onderwerp:");
+		quizCreatieView.getKlasL().setText("Klas:");
 		quizCreatieView.getAuteurL().setText("Auteur:");
+		quizCreatieView.getCategorieL().setText("Toon opdrachten van:");
+		quizCreatieView.getAantalToegevoegdeOpdrL().setText("Aantal toegevoegde opdrachten:");
+		quizCreatieView.getSorteerOpdrL().setText("Sorteer opdrachten op:");
+		quizCreatieView.getAantalToegevoegdeOpdr().setText("0");
+		
+		//Set all the comboboxes
+		quizCreatieView.getKlas().setModel(new DefaultComboBoxModel<>(klassen));
+		quizCreatieView.getSorteerOpdr().setModel(new DefaultComboBoxModel<>(sorterenOp));
+		quizCreatieView.getCategorie().setModel(new DefaultComboBoxModel<>(OpdrachtCategorie
+				.values()));
+		quizCreatieView.getQuizStatus().setModel(new DefaultComboBoxModel<>(QuizStatus.values()));
+		quizCreatieView.getAuteur().setModel(new DefaultComboBoxModel<>(Leraar.values()));
+		
+		//Set all the buttons
+		quizCreatieView.getNieuweQuiz().setText("Registreer nieuwe quiz");
+		quizCreatieView.getNaarBoven().setText("^^^^");
+		quizCreatieView.getNaarRechts().setText(">>>>");
+		quizCreatieView.getNaarLinks().setText("<<<<");
+		
 	}
 
 	/**
