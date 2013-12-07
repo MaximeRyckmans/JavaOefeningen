@@ -2,7 +2,10 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.DefaultListModel;
 
 import model.Opdracht;
 import model.OpdrachtCatalogus;
@@ -18,24 +21,25 @@ public class QuizCreatieController implements ActionListener {
 	private OpdrachtCatalogus opdrachtCatalogusModel;
 	private QuizCatalogus quizCatalogusModel;
 	private List<Opdracht> opdrachten;
-	private OpdrachtTableModel opdrachtTableModel;
+	//private OpdrachtTableModel opdrachtTableModel;
 	
 	public QuizCreatieController(){
 		
 	}
 	
 	public QuizCreatieController(OpdrachtCatalogus opdrachtCatalogusModel,
-			QuizCatalogus quizCatalogusModel) {
+			QuizCatalogus quizCatalogusModel, QuizCreatieView quizCreatieView) {
 
 		this.opdrachtCatalogusModel = opdrachtCatalogusModel;
 		this.quizCatalogusModel = quizCatalogusModel;
 		this.opdrachtCatalogusModel.leesOpdrachtenVanBestand();
 		this.quizCatalogusModel.leesQuizzenVanBestand();
 		opdrachten = opdrachtCatalogusModel.getOpdrachten();
-		opdrachtTableModel = new OpdrachtTableModel();
-		opdrachtTableModel.setOpdrachtLijst(opdrachten);
+	//	opdrachtTableModel = new OpdrachtTableModel();
+	//	opdrachtTableModel.setOpdrachtLijst(opdrachten);
 		
-		quizCreatieView = new QuizCreatieView();
+		this.quizCreatieView = quizCreatieView;
+		setInitiëleWaardenQuizCreatieView();
 	
 		quizCreatieView.buttonActionListener(this);
 	
@@ -80,19 +84,29 @@ public class QuizCreatieController implements ActionListener {
 	private void registreerNieuweQuiz() {
 
 	}
+	public void populeerListModel(DefaultListModel<Opdracht> model){
+		
+		for(Opdracht opdr: this.opdrachten){
+			model.addElement(opdr);
+		}
+		
+	}
+	private void setInitiëleWaardenQuizCreatieView(){
+		quizCreatieView.getAuteurL().setText("Auteur:");
+	}
 
 	/**
 	 * @return the opdrachtTableModel
 	 */
-	public OpdrachtTableModel getOpdrachtTableModel() {
+/*	public OpdrachtTableModel getOpdrachtTableModel() {
 		return opdrachtTableModel;
 	}
 
 	/**
 	 * @param opdrachtTableModel the opdrachtTableModel to set
 	 */
-	public void setOpdrachtTableModel(OpdrachtTableModel opdrachtTableModel) {
+/*	public void setOpdrachtTableModel(OpdrachtTableModel opdrachtTableModel) {
 		this.opdrachtTableModel = opdrachtTableModel;
-	}
+	}*/
 
 }

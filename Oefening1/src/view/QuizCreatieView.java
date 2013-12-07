@@ -9,24 +9,22 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListModel;
 import javax.swing.border.EmptyBorder;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 
 import controller.QuizCreatieController;
 import model.Leraar;
 import model.Opdracht;
 import model.OpdrachtCatalogus;
 import model.OpdrachtCategorie;
-import model.OpdrachtTableModel;
 import model.QuizStatus;
 
 /**
@@ -46,17 +44,17 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	private JComboBox<Leraar> auteur;
 	private JButton nieuweQuiz, naarBoven, naarLinks, naarRechts;
 	private JPanel upperPanel, lowerPanel;
-	private TableColumnModel tcm;
-//	private JTable opdrachten;
-	private JList<Opdracht> toegevoegdeOpdr;
+	
+
+	private JList<Opdracht> opdrachten;
 	private String[] klassen = { "1A", "1B", "1C", "2A", "2B", "2C", "3A",
 			"3B", "4A", "5A", "6A" };
 	private String[] sorterenOp = { "geen", "categorie", "vraag" };
-	private QuizCreatieController controller = new QuizCreatieController();
+//	private QuizCreatieController controller = new QuizCreatieController();
 
-	private OpdrachtCatalogus opdrachtCatalogus = new OpdrachtCatalogus();
-	private List<Opdracht> opdrachtenLijst;
-	String[] klassenjaar = { "", "1" ,"2", "3", "4", "5", "6"};
+//	private OpdrachtCatalogus opdrachtCatalogus = new OpdrachtCatalogus();
+//	private List<Opdracht> opdrachtenLijst;
+	String[] klassenjaar = { "", "1", "2", "3", "4", "5", "6" };
 	/**
 	 * 
 	 */
@@ -89,7 +87,7 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 		klas = new JComboBox<String>();
 		klas.setModel(new DefaultComboBoxModel<>(klassen));
 		klas = new JComboBox(klassenjaar);
-		auteurL = new JLabel("Auteur:");
+		auteurL = new JLabel();
 		auteur = new JComboBox<Leraar>();
 		auteur.setModel(new DefaultComboBoxModel<>(Leraar.values()));
 		quizStatus = new JComboBox(QuizStatus.values());
@@ -122,28 +120,27 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 		sorteerOpdr = new JComboBox<String>();
 		sorteerOpdr.setModel(new DefaultComboBoxModel<>(sorterenOp));
 		naarBoven = new JButton("^^^^");
-		opdrachtenLijst = opdrachtCatalogus.getOpdrachten();
-/*
-		opdrachten = new JTable();
-		opdrachten.setModel(controller.getOpdrachtTableModel());
-
-*/
+	//	opdrachtenLijst = opdrachtCatalogus.getOpdrachten();
+		DefaultListModel<Opdracht> model = new DefaultListModel<Opdracht>();
+//		controller.populeerListModel(model);
+		opdrachten = new JList<Opdracht>(model);
+		
 		naarRechts = new JButton(">>>>");
 		naarLinks = new JButton("<<<<");
 
-		toegevoegdeOpdr = new JList<Opdracht>();
+		opdrachten = new JList<Opdracht>();
 		lowerPanel.add(categorieL);
 		lowerPanel.add(categorie);
 		lowerPanel.add(aantalToegevoegdeOpdrL);
 		lowerPanel.add(aantalToegevoegdeOpdr);
 		lowerPanel.add(sorteerOpdrL);
 		lowerPanel.add(sorteerOpdr);
-	//	lowerPanel.add(opdrachten);
+		lowerPanel.add(opdrachten);
 		lowerPanel.add(naarBoven);
 
 		lowerPanel.add(naarRechts);
 		lowerPanel.add(naarLinks);
-		lowerPanel.add(toegevoegdeOpdr);
+		// lowerPanel.add(toegevoegdeOpdr);
 
 		return lowerPanel;
 
@@ -423,32 +420,29 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	 * @return the opdrachten
 	 */
 	/*
-	public JTable getOpdrachten() {
-		return opdrachten;
-	}
-
-	/**
-	 * @param opdrachten
-	 *            the opdrachten to set
+	 * public JTable getOpdrachten() { return opdrachten; }
+	 * 
+	 * /**
+	 * 
+	 * @param opdrachten the opdrachten to set
 	 */
 	/*
-	public void setOpdrachten(JTable opdrachten) {
-		this.opdrachten = opdrachten;
-	}
-*/
+	 * public void setOpdrachten(JTable opdrachten) { this.opdrachten =
+	 * opdrachten; }
+	 */
 	/**
 	 * @return the toegevoegdeOpdr
 	 */
 	public JList<Opdracht> getToegevoegdeOpdr() {
-		return toegevoegdeOpdr;
+		return opdrachten;
 	}
 
 	/**
 	 * @param toegevoegdeOpdr
 	 *            the toegevoegdeOpdr to set
 	 */
-	public void setToegevoegdeOpdr(JList<Opdracht> toegevoegdeOpdr) {
-		this.toegevoegdeOpdr = toegevoegdeOpdr;
+	public void setToegevoegdeOpdr(JList<Opdracht> opdrachten) {
+		this.opdrachten = opdrachten;
 	}
 
 	/**

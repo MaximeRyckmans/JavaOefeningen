@@ -176,9 +176,6 @@ public abstract class Opdracht implements Cloneable, Comparable<Opdracht>, Seria
 	
 	@Override
 	public String toString() {
-		return "Opdracht /n----------/nVraag=" + vraag + "/nAntwoord=" + antwoord
-				+ "/nMaximum aantal pogingen=" + maxAantalPogingen
-				+ "/nHint=" + antwoordHint + "/nMaximum antwoord tijd="
-				+ maxAntwoordTijd;
+		return "("+this.getOpdrachtCategorie()+") "+ this.getVraag();
 	}
 }
