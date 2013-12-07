@@ -156,7 +156,7 @@ public class Meerkeuze extends Opdracht implements Valideerbaar {
 	 */
 	@Override
 	public String toString() {
-		return super.toString() + "/nType= Meerkeuze /nkeuzes=" + keuzesMap;
+		return super.toString();
 	}
 
 	

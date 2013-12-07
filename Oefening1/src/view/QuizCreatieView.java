@@ -5,25 +5,22 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.ListModel;
 import javax.swing.border.EmptyBorder;
 
-import controller.QuizCreatieController;
 import model.Leraar;
 import model.Opdracht;
-import model.OpdrachtCatalogus;
 import model.OpdrachtCategorie;
 import model.QuizStatus;
 
@@ -49,6 +46,10 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	private JPanel upperPanel, lowerPanel;
 	
 	private JList<Opdracht> opdrachten;
+	
+	private JTable geselecteerdeOpdrachten;
+	
+	JScrollPane pane;
 	/**
 	 * 
 	 */
@@ -85,7 +86,7 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 		quizStatus = new JComboBox<QuizStatus>();
 		auteur = new JComboBox<Leraar>();
 		nieuweQuiz = new JButton();
-
+		
 		upperPanel.add(onderwerpL);
 		upperPanel.add(onderwerpText);
 		upperPanel.add(klasL);
@@ -118,7 +119,9 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 		naarRechts = new JButton();
 		naarLinks = new JButton();
 
-		opdrachten = new JList<Opdracht>();
+		geselecteerdeOpdrachten = new JTable();
+		pane = new JScrollPane(geselecteerdeOpdrachten);
+		
 		lowerPanel.add(categorieL);
 		lowerPanel.add(categorie);
 		lowerPanel.add(aantalToegevoegdeOpdrL);
@@ -126,10 +129,11 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 		lowerPanel.add(sorteerOpdrL);
 		lowerPanel.add(sorteerOpdr);
 		lowerPanel.add(opdrachten);
-		lowerPanel.add(naarBoven);
-		lowerPanel.add(opdrachten);
+		lowerPanel.add(opdrachten);	
 		lowerPanel.add(naarRechts);
 		lowerPanel.add(naarLinks);
+		lowerPanel.add(naarBoven);
+		lowerPanel.add(pane);
 
 		return lowerPanel;
 
@@ -405,20 +409,7 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 		this.upperPanel = upperPanel;
 	}
 
-	/**
-	 * @return the opdrachten
-	 */
-	/*
-	 * public JTable getOpdrachten() { return opdrachten; }
-	 * 
-	 * /**
-	 * 
-	 * @param opdrachten the opdrachten to set
-	 */
-	/*
-	 * public void setOpdrachten(JTable opdrachten) { this.opdrachten =
-	 * opdrachten; }
-	 */
+
 	/**
 	 * @return the toegevoegdeOpdr
 	 */
@@ -447,6 +438,30 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	 */
 	public void setQuizStatus(JComboBox<QuizStatus> quizStatus) {
 		this.quizStatus = quizStatus;
+	}
+
+	public JList<Opdracht> getOpdrachten() {
+		return opdrachten;
+	}
+
+	public void setOpdrachten(JList<Opdracht> opdrachten) {
+		this.opdrachten = opdrachten;
+	}
+
+	public JTable getGeselecteerdeOpdrachten() {
+		return geselecteerdeOpdrachten;
+	}
+
+	public void setGeselecteerdeOpdrachten(JTable geselecteerdeOpdrachten) {
+		this.geselecteerdeOpdrachten = geselecteerdeOpdrachten;
+	}
+
+	public JScrollPane getPane() {
+		return pane;
+	}
+
+	public void setPane(JScrollPane pane) {
+		this.pane = pane;
 	}
 
 	@Override

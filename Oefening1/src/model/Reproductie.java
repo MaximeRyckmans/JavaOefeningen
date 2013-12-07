@@ -87,8 +87,7 @@ public class Reproductie extends Opdracht {
 
 	@Override
 	public String toString() {
-		return "/nType= Reproductie /ntrefwoorden=" + trefwoorden
-				+ "/nminAantalJuisteTrefwoorden=" + minAantalJuisteTrefwoorden;
+		return super.toString();
 	}
 
 }

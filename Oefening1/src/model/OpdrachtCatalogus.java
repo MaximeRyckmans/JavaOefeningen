@@ -137,24 +137,24 @@ public class OpdrachtCatalogus implements Cloneable,
 				int maxAantalPogingen = Integer.parseInt(velden[3]);
 				String antwoordHint = velden[4];
 				int maxAntwoordTijd = Integer.parseInt(velden[5]);
-				String klasNaam = velden[6];
+				String soortOpdracht = velden[6];
 				String opdrachtCategorieString = velden[7];
 				OpdrachtCategorie opdrachtCategorie = OpdrachtCategorie.valueOf(opdrachtCategorieString);
 				Opdracht opdracht = null;
-				if (klasNaam.equals("Meerkeuze")) {
+				if (soortOpdracht.equals("Meerkeuze")) {
 					String alleKeuzes = velden[8];
 					opdracht = new Meerkeuze(vraag, antwoord,
 							maxAantalPogingen, alleKeuzes, antwoordHint,
 							maxAntwoordTijd, opdrachtCategorie);
 					opdracht.setId(id);
-				} else if (klasNaam.equals("Reproductie")) {
+				} else if (soortOpdracht.equals("Reproductie")) {
 					String trefwoorden = velden[8];
 					int minAantalJuisteTrefwoorden = Integer
 							.parseInt(velden[9]);
 					opdracht = new Reproductie(vraag, antwoordHint,
 							maxAantalPogingen, antwoordHint, maxAntwoordTijd,
 							trefwoorden, minAantalJuisteTrefwoorden, opdrachtCategorie);
-				} else if (klasNaam.equals("Opsomming")) {
+				} else if (soortOpdracht.equals("Opsomming")) {
 					opdracht = new Opsomming(vraag, antwoord,
 							maxAantalPogingen, antwoordHint, maxAntwoordTijd, opdrachtCategorie);
 				}

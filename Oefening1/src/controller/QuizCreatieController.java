@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.table.DefaultTableModel;
 
 import model.Leraar;
 import model.Opdracht;
@@ -28,7 +29,8 @@ public class QuizCreatieController implements ActionListener {
 	private String[] klassen = { "1A", "1B", "1C", "2A", "2B", "2C", "3A",
 			"3B", "4A", "5A", "6A" };
 	private String[] sorterenOp = { "geen", "categorie", "vraag" };
-	//private OpdrachtTableModel opdrachtTableModel;
+	private String [] col = {"Opdracht", "MaximumScore"};
+
 	
 	public QuizCreatieController(){
 		
@@ -42,8 +44,7 @@ public class QuizCreatieController implements ActionListener {
 		this.opdrachtCatalogusModel.leesOpdrachtenVanBestand();
 		this.quizCatalogusModel.leesQuizzenVanBestand();
 		opdrachten = opdrachtCatalogusModel.getOpdrachten();
-	//	opdrachtTableModel = new OpdrachtTableModel();
-	//	opdrachtTableModel.setOpdrachtLijst(opdrachten);
+	
 		
 		this.quizCreatieView = quizCreatieView;
 		setInitiëleWaardenQuizCreatieView();
@@ -122,20 +123,17 @@ public class QuizCreatieController implements ActionListener {
 		quizCreatieView.getNaarRechts().setText(">>>>");
 		quizCreatieView.getNaarLinks().setText("<<<<");
 		
+		//Set the data in the JList that contains all the opdrachten
+		DefaultListModel<Opdracht> listModel = new DefaultListModel<Opdracht>();
+		this.populeerListModel(listModel);
+		quizCreatieView.getOpdrachten().setModel(listModel);
+		
+		//Set the headers for the JTable that holds the selected Opdrachten.
+
+		DefaultTableModel tableModel = new DefaultTableModel(null, col);
+		quizCreatieView.getGeselecteerdeOpdrachten().setModel(tableModel);
+		
 	}
 
-	/**
-	 * @return the opdrachtTableModel
-	 */
-/*	public OpdrachtTableModel getOpdrachtTableModel() {
-		return opdrachtTableModel;
-	}
-
-	/**
-	 * @param opdrachtTableModel the opdrachtTableModel to set
-	 */
-/*	public void setOpdrachtTableModel(OpdrachtTableModel opdrachtTableModel) {
-		this.opdrachtTableModel = opdrachtTableModel;
-	}*/
 
 }

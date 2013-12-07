@@ -5,6 +5,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import javax.swing.table.AbstractTableModel;
 
@@ -18,12 +19,13 @@ public class OpdrachtTableModel extends AbstractTableModel {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private List <Opdracht> opdrachtLijst;
-	private String [] columnNames = {"Vraag", "Maximum score"};
+	protected Vector dataVector;
+	private String [] columnNames;
 	
 	
-	public OpdrachtTableModel(){
-		this.opdrachtLijst= new ArrayList<Opdracht>();
+	public OpdrachtTableModel(String[] columnNames){
+		this.dataVector= new Vector();
+		this.columnNames = columnNames;
 	}
 
 	/* (non-Javadoc)
@@ -32,7 +34,7 @@ public class OpdrachtTableModel extends AbstractTableModel {
 	@Override
 	public int getRowCount() {
 		// TODO Auto-generated method stub
-		return opdrachtLijst.size();
+		return dataVector.size();
 	}
 
 	/* (non-Javadoc)
@@ -49,21 +51,33 @@ public class OpdrachtTableModel extends AbstractTableModel {
 	 */
 	@Override
 	public Opdracht getValueAt(int rowIndex, int columnIndex) {
+	/*	Opdracht opdracht = (Opdracht) dataVector.get(rowIndex);
+		
+		switch(columnIndex){
+		
+		case 0:
+			return opdracht.getVraag();
+		case 1:
+			
+		}*/
 		return null;
 	}
 
-	/**
-	 * @return the opdrachtLijst
-	 */
-	public List<Opdracht> getOpdrachtLijst() {
-		return opdrachtLijst;
+
+	public Vector getDataVector() {
+		return dataVector;
 	}
 
-	/**
-	 * @param opdrachtLijst the opdrachtLijst to set
-	 */
-	public void setOpdrachtLijst(List<Opdracht> opdrachtLijst) {
-		this.opdrachtLijst = opdrachtLijst;
+	public void setDataVector(Vector dataVector) {
+		this.dataVector = dataVector;
+	}
+
+	public String [] getColumnNames() {
+		return columnNames;
+	}
+
+	public void setColumnNames(String [] columnNames) {
+		this.columnNames = columnNames;
 	}
 
 }
