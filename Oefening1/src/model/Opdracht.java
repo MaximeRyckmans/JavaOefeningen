@@ -9,9 +9,7 @@ import java.io.Serializable;
 
 public abstract class Opdracht implements Cloneable, Comparable<Opdracht>, Serializable {
 	
-	/**
-	 * Categorie van opdracht moet nog toegevoegd worden??
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private int id;
 	private String vraag;
@@ -19,12 +17,14 @@ public abstract class Opdracht implements Cloneable, Comparable<Opdracht>, Seria
 	private int maxAantalPogingen;
 	private String antwoordHint;
 	private int maxAntwoordTijd;
+	private OpdrachtCategorie opdrachtCategorie;
 	
 	public Opdracht(){}
 	
-	public Opdracht(String vraag, String antwoord, int maxAantalPogingen){
+	public Opdracht(String vraag, String antwoord, int maxAantalPogingen, OpdrachtCategorie opdrachtCategorie){
 		this.vraag = vraag;
 		this.antwoord = antwoord;
+		this.opdrachtCategorie = opdrachtCategorie;
 		if (maxAantalPogingen > 1) {
 			this.maxAantalPogingen = maxAantalPogingen;
 		}else {
@@ -32,23 +32,23 @@ public abstract class Opdracht implements Cloneable, Comparable<Opdracht>, Seria
 		}
 	}
 	
-	public Opdracht(String vraag, String antwoord, int maxAantalPogingen, String antwoordHint) {
-		this(vraag, antwoord, maxAantalPogingen);
+	public Opdracht(String vraag, String antwoord, int maxAantalPogingen, String antwoordHint, OpdrachtCategorie opdrachtCategorie) {
+		this(vraag, antwoord, maxAantalPogingen, opdrachtCategorie);
 		this.antwoordHint = antwoordHint;
 	}
 	
-	public Opdracht(String vraag, String antwoord, int maxAantalPogingen, int maxAntwoordTijd) {
-		this(vraag, antwoord, maxAantalPogingen);
+	public Opdracht(String vraag, String antwoord, int maxAantalPogingen, int maxAntwoordTijd, OpdrachtCategorie opdrachtCategorie) {
+		this(vraag, antwoord, maxAantalPogingen, opdrachtCategorie);
 		this.maxAntwoordTijd = maxAntwoordTijd;
 	}
 	
-	public Opdracht(String vraag, String antwoord, int maxAantalPogingen, String antwoordHint, int maxAntwoordTijd) {
-		this(vraag, antwoord, maxAantalPogingen, antwoordHint);
+	public Opdracht(String vraag, String antwoord, int maxAantalPogingen, String antwoordHint, int maxAntwoordTijd, OpdrachtCategorie opdrachtCategorie) {
+		this(vraag, antwoord, maxAantalPogingen, antwoordHint, opdrachtCategorie);
 		this.maxAntwoordTijd = maxAntwoordTijd;
 	}
 	
-	public Opdracht(int id, String vraag, String antwoord, int maxAantalPogingen, String antwoordHint, int maxAntwoordTijd) {
-		this(vraag, antwoord, maxAantalPogingen, antwoordHint);
+	public Opdracht(int id, String vraag, String antwoord, int maxAantalPogingen, String antwoordHint, int maxAntwoordTijd, OpdrachtCategorie opdrachtCategorie) {
+		this(vraag, antwoord, maxAantalPogingen, antwoordHint, opdrachtCategorie);
 		this.id = id;
 		this.maxAntwoordTijd = maxAntwoordTijd;
 	}
@@ -144,6 +144,22 @@ public abstract class Opdracht implements Cloneable, Comparable<Opdracht>, Seria
 		this.id = id;
 	}
 	
+	public int getMaxAntwoordTijd() {
+		return maxAntwoordTijd;
+	}
+
+	public void setMaxAntwoordTijd(int maxAntwoordTijd) {
+		this.maxAntwoordTijd = maxAntwoordTijd;
+	}
+
+	public OpdrachtCategorie getOpdrachtCategorie() {
+		return opdrachtCategorie;
+	}
+
+	public void setOpdrachtCategorie(OpdrachtCategorie opdrachtCategorie) {
+		this.opdrachtCategorie = opdrachtCategorie;
+	}
+
 	public abstract boolean isJuisteAntwoord(String antwoord);
 	
 	@Override

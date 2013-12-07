@@ -2,6 +2,7 @@ package test;
 
 import static org.junit.Assert.*;
 import model.Opdracht;
+import model.OpdrachtCategorie;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -12,7 +13,7 @@ public class OpdrachtTest {
 	@Before
 	public void setUp()
 	{
-		opdracht = new Opdracht("Hoe lang is een Chinees?", "10 meter", 5, "Geen 11 meter", 120) {
+		opdracht = new Opdracht("Hoe lang is een Chinees?", "10 meter", 5, "Geen 11 meter", 120, OpdrachtCategorie.algemeneKennis) {
 			
 			@Override
 			public boolean isJuisteAntwoord(String antwoord) {

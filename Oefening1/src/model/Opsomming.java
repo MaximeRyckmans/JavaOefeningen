@@ -14,20 +14,20 @@ public class Opsomming extends Opdracht implements Valideerbaar{
 	 */
 	public Opsomming() {}
 	
-	public Opsomming(String vraag, String antwoord, int maxAantalPogingen){
-		super(vraag, antwoord, maxAantalPogingen);
+	public Opsomming(String vraag, String antwoord, int maxAantalPogingen, OpdrachtCategorie opdrachtCategorie){
+		super(vraag, antwoord, maxAantalPogingen, opdrachtCategorie);
 	}
 	
-	public Opsomming(String vraag, String antwoord, int maxAantalPogingen, String antwoordHint) {
-		super(vraag, antwoord, maxAantalPogingen, antwoordHint);
+	public Opsomming(String vraag, String antwoord, int maxAantalPogingen, String antwoordHint, OpdrachtCategorie opdrachtCategorie) {
+		super(vraag, antwoord, maxAantalPogingen, antwoordHint, opdrachtCategorie);
 	}
 	
-	public Opsomming(String vraag, String antwoord, int maxAantalPogingen, int maxAntwoordTijd){
-		super(vraag, antwoord, maxAantalPogingen, maxAntwoordTijd);
+	public Opsomming(String vraag, String antwoord, int maxAantalPogingen, int maxAntwoordTijd, OpdrachtCategorie opdrachtCategorie){
+		super(vraag, antwoord, maxAantalPogingen, maxAntwoordTijd, opdrachtCategorie);
 	}
 	
-	public Opsomming(String vraag, String antwoord, int maxAantalPogingen, String antwoordHint, int maxAntwoordTijd) {
-		super(vraag, antwoord, maxAantalPogingen, antwoordHint, maxAntwoordTijd);
+	public Opsomming(String vraag, String antwoord, int maxAantalPogingen, String antwoordHint, int maxAntwoordTijd, OpdrachtCategorie opdrachtCategorie) {
+		super(vraag, antwoord, maxAantalPogingen, antwoordHint, maxAntwoordTijd, opdrachtCategorie);
 	}
 
 	/*

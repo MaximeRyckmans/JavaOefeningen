@@ -13,32 +13,32 @@ public class Reproductie extends Opdracht {
 	public Reproductie() {}
 	
 	public Reproductie(String vraag, String antwoord, int maxAantalPogingen, 
-			String trefwoorden, int minAantalJuisteTrefwoorden) {
-		super(vraag, antwoord, maxAantalPogingen);
+			String trefwoorden, int minAantalJuisteTrefwoorden, OpdrachtCategorie opdrachtCategorie) {
+		super(vraag, antwoord, maxAantalPogingen, opdrachtCategorie);
 		
 		this.setTrefwoorden(trefwoorden);
 		this.setMinAantalJuisteTrefwoorden(minAantalJuisteTrefwoorden);
 	}
 	
 	public Reproductie(String vraag, String antwoord, int maxAantalPogingen, String antwoordHint, 
-			String trefwoorden, int minAantalJuisteTrefwoorden) {
-		super(vraag, antwoord, maxAantalPogingen, antwoordHint);
+			String trefwoorden, int minAantalJuisteTrefwoorden, OpdrachtCategorie opdrachtCategorie) {
+		super(vraag, antwoord, maxAantalPogingen, antwoordHint, opdrachtCategorie);
 		
 		this.setTrefwoorden(trefwoorden);
 		this.setMinAantalJuisteTrefwoorden(minAantalJuisteTrefwoorden);
 	}
 	
 	public Reproductie(String vraag, String antwoord, int maxAantalPogingen, int maxAntwoordTijd, 
-			String trefwoorden, int minAantalJuisteTrefwoorden) {
-		super(vraag, antwoord, maxAantalPogingen, maxAntwoordTijd);
+			String trefwoorden, int minAantalJuisteTrefwoorden, OpdrachtCategorie opdrachtCategorie) {
+		super(vraag, antwoord, maxAantalPogingen, maxAntwoordTijd, opdrachtCategorie);
 		
 		this.setTrefwoorden(trefwoorden);
 		this.setMinAantalJuisteTrefwoorden(minAantalJuisteTrefwoorden);
 	}
 	
 	public Reproductie(String vraag, String antwoord, int maxAantalPogingen, String antwoordHint, int maxAntwoordTijd,
-			String trefwoorden, int minAantalJuisteTrefwoorden) {
-		super(vraag, antwoord, maxAantalPogingen, antwoordHint, maxAntwoordTijd);
+			String trefwoorden, int minAantalJuisteTrefwoorden, OpdrachtCategorie opdrachtCategorie) {
+		super(vraag, antwoord, maxAantalPogingen, antwoordHint, maxAntwoordTijd, opdrachtCategorie);
 	}
 
 	public String getTrefwoorden() {

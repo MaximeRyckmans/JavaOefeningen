@@ -138,23 +138,25 @@ public class OpdrachtCatalogus implements Cloneable,
 				String antwoordHint = velden[4];
 				int maxAntwoordTijd = Integer.parseInt(velden[5]);
 				String klasNaam = velden[6];
+				String opdrachtCategorieString = velden[7];
+				OpdrachtCategorie opdrachtCategorie = OpdrachtCategorie.valueOf(opdrachtCategorieString);
 				Opdracht opdracht = null;
 				if (klasNaam.equals("Meerkeuze")) {
-					String alleKeuzes = velden[7];
+					String alleKeuzes = velden[8];
 					opdracht = new Meerkeuze(vraag, antwoord,
 							maxAantalPogingen, alleKeuzes, antwoordHint,
-							maxAntwoordTijd);
+							maxAntwoordTijd, opdrachtCategorie);
 					opdracht.setId(id);
 				} else if (klasNaam.equals("Reproductie")) {
-					String trefwoorden = velden[7];
+					String trefwoorden = velden[8];
 					int minAantalJuisteTrefwoorden = Integer
-							.parseInt(velden[8]);
+							.parseInt(velden[9]);
 					opdracht = new Reproductie(vraag, antwoordHint,
 							maxAantalPogingen, antwoordHint, maxAntwoordTijd,
-							trefwoorden, minAantalJuisteTrefwoorden);
+							trefwoorden, minAantalJuisteTrefwoorden, opdrachtCategorie);
 				} else if (klasNaam.equals("Opsomming")) {
 					opdracht = new Opsomming(vraag, antwoord,
-							maxAantalPogingen, antwoordHint, maxAntwoordTijd);
+							maxAantalPogingen, antwoordHint, maxAntwoordTijd, opdrachtCategorie);
 				}
 				this.opdrachten.add(opdracht);
 				
@@ -189,25 +191,26 @@ public class OpdrachtCatalogus implements Cloneable,
 					String antwoordHint = velden[4];
 					int maxAntwoordTijd = Integer.parseInt(velden[5]);
 					String klasNaam = velden[6];
-					
+					String opdrachtCategorieString = velden[7];
+					OpdrachtCategorie opdrachtCategorie = OpdrachtCategorie.valueOf(opdrachtCategorieString);
 					if (klasNaam.equals("Meerkeuze")) {
-						String alleKeuzes = velden[7];
+						String alleKeuzes = velden[8];
 						opdracht = new Meerkeuze(vraag, antwoord,
 								maxAantalPogingen, alleKeuzes, antwoordHint,
-								maxAntwoordTijd);
+								maxAntwoordTijd, opdrachtCategorie);
 						opdracht.setId(id);
 					} else if (klasNaam.equals("Reproductie")) {
-						String trefwoorden = velden[7];
+						String trefwoorden = velden[8];
 						int minAantalJuisteTrefwoorden = Integer
-								.parseInt(velden[8]);
+								.parseInt(velden[9]);
 						opdracht = new Reproductie(vraag, antwoordHint,
 								maxAantalPogingen, antwoordHint,
 								maxAntwoordTijd, trefwoorden,
-								minAantalJuisteTrefwoorden);
+								minAantalJuisteTrefwoorden, opdrachtCategorie);
 					} else if (klasNaam.equals("Opsomming")) {
 						opdracht = new Opsomming(vraag, antwoord,
 								maxAantalPogingen, antwoordHint,
-								maxAntwoordTijd);
+								maxAntwoordTijd, opdrachtCategorie);
 					}
 					
 				}

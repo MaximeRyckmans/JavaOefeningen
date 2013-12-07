@@ -18,36 +18,36 @@ public class Meerkeuze extends Opdracht implements Valideerbaar {
 	 */
 	public Meerkeuze(){}
 	
-	public Meerkeuze(String vraag, String antwoord, int maxAantalPogingen, String alleKeuzes){
-		super(vraag, antwoord, maxAantalPogingen);
+	public Meerkeuze(String vraag, String antwoord, int maxAantalPogingen, String alleKeuzes, OpdrachtCategorie opdrachtCategorie){
+		super(vraag, antwoord, maxAantalPogingen, opdrachtCategorie);
 		
 		samenstellenKeuzes(alleKeuzes);
 		isAntwoordInKeuzes(antwoord);
 	}
 	
-	public Meerkeuze(String vraag, String antwoord, int maxAantalPogingen, String alleKeuzes, String antwoordHint) {
-		super(vraag, antwoord, maxAantalPogingen, antwoordHint);
+	public Meerkeuze(String vraag, String antwoord, int maxAantalPogingen, String alleKeuzes, String antwoordHint, OpdrachtCategorie opdrachtCategorie) {
+		super(vraag, antwoord, maxAantalPogingen, antwoordHint, opdrachtCategorie);
 		
 		samenstellenKeuzes(alleKeuzes);
 		isAntwoordInKeuzes(antwoord);
 	}
 	
-	public Meerkeuze(String vraag, String antwoord, int maxAantalPogingen, String alleKeuzes, int maxAntwoordTijd) {
-		super(vraag, antwoord, maxAantalPogingen, maxAntwoordTijd);
+	public Meerkeuze(String vraag, String antwoord, int maxAantalPogingen, String alleKeuzes, int maxAntwoordTijd, OpdrachtCategorie opdrachtCategorie) {
+		super(vraag, antwoord, maxAantalPogingen, maxAntwoordTijd, opdrachtCategorie);
 		
 		samenstellenKeuzes(alleKeuzes);
 		isAntwoordInKeuzes(antwoord);
 	}
 	
-	public Meerkeuze(String vraag, String antwoord, int maxAantalPogingen, String alleKeuzes, String antwoordHint, int maxAntwoordTijd) {
-		super(vraag, antwoord, maxAantalPogingen, antwoordHint, maxAntwoordTijd);
+	public Meerkeuze(String vraag, String antwoord, int maxAantalPogingen, String alleKeuzes, String antwoordHint, int maxAntwoordTijd, OpdrachtCategorie opdrachtCategorie) {
+		super(vraag, antwoord, maxAantalPogingen, antwoordHint, maxAntwoordTijd, opdrachtCategorie);
 		
 		samenstellenKeuzes(alleKeuzes);
 		isAntwoordInKeuzes(antwoord);
 	}
 	
-	public Meerkeuze(int id, String vraag, String antwoord, int maxAantalPogingen, String alleKeuzes, String antwoordHint, int maxAntwoordTijd) {
-		super(id, vraag, antwoord, maxAantalPogingen, antwoordHint, maxAntwoordTijd);
+	public Meerkeuze(int id, String vraag, String antwoord, int maxAantalPogingen, String alleKeuzes, String antwoordHint, int maxAntwoordTijd, OpdrachtCategorie opdrachtCategorie) {
+		super(id, vraag, antwoord, maxAantalPogingen, antwoordHint, maxAntwoordTijd, opdrachtCategorie);
 		
 		samenstellenKeuzes(alleKeuzes);
 		isAntwoordInKeuzes(antwoord);
