@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -26,8 +27,8 @@ public class QuizListView extends JFrame {
 	private JTree tree;
 	private QuizCatalogus quizCatalogus;
 	
-	public QuizListView(){
-		
+	public QuizListView(QuizCatalogus qcat){
+		this.quizCatalogus = qcat;
 		Container content = getContentPane();
 		setLayout(new FlowLayout());
 		
@@ -47,8 +48,22 @@ public class QuizListView extends JFrame {
 		try {
 			DefaultMutableTreeNode quiz = null;
 			DefaultMutableTreeNode opdracht = null;
-	    
-			for (Iterator<Quiz> i = quizCatalogus.getQuizzen().iterator(); i.hasNext();) {
+			List<Quiz> quizzen = quizCatalogus.getQuizzen();
+			for(Quiz q : quizzen){
+			//	Quiz tempQuiz = q;
+				int nameQuiz = q.getId();
+		
+				quiz = new DefaultMutableTreeNode(nameQuiz);
+				top.add(quiz);
+		
+				for (Opdracht opdr : q) {
+			//		Opdracht tempOpdracht = opdr;
+					String nameOpdracht = opdr.getVraag();
+			
+					opdracht = new DefaultMutableTreeNode(nameOpdracht);
+					quiz.add(opdracht);
+			}
+		/*	for (Iterator<Quiz> i = quizCatalogus.getQuizzen().iterator(); i.hasNext();) {
 				if (i.next() != null) {
 				
 					Quiz tempQuiz = i.next();
@@ -67,10 +82,10 @@ public class QuizListView extends JFrame {
 				}
 				else {
 					top.add(new DefaultMutableTreeNode("Nog geen quizen in het systeem"));
-				}
+				}*/
 			}
 		} catch (Exception e) {
-			System.out.println(e);
+			System.out.println(e.getMessage());
 		}
 	}
 	

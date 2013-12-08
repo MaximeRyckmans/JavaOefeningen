@@ -147,7 +147,7 @@ public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iter
 				  opdrachten.add(opdrc.LeesBepaaldeOpdrachtenVanBestand(ids));
 			  }
 			//  List<Opdracht> opdrachten = opdrc.LeesBepaaldeOpdrachtenVanBestand(ids);
-			  Quiz quiz = new Quiz(aantalDeelnames, leerjaar, leraar, onderwerp, quizStatus, opdrachten);
+			  Quiz quiz = new Quiz(id,aantalDeelnames, leerjaar, leraar, onderwerp, quizStatus, opdrachten);
 			  quizzen.add(quiz);
 			}
 			if (scanner!=null){

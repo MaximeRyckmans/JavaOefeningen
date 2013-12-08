@@ -1,6 +1,9 @@
 package utils;
 
+import java.util.List;
+
 import model.OpdrachtCatalogus;
+import model.Quiz;
 import model.QuizCatalogus;
 import controller.QuizCreatieController;
 import view.OpdrachtCreatieView;
@@ -16,6 +19,8 @@ public class Start {
 		QuizCatalogus qcat = new QuizCatalogus();
 		
 		QuizCreatieController c = new QuizCreatieController(cat, qcat, view);
+		QuizListView qlv = new QuizListView(qcat);
+	
 	}
 
 }
