@@ -14,9 +14,10 @@ import org.junit.Test;
 public class QuizTest {
         private Quiz quiz;
         
+        //RANDOM ARGUMENT TOEGEVOEGT OP PLAATS 3 DE 0 OM ERROR OP TE LOSSEN -Davy
         @Before
         public void setUp(){
-                quiz = new Quiz(4, 3, Leraar.JoskeVermeulen, "Talen", QuizStatus.OPENGESTELD, null);
+                quiz = new Quiz(4, 3, 0, Leraar.JoskeVermeulen, "Talen", QuizStatus.OPENGESTELD, null);
         }
 
         /*@Test
