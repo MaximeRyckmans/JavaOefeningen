@@ -56,7 +56,85 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	public QuizCreatieView() {
-		JFrame frame = new JFrame("Aanmaken nieuwe Quiz");
+		super("Aanmaken nieuwe Quiz");
+		this.setSize(900,900);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setLayout(new FlowLayout());
+		
+		createUpperPanel();
+		createLowerPanel();
+		
+		this.add(upperPanel, BorderLayout.NORTH);
+		this.add(lowerPanel);
+		this.setVisible(true);
+	}
+	
+	private void createUpperPanel() {
+
+		upperPanel = new JPanel();
+		upperPanel.setBorder(new EmptyBorder(10, 10, 50, 10));
+		upperPanel.setSize(400, 400);
+		
+		onderwerpL = new JLabel();
+		onderwerpText = new JTextField(20);
+		klasL = new JLabel();
+		klas = new JComboBox<String>();
+		auteurL = new JLabel();
+		auteur = new JComboBox<Leraar>();
+		auteur.setModel(new DefaultComboBoxModel<>(Leraar.values()));
+		quizStatus = new JComboBox<QuizStatus>();
+		auteur = new JComboBox<Leraar>();
+		nieuweQuiz = new JButton();
+		
+		upperPanel.add(onderwerpL);
+		upperPanel.add(onderwerpText);
+		upperPanel.add(klasL);
+		upperPanel.add(klas);
+		upperPanel.add(auteurL);
+		upperPanel.add(auteur);
+		upperPanel.add(quizStatus);
+		upperPanel.add(nieuweQuiz);
+		upperPanel.setVisible(true);
+		
+	}
+
+	private void createLowerPanel() {
+		lowerPanel = new JPanel();
+		lowerPanel.setBorder(BorderFactory.createLineBorder(Color.black));
+		lowerPanel.setSize(450, 450);
+		
+		categorieL = new JLabel();
+		categorie = new JComboBox<OpdrachtCategorie>();
+		aantalToegevoegdeOpdrL = new JLabel();
+		aantalToegevoegdeOpdr = new JLabel();
+		sorteerOpdrL = new JLabel();
+		sorteerOpdr = new JComboBox<String>();
+		
+		naarBoven = new JButton();
+	
+		opdrachten = new JList<Opdracht>();
+		
+		naarRechts = new JButton();
+		naarLinks = new JButton();
+
+		geselecteerdeOpdrachten = new JTable();
+		pane = new JScrollPane(geselecteerdeOpdrachten);
+		
+		lowerPanel.add(categorieL);
+		lowerPanel.add(categorie);
+		lowerPanel.add(aantalToegevoegdeOpdrL);
+		lowerPanel.add(aantalToegevoegdeOpdr);
+		lowerPanel.add(sorteerOpdrL);
+		lowerPanel.add(sorteerOpdr);
+		lowerPanel.add(opdrachten);
+		lowerPanel.add(opdrachten);	
+		lowerPanel.add(naarRechts);
+		lowerPanel.add(naarLinks);
+		lowerPanel.add(naarBoven);
+		lowerPanel.add(pane);
+
+	}
+		/*JFrame frame = new JFrame("Aanmaken nieuwe Quiz");
 		frame.setSize(900, 900);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -137,7 +215,7 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 
 		return lowerPanel;
 
-	}
+	}*/
 
 	public void buttonActionListener(ActionListener al) {
 
