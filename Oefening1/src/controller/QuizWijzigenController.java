@@ -26,7 +26,14 @@ public class QuizWijzigenController implements ActionListener {
 	
 	public QuizWijzigenController(){}
 	
-	//public QuizWijzigenController(QuizWijzigenView )
+	public QuizWijzigenController(QuizWijzigenView quizWijzigenView, QuizCatalogus quizCatalogus,
+			OpdrachtCatalogus opdrachtCatalogus){
+		this.quizWijzigenView = quizWijzigenView;
+		this.quizCatalogus = quizCatalogus;
+		this.opdrachtCatalogus = opdrachtCatalogus;
+	}
+	
+	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {

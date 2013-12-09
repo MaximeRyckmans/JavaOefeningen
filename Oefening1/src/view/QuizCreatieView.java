@@ -2,7 +2,6 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemListener;
@@ -57,23 +56,22 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	public QuizCreatieView() {
-		JFrame frame = new JFrame("Aanmaken nieuwe Quiz");
-		frame.setSize(900, 900);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-		setLayout(new FlowLayout());
-		upperPanel = createUpperPanel();
-		lowerPanel = createLowerPanel();
-		frame.add(upperPanel, BorderLayout.NORTH);
-		frame.add(lowerPanel);
-		frame.setVisible(true);
+		super("Aanmaken nieuwe Quiz");
+		this.setSize(900,900);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		createUpperPanel();
+		createLowerPanel();
+		
+		this.add(upperPanel, BorderLayout.NORTH);
+		this.add(lowerPanel);
+		this.setVisible(true);
 	}
-
-	// Create the content pane which displays the buttons and widgets on-screen.
 	
-	private JPanel createUpperPanel() {
+	// Create the content pane which displays the buttons and widgets on-screen.
+	private void createUpperPanel() {
 
-		JPanel upperPanel = new JPanel();
+		upperPanel = new JPanel();
 		upperPanel.setBorder(new EmptyBorder(10, 10, 50, 10));
 		upperPanel.setSize(400, 400);
 		
@@ -98,11 +96,10 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 		upperPanel.add(nieuweQuiz);
 		upperPanel.setVisible(true);
 		
-		return upperPanel;
 	}
 
-	private JPanel createLowerPanel() {
-		JPanel lowerPanel = new JPanel();
+	private void createLowerPanel() {
+		lowerPanel = new JPanel();
 		lowerPanel.setBorder(BorderFactory.createLineBorder(Color.black));
 		lowerPanel.setSize(450, 450);
 		
@@ -136,10 +133,8 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 		lowerPanel.add(naarBoven);
 		lowerPanel.add(pane);
 
-		return lowerPanel;
-
 	}
-
+		
 	public void buttonActionListener(ActionListener al) {
 
 		nieuweQuiz.setActionCommand(nieuweQuiz.getName());
