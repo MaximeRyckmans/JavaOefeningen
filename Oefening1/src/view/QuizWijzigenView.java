@@ -6,6 +6,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+
 import java.awt.BorderLayout;
 
 import javax.swing.JList;
@@ -18,13 +19,16 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class QuizWijzigenView extends JFrame {
+/**
+ * @author Davy Pulinx
+ * @version 1.0
+ */
 
-	/**
-	 * @author Davy Pulinx
-	 * @version 1.0
-	 */
+public class QuizWijzigenView extends JFrame implements ActionListener  {
+
 	private static final long serialVersionUID = 1L;
 	
 	private JPanel pnlBackground, pnlLeft, pnlRight, pnlListQuizzen, pnlListOpdrInQuiz, pnlListOpdrachten;
@@ -140,5 +144,26 @@ public class QuizWijzigenView extends JFrame {
 		gbc.gridx = 0;
 		gbc.gridy = 6;
 		pnlRight.add(btnWijzigingOpslaan, gbc);
+	}
+	
+	public void buttonActionListener(ActionListener al) {
+
+		btnToevoegenOpdracht.setActionCommand(btnToevoegenOpdracht.getName());
+		btnToevoegenOpdracht.addActionListener(al);
+
+		btnVerwijderOpdracht.setActionCommand(btnVerwijderOpdracht.getName());
+		btnVerwijderOpdracht.addActionListener(al);
+
+		btnWijzigingOpslaan.setActionCommand(btnWijzigingOpslaan.getName());
+		btnWijzigingOpslaan.addActionListener(al);
+
+		btnWijzigQuiz.setActionCommand(btnWijzigQuiz.getName());
+		btnWijzigQuiz.addActionListener(al);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 }
