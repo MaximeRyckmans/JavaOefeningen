@@ -7,5 +7,5 @@ package model;
  */
 public enum OpdrachtCategorie {
 	
-	rekenen, NederlandseNaam, FranseTaal, algemeneKennis
+	Aardrijkskunde, Nederlands, Wetenschappen, Wiskunde
 }
