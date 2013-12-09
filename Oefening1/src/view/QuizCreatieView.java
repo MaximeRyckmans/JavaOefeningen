@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
@@ -152,6 +153,23 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 
 		naarRechts.setActionCommand(naarRechts.getName());
 		naarRechts.addActionListener(al);
+	}
+	public void comboboxActionListener(ItemListener al){
+		
+		klas.setActionCommand(klas.getName());
+		klas.addItemListener(al);
+		
+		sorteerOpdr.setActionCommand(sorteerOpdr.getName());
+		sorteerOpdr.addItemListener(al);
+		
+		categorie.setActionCommand(categorie.getName());
+		categorie.addItemListener(al);
+		
+		quizStatus.setActionCommand(quizStatus.getName());
+		quizStatus.addItemListener(al);
+		
+		auteur.setActionCommand(auteur.getName());
+		auteur.addItemListener(al);
 	}
 
 	/**
