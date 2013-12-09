@@ -21,11 +21,11 @@ public class OpdrachtCreatieController {
 		this.opdrCreatieView = opdrCreatieView; 
 	}
 	
-	public void createOpdracht(){
+	/*public void createOpdracht(){
 		if (opdrCreatieView.getCategorie().toString() == Categorie.Reproductie.toString()){
 			reproductie = new Reproductie(opdrCreatieView.getVraagT().toString(), opdrCreatieView.getAntwoordT().toString(), Integer.parseInt(opdrCreatieView.getMaxAantalPogingenC().toString()),
 					opdrCreatieView.getAntwoordHintT().toString(), Integer.parseInt(opdrCreatieView.getMaxAntwoordTijdC().toString()));
 		}
 		
-	}
+	}*/
 }
