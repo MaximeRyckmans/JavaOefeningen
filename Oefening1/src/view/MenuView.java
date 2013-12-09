@@ -58,7 +58,7 @@ public class MenuView extends JFrame implements ActionListener {
 	}
 	
 	public void close() {
-		frame.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 	}
 
 	public JButton getQuiz() {
