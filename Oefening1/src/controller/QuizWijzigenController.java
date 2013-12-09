@@ -3,6 +3,9 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import model.Opdracht;
+import model.OpdrachtCatalogus;
+import model.Quiz;
 import model.QuizCatalogus;
 import view.QuizWijzigenView;
 
@@ -16,9 +19,14 @@ import view.QuizWijzigenView;
 public class QuizWijzigenController implements ActionListener {
 
 	private QuizWijzigenView quizWijzigenView;
-	private QuizCatalogus qCat;
+	private QuizCatalogus quizCatalogus;
+	private OpdrachtCatalogus opdrachtCatalogus;
+	private Quiz quiz;
+	private Opdracht opdracht;
 	
+	public QuizWijzigenController(){}
 	
+	//public QuizWijzigenController(QuizWijzigenView )
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {

@@ -13,7 +13,7 @@ public class OpdrachtTest {
 	@Before
 	public void setUp()
 	{
-		opdracht = new Opdracht("Hoe lang is een Chinees?", "10 meter", 5, "Geen 11 meter", 120, OpdrachtCategorie.algemeneKennis) {
+		opdracht = new Opdracht("Hoe lang is een Chinees?", "10 meter", 5, "Geen 11 meter", 120, OpdrachtCategorie.Nederlands) {
 			
 			@Override
 			public boolean isJuisteAntwoord(String antwoord) {

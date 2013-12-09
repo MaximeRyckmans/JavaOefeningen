@@ -161,6 +161,138 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 		btnWijzigQuiz.addActionListener(al);
 	}
 
+	public JPanel getPnlBackground() {
+		return pnlBackground;
+	}
+
+	public void setPnlBackground(JPanel pnlBackground) {
+		this.pnlBackground = pnlBackground;
+	}
+
+	public JPanel getPnlLeft() {
+		return pnlLeft;
+	}
+
+	public void setPnlLeft(JPanel pnlLeft) {
+		this.pnlLeft = pnlLeft;
+	}
+
+	public JPanel getPnlRight() {
+		return pnlRight;
+	}
+
+	public void setPnlRight(JPanel pnlRight) {
+		this.pnlRight = pnlRight;
+	}
+
+	public JPanel getPnlListQuizzen() {
+		return pnlListQuizzen;
+	}
+
+	public void setPnlListQuizzen(JPanel pnlListQuizzen) {
+		this.pnlListQuizzen = pnlListQuizzen;
+	}
+
+	public JPanel getPnlListOpdrInQuiz() {
+		return pnlListOpdrInQuiz;
+	}
+
+	public void setPnlListOpdrInQuiz(JPanel pnlListOpdrInQuiz) {
+		this.pnlListOpdrInQuiz = pnlListOpdrInQuiz;
+	}
+
+	public JPanel getPnlListOpdrachten() {
+		return pnlListOpdrachten;
+	}
+
+	public void setPnlListOpdrachten(JPanel pnlListOpdrachten) {
+		this.pnlListOpdrachten = pnlListOpdrachten;
+	}
+
+	public JLabel getLblLijstVanQuizzen() {
+		return lblLijstVanQuizzen;
+	}
+
+	public void setLblLijstVanQuizzen(JLabel lblLijstVanQuizzen) {
+		this.lblLijstVanQuizzen = lblLijstVanQuizzen;
+	}
+
+	public JLabel getLblOpdrachtenInQuiz() {
+		return lblOpdrachtenInQuiz;
+	}
+
+	public void setLblOpdrachtenInQuiz(JLabel lblOpdrachtenInQuiz) {
+		this.lblOpdrachtenInQuiz = lblOpdrachtenInQuiz;
+	}
+
+	public JLabel getLblOpdrachtenInSystem() {
+		return lblOpdrachtenInSystem;
+	}
+
+	public void setLblOpdrachtenInSystem(JLabel lblOpdrachtenInSystem) {
+		this.lblOpdrachtenInSystem = lblOpdrachtenInSystem;
+	}
+
+	public JList<?> getListQuizzen() {
+		return listQuizzen;
+	}
+
+	public void setListQuizzen(JList<?> listQuizzen) {
+		this.listQuizzen = listQuizzen;
+	}
+
+	public JList<?> getListOpdrachtenInQuiz() {
+		return listOpdrachtenInQuiz;
+	}
+
+	public void setListOpdrachtenInQuiz(JList<?> listOpdrachtenInQuiz) {
+		this.listOpdrachtenInQuiz = listOpdrachtenInQuiz;
+	}
+
+	public JList<?> getListOpdrachten() {
+		return listOpdrachten;
+	}
+
+	public void setListOpdrachten(JList<?> listOpdrachten) {
+		this.listOpdrachten = listOpdrachten;
+	}
+
+	public JButton getBtnWijzigQuiz() {
+		return btnWijzigQuiz;
+	}
+
+	public void setBtnWijzigQuiz(JButton btnWijzigQuiz) {
+		this.btnWijzigQuiz = btnWijzigQuiz;
+	}
+
+	public JButton getBtnVerwijderOpdracht() {
+		return btnVerwijderOpdracht;
+	}
+
+	public void setBtnVerwijderOpdracht(JButton btnVerwijderOpdracht) {
+		this.btnVerwijderOpdracht = btnVerwijderOpdracht;
+	}
+
+	public JButton getBtnToevoegenOpdracht() {
+		return btnToevoegenOpdracht;
+	}
+
+	public void setBtnToevoegenOpdracht(JButton btnToevoegenOpdracht) {
+		this.btnToevoegenOpdracht = btnToevoegenOpdracht;
+	}
+
+	public JButton getBtnWijzigingOpslaan() {
+		return btnWijzigingOpslaan;
+	}
+
+	public void setBtnWijzigingOpslaan(JButton btnWijzigingOpslaan) {
+		this.btnWijzigingOpslaan = btnWijzigingOpslaan;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
