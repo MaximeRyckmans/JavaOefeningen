@@ -145,17 +145,32 @@ public class QuizCreatieController implements ActionListener, ItemListener {
 	public void itemStateChanged(ItemEvent e) {
 		
 		if (e.getStateChange() == ItemEvent.SELECTED) {
-			System.out.println("here there everywhere");
+			
 			if(e.getItemSelectable() == quizCreatieView.getSorteerOpdr())
 	        {
-	           
+				System.out.println(e.getItem());
 	        }else if(e.getItemSelectable() == quizCreatieView.getCategorie()){
 	        	
 	        }
-		
+
 			
 		}
 	}
-//	private void sorteerOp
+	private List<Opdracht> toonOpdrachtenVanCategorie(ItemEvent e){
+		List<Opdracht> tempList = new ArrayList<Opdracht>();
+		for(Opdracht opdr : opdrachtCatalogusModel.getOpdrachten()){
+			if(e.getItem().equals(OpdrachtCategorie.Aardrijkskunde) && opdr.getOpdrachtCategorie().equals(OpdrachtCategorie.Aardrijkskunde)){
+				tempList.add(opdr);
+			}else if(e.getItem().equals(OpdrachtCategorie.Nederlands)&& opdr.getOpdrachtCategorie().equals(OpdrachtCategorie.Nederlands)){
+				
+				tempList.add(opdr);
+			}else if (e.getItem().equals(OpdrachtCategorie.Wetenschappen)&& opdr.getOpdrachtCategorie().equals(OpdrachtCategorie.Wetenschappen)){
+				tempList.add(opdr);
+			}else if (e.getItem().equals(OpdrachtCategorie.Wiskunde)&& opdr.getOpdrachtCategorie().equals(OpdrachtCategorie.Wiskunde)){
+				tempList.add(opdr);
+			}
+		}
+		return tempList;
+	}
 
 }
