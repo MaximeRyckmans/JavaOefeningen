@@ -19,11 +19,11 @@ public class OpdrachtCatalogus implements Cloneable,
 
 	private List<Opdracht> opdrachten;
 	private int id;
-	
-	public OpdrachtCatalogus(){
+
+	public OpdrachtCatalogus() {
 		opdrachten = new ArrayList<Opdracht>();
 	}
-	
+
 	public List<Opdracht> getOpdrachten() {
 		return opdrachten;
 	}
@@ -107,12 +107,23 @@ public class OpdrachtCatalogus implements Cloneable,
 			PrintWriter writer = new PrintWriter(file);
 			for (int i = 0; i < this.getOpdrachten().size(); i++) {
 				Opdracht opdracht = opdrachten.get(i);
+				String typeOpdracht = opdracht.getClass().toString();
 				String lijn = opdracht.getId() + "," + opdracht.getVraag()
 						+ "," + opdracht.getAntwoord() + ","
 						+ opdracht.getMaxAantalPogingen() + ","
 						+ opdracht.getAntwoordHint() + ","
-						+ opdracht.getmaxAntwoordTijd() + ","
-						+ opdracht.getClass();
+						+ opdracht.getmaxAntwoordTijd() + "," + typeOpdracht
+						+ "," + opdracht.getOpdrachtCategorie();
+				if (typeOpdracht.equals("Meerkeuze")) {
+					lijn += "," + ((Meerkeuze) opdracht).getAlleKeuzes();
+				} else if (opdracht.equals("Reproductie")) {
+					lijn += ","
+							+ ((Reproductie) opdracht).getTrefwoorden()
+							+ ","
+							+ ((Reproductie) opdracht)
+									.getMinAantalJuisteTrefwoorden();
+				}
+
 				writer.println(lijn);
 			}
 			if (writer != null)
@@ -139,7 +150,8 @@ public class OpdrachtCatalogus implements Cloneable,
 				int maxAntwoordTijd = Integer.parseInt(velden[5]);
 				String soortOpdracht = velden[6];
 				String opdrachtCategorieString = velden[7];
-				OpdrachtCategorie opdrachtCategorie = OpdrachtCategorie.valueOf(opdrachtCategorieString);
+				OpdrachtCategorie opdrachtCategorie = OpdrachtCategorie
+						.valueOf(opdrachtCategorieString);
 				Opdracht opdracht = null;
 				if (soortOpdracht.equals("Meerkeuze")) {
 					String alleKeuzes = velden[8];
@@ -153,13 +165,15 @@ public class OpdrachtCatalogus implements Cloneable,
 							.parseInt(velden[9]);
 					opdracht = new Reproductie(vraag, antwoordHint,
 							maxAantalPogingen, antwoordHint, maxAntwoordTijd,
-							trefwoorden, minAantalJuisteTrefwoorden, opdrachtCategorie);
+							trefwoorden, minAantalJuisteTrefwoorden,
+							opdrachtCategorie);
 				} else if (soortOpdracht.equals("Opsomming")) {
 					opdracht = new Opsomming(vraag, antwoord,
-							maxAantalPogingen, antwoordHint, maxAntwoordTijd, opdrachtCategorie);
+							maxAantalPogingen, antwoordHint, maxAntwoordTijd,
+							opdrachtCategorie);
 				}
 				this.opdrachten.add(opdracht);
-				
+
 			}
 			if (scanner != null) {
 				scanner.close();
@@ -192,7 +206,8 @@ public class OpdrachtCatalogus implements Cloneable,
 					int maxAntwoordTijd = Integer.parseInt(velden[5]);
 					String klasNaam = velden[6];
 					String opdrachtCategorieString = velden[7];
-					OpdrachtCategorie opdrachtCategorie = OpdrachtCategorie.valueOf(opdrachtCategorieString);
+					OpdrachtCategorie opdrachtCategorie = OpdrachtCategorie
+							.valueOf(opdrachtCategorieString);
 					if (klasNaam.equals("Meerkeuze")) {
 						String alleKeuzes = velden[8];
 						opdracht = new Meerkeuze(vraag, antwoord,
@@ -212,13 +227,13 @@ public class OpdrachtCatalogus implements Cloneable,
 								maxAantalPogingen, antwoordHint,
 								maxAntwoordTijd, opdrachtCategorie);
 					}
-					
+
 				}
 			}
 			if (scanner != null) {
 				scanner.close();
 			}
-			
+
 		} catch (FileNotFoundException ex) {
 			System.out.println("bestand niet gevonden");
 		} catch (NullPointerException ex) {
