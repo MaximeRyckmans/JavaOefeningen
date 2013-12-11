@@ -104,6 +104,7 @@ public class OpdrachtCatalogus implements Cloneable,
 	public void schrijfOpdrachtenNaarBestand() {
 		File file = new File("bestanden/opdrachten");
 		try {
+			//Wegschrijven
 			PrintWriter writer = new PrintWriter(file);
 			for (int i = 0; i < this.getOpdrachten().size(); i++) {
 				Opdracht opdracht = opdrachten.get(i);
