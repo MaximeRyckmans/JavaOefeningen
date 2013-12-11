@@ -5,8 +5,10 @@ import java.awt.FlowLayout;
 import javax.swing.BorderFactory;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JSeparator;
 import javax.swing.ListModel;
 
 import java.awt.BorderLayout;
@@ -23,6 +25,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.util.List;
 
 /**
@@ -37,7 +40,7 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 	private JPanel pnlBackground, pnlLeft, pnlRight, pnlListQuizzen, pnlListOpdrInQuiz, pnlListOpdrachten;
 	private JLabel lblLijstVanQuizzen, lblOpdrachtenInQuiz, lblOpdrachtenInSystem;
 	private JList<String> listQuizzen, listOpdrachtenInQuiz, listOpdrachten;
-	private JButton btnWijzigQuiz, btnVerwijderOpdracht, btnToevoegenOpdracht, btnWijzigingOpslaan;
+	private JButton btnWijzigQuiz, btnVerwijderOpdracht, btnToevoegenOpdracht, btnWijzigingOpslaan, btnAnnuleerWijziging;
 	
 	public QuizWijzigenView() {
 		super("Wijzigen van quizzen");
@@ -105,7 +108,8 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 		listOpdrachten = new JList<String>();
 		btnToevoegenOpdracht = new JButton("Voeg opdracht toe aan quiz");
 		btnVerwijderOpdracht = new JButton(" Verwijder opdracht in quiz ");
-		btnWijzigingOpslaan = new JButton("Wijziging opslaan");
+		btnWijzigingOpslaan = new JButton("Alle wijzigingen opslaan");
+		btnAnnuleerWijziging = new JButton("Annuleer");
 		
 		pnlRight = new JPanel();
 		pnlRight.setPreferredSize(new Dimension(435,857));
@@ -131,22 +135,26 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 		
 		gbc.gridx = 0;
 		gbc.gridy = 3;
-		pnlRight.add(btnToevoegenOpdracht, gbc);
-		
-		gbc.gridx = 0;
-		gbc.gridy = 4;
 		pnlRight.add(lblOpdrachtenInSystem, gbc);
 		
 		pnlListOpdrachten.setPreferredSize(new Dimension(350, 300));
 		pnlListOpdrachten.setBorder(BorderFactory.createLoweredBevelBorder());
 		pnlListOpdrachten.add(listOpdrachten);
 		gbc.gridx = 0;
-		gbc.gridy = 5;
+		gbc.gridy = 4;
 		pnlRight.add(pnlListOpdrachten, gbc);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 5;
+		pnlRight.add(btnToevoegenOpdracht, gbc);
 		
 		gbc.gridx = 0;
 		gbc.gridy = 6;
 		pnlRight.add(btnWijzigingOpslaan, gbc);
+		
+		gbc.gridx = 0;
+		gbc.gridy = 7;
+		pnlRight.add(btnAnnuleerWijziging, gbc);
 	}
 	
 	public void buttonActionListener(ActionListener al) {
@@ -162,6 +170,9 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 
 		btnWijzigQuiz.setActionCommand(btnWijzigQuiz.getName());
 		btnWijzigQuiz.addActionListener(al);
+		
+		btnAnnuleerWijziging.setActionCommand(btnAnnuleerWijziging.getName());
+		btnAnnuleerWijziging.addActionListener(al);
 	}
 	
 	public void setInitiëleWaarden(List<Quiz> quizzen, List<Opdracht> opdrachten){
@@ -185,6 +196,18 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 		}
 		listOpdrachtenInQuiz.setModel(model);
 	}
+	
+	public void windowClosing(String Confirmation, String title)
+    {
+        int result = JOptionPane.showConfirmDialog(
+            this,
+            Confirmation,
+            title,
+            JOptionPane.YES_NO_OPTION);
+
+        if (result == JOptionPane.YES_OPTION)
+            this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+    }
 
 	public JPanel getPnlBackground() {
 		return pnlBackground;

@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 import model.Opdracht;
 import model.OpdrachtCatalogus;
@@ -21,8 +22,7 @@ public class QuizWijzigenController implements ActionListener {
 	private QuizWijzigenView quizWijzigenView;
 	private QuizCatalogus quizCatalogus;
 	private OpdrachtCatalogus opdrachtCatalogus;
-	private Quiz quiz;
-	private Opdracht opdracht;
+	private Quiz quiz, copyQuizOld;
 	
 	public QuizWijzigenController(){}
 	
@@ -38,42 +38,68 @@ public class QuizWijzigenController implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		Quiz object = null;
 		if (e.getActionCommand().equals("Voeg opdracht toe aan quiz")) {
 			voegOpdrachtToeAanQuiz();
 		} else if (e.getActionCommand().equals(" Verwijder opdracht in quiz ")) {
-			verwijderOpdrachtInQuiz(object);
-		} else if (e.getActionCommand().equals("Wijziging opslaan")) {
+			verwijderOpdrachtInQuiz();
+		} else if (e.getActionCommand().equals("Alle wijzigingen opslaan")) {
 			wijzigingQuizOpslaan();
 		} else if (e.getActionCommand().equals("Wijzig quiz")) {
-			object = wijzigQuiz();
-			quizWijzigenView.setOpdrachtenInQuiz(object.getOpdrachten());
+			wijzigQuiz();
+			quizWijzigenView.setOpdrachtenInQuiz(quiz.getOpdrachten());
+		} else if (e.getActionCommand().equals("Annuleer")) {
+			annuleer();
+		} else {
+
 		}
 		
 	}
 
-	private Quiz wijzigQuiz() {
-		Quiz wQ = null;
+	private void annuleer() {
+		quizCatalogus.getQuizzen().remove(quiz);
+		quizCatalogus.getQuizzen().add(copyQuizOld);
 		
+		quizWijzigenView.windowClosing("Ben je zeker dat je de wijzigingen wilt annuleren?", "Annuleer wijzigingen");
+		
+	}
+
+	private void wijzigQuiz() {		
 		for (Quiz q : quizCatalogus.getQuizzen()) {
 			if (q.getOnderwerp().equals(quizWijzigenView.getListQuizzen().getSelectedValue())) {
-				wQ = q;
+				quiz = q;
+				copyQuizOld = quiz;
 			}
 		}
-		return wQ;
 	}
 
 	private void wijzigingQuizOpslaan() {
-		// TODO Auto-generated method stub
-		
+		quizWijzigenView.windowClosing("Ben je zeker dat je deze wijzigingen wilt opslaan?", "Opslaan wijzigingen");
 	}
 
-	private void verwijderOpdrachtInQuiz(Quiz quiz) {
-		
+	private void verwijderOpdrachtInQuiz() {
+		try {
+			for (Opdracht opdracht : quiz.getOpdrachten()) {
+				if (opdracht.getVraag().equals(quizWijzigenView.getListOpdrachtenInQuiz().getSelectedValue())) {
+					quiz.getOpdrachten().remove(opdracht);
+					quizWijzigenView.setOpdrachtenInQuiz(quiz.getOpdrachten());
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}	
 	}
 
 	private void voegOpdrachtToeAanQuiz() {
-		// TODO Auto-generated method stub
+		try {
+			for (Opdracht opdracht : opdrachtCatalogus.getOpdrachten()) {
+				if (opdracht.getVraag().equals(quizWijzigenView.getListOpdrachten().getSelectedValue())) {
+					quiz.getOpdrachten().add(opdracht);
+					quizWijzigenView.setOpdrachtenInQuiz(quiz.getOpdrachten());
+				}
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 		
 	}
 }
