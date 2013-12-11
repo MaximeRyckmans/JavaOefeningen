@@ -12,6 +12,7 @@ public class Meerkeuze extends Opdracht implements Valideerbaar {
 	private static final long serialVersionUID = 1L;
 	private Map<Integer, String> keuzesMap;
 	private String valideerTekst = "Nog niet gevalideerd";
+	private String alleKeuzes;
 	
 	/*
 	 * Constructors
@@ -21,35 +22,40 @@ public class Meerkeuze extends Opdracht implements Valideerbaar {
 	public Meerkeuze(String vraag, String antwoord, int maxAantalPogingen, String alleKeuzes, OpdrachtCategorie opdrachtCategorie){
 		super(vraag, antwoord, maxAantalPogingen, opdrachtCategorie);
 		
-		samenstellenKeuzes(alleKeuzes);
+		this.alleKeuzes = alleKeuzes;
+		samenstellenKeuzes(this.alleKeuzes);
 		isAntwoordInKeuzes(antwoord);
 	}
 	
 	public Meerkeuze(String vraag, String antwoord, int maxAantalPogingen, String alleKeuzes, String antwoordHint, OpdrachtCategorie opdrachtCategorie) {
 		super(vraag, antwoord, maxAantalPogingen, antwoordHint, opdrachtCategorie);
 		
-		samenstellenKeuzes(alleKeuzes);
+		this.alleKeuzes = alleKeuzes;
+		samenstellenKeuzes(this.alleKeuzes);
 		isAntwoordInKeuzes(antwoord);
 	}
 	
 	public Meerkeuze(String vraag, String antwoord, int maxAantalPogingen, String alleKeuzes, int maxAntwoordTijd, OpdrachtCategorie opdrachtCategorie) {
 		super(vraag, antwoord, maxAantalPogingen, maxAntwoordTijd, opdrachtCategorie);
 		
-		samenstellenKeuzes(alleKeuzes);
+		this.alleKeuzes = alleKeuzes;
+		samenstellenKeuzes(this.alleKeuzes);
 		isAntwoordInKeuzes(antwoord);
 	}
 	
 	public Meerkeuze(String vraag, String antwoord, int maxAantalPogingen, String alleKeuzes, String antwoordHint, int maxAntwoordTijd, OpdrachtCategorie opdrachtCategorie) {
 		super(vraag, antwoord, maxAantalPogingen, antwoordHint, maxAntwoordTijd, opdrachtCategorie);
 		
-		samenstellenKeuzes(alleKeuzes);
+		this.alleKeuzes = alleKeuzes;
+		samenstellenKeuzes(this.alleKeuzes);
 		isAntwoordInKeuzes(antwoord);
 	}
 	
 	public Meerkeuze(int id, String vraag, String antwoord, int maxAantalPogingen, String alleKeuzes, String antwoordHint, int maxAntwoordTijd, OpdrachtCategorie opdrachtCategorie) {
 		super(id, vraag, antwoord, maxAantalPogingen, antwoordHint, maxAntwoordTijd, opdrachtCategorie);
 		
-		samenstellenKeuzes(alleKeuzes);
+		this.alleKeuzes = alleKeuzes;
+		samenstellenKeuzes(this.alleKeuzes);
 		isAntwoordInKeuzes(antwoord);
 	}
 	
@@ -139,6 +145,14 @@ public class Meerkeuze extends Opdracht implements Valideerbaar {
 		this.keuzesMap = keuzesMap;
 	}
 	
+	public String getAlleKeuzes() {
+		return alleKeuzes;
+	}
+
+	public void setAlleKeuzes(String alleKeuzes) {
+		this.alleKeuzes = alleKeuzes;
+	}
+
 	private void samenstellenKeuzes(String alleKeuzes){
 		String delimiter = ";";
 		String[] temp = alleKeuzes.split(delimiter);
