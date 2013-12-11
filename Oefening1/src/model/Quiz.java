@@ -14,7 +14,7 @@ public class Quiz implements Cloneable, Comparable<Quiz>, Iterable<Opdracht> {
 
 	private int id;
 	private int aantalDeelnames;
-	private int leerjaar;
+	private Klas leerjaar;
 	private Leraar leraar;
 	private String onderwerp;
 	private QuizStatus quizStatus;
@@ -23,7 +23,7 @@ public class Quiz implements Cloneable, Comparable<Quiz>, Iterable<Opdracht> {
 	public Quiz() {
 	}
 	
-	public Quiz(int id,int aantalDeelnames, int leerjaar, Leraar leraar, String onderwerp, QuizStatus quizStatus, List<Opdracht> opdrachten) {
+	public Quiz(int id,int aantalDeelnames, Klas leerjaar, Leraar leraar, String onderwerp, QuizStatus quizStatus, List<Opdracht> opdrachten) {
 		this.aantalDeelnames = aantalDeelnames;
 		this.leerjaar = leerjaar;
 		this.leraar = leraar;
@@ -49,11 +49,11 @@ public class Quiz implements Cloneable, Comparable<Quiz>, Iterable<Opdracht> {
 		this.aantalDeelnames = aantalDeelnames;
 	}
 
-	public int getLeerjaar() {
+	public Klas getLeerjaar() {
 		return leerjaar;
 	}
 
-	public void setLeerjaar(int leerjaar) {
+	public void setLeerjaar(Klas leerjaar) {
 			this.leerjaar = leerjaar;
 	}
 
@@ -116,7 +116,9 @@ public class Quiz implements Cloneable, Comparable<Quiz>, Iterable<Opdracht> {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + aantalDeelnames;
-		result = prime * result + leerjaar;
+		result = prime * result + id;
+		result = prime * result
+				+ ((leerjaar == null) ? 0 : leerjaar.hashCode());
 		result = prime * result + ((leraar == null) ? 0 : leraar.hashCode());
 		result = prime * result
 				+ ((onderwerp == null) ? 0 : onderwerp.hashCode());
@@ -137,6 +139,8 @@ public class Quiz implements Cloneable, Comparable<Quiz>, Iterable<Opdracht> {
 			return false;
 		Quiz other = (Quiz) obj;
 		if (aantalDeelnames != other.aantalDeelnames)
+			return false;
+		if (id != other.id)
 			return false;
 		if (leerjaar != other.leerjaar)
 			return false;

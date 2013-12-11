@@ -130,7 +130,8 @@ public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iter
 			  String [] velden = lijn.split(",");
 			  int id = Integer.parseInt(velden[0]);
 			  int aantalDeelnames=Integer.parseInt(velden[1]);
-			  int leerjaar=Integer.parseInt(velden[2]);
+			  String leerjaarNaam=velden[2];
+			  Klas leerjaar= Klas.valueOf(leerjaarNaam);
 			
 			  String onderwerp=velden[3];
 			  String quizStatusNaam = velden[4];

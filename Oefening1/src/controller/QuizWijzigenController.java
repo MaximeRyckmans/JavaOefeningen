@@ -4,11 +4,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
+import model.Klas;
 import model.Leraar;
 import model.Opdracht;
 import model.OpdrachtCatalogus;
 import model.Quiz;
 import model.QuizCatalogus;
+import model.QuizStatus;
 import view.QuizWijzigenView;
 
 /**
@@ -77,13 +79,6 @@ public class QuizWijzigenController implements ActionListener {
 		quiz = quizWijzigenView.getListQuizzen().getSelectedValue();
 		copyQuizOld = quiz.clone();
 		quizWijzigenView.setOpdrachtenInQuiz(quiz);
-		
-		/*for (Quiz q : quizCatalogus.getQuizzen()) {
-			if (q.equals(quizWijzigenView.getListQuizzen().getSelectedValue())) {
-				quiz = q;
-				copyQuizOld = q.clone();
-			}
-		}*/
 	}
 
 	private void wijzigingQuizOpslaan() {
@@ -92,6 +87,12 @@ public class QuizWijzigenController implements ActionListener {
 			String parse = quizWijzigenView.getTxtAantalDeelnames().getText();
 			quiz.setAantalDeelnames(Integer.parseInt(parse));
 			
+			for (Klas klas : Klas.values()) {
+				if (klas.toString().equals(quizWijzigenView.getCmbbxLeerjaar().getSelectedItem())) {
+					quiz.setLeerjaar(klas);
+				}
+			}
+			
 			for (Leraar leraar : Leraar.values()) {
 				if (leraar.toString().equals(quizWijzigenView.getCmbbxLeraar().getSelectedItem())) {
 					quiz.setLeraar(leraar);
@@ -99,6 +100,12 @@ public class QuizWijzigenController implements ActionListener {
 			}
 			
 			quiz.setOnderwerp(quizWijzigenView.getTxtOnderwerp().getText());
+			
+			for (QuizStatus quizStatus : QuizStatus.values()) {
+				if (quizStatus.toString().equals(quizWijzigenView.getCmbbxQuizStatus().getSelectedItem())) {
+					quiz.setQuizStatus(quizStatus);
+				}
+			}
 			
 			System.out.println(quiz.getOnderwerp());
 			System.out.println(copyQuizOld.getOnderwerp());
