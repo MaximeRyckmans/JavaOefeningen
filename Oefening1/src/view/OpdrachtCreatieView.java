@@ -43,7 +43,7 @@ public class OpdrachtCreatieView extends JFrame implements ActionListener {
 	public OpdrachtCreatieView() {
 
 		JFrame frame = new JFrame("Aanmaken nieuwe Opdracht");
-		frame.setSize(800, 600);
+		frame.setSize(1000, 600);
 		frame.add(createPanel());
 		frame.setVisible(true);
 
@@ -51,7 +51,7 @@ public class OpdrachtCreatieView extends JFrame implements ActionListener {
 
 	public JPanel createPanel() {
 		JPanel panel = new JPanel();
-		panel.setLayout(new GridLayout(13, 1));
+		panel.setLayout(new GridLayout(20, 3));
 		categorie = new JComboBox(Categorie.values());
 		opdrachtCategorie = new JComboBox(OpdrachtCategorie.values());
 		vraagL = new JLabel("Vraag :");
