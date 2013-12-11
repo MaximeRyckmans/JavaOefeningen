@@ -56,11 +56,15 @@ public class QuizWijzigenController implements ActionListener {
 	}
 
 	private void annuleer() {
-		quizCatalogus.getQuizzen().remove(quiz);
-		quizCatalogus.getQuizzen().add(copyQuizOld);
-		
 		quizWijzigenView.windowClosing("Ben je zeker dat je de wijzigingen wilt annuleren?", "Annuleer wijzigingen");
 		
+		if (quizWijzigenView.isCanceledIndicator()) {
+			for (Quiz q : quizCatalogus.getQuizzen()) {
+				if (q.getId() == copyQuizOld.getId()) {
+					q = copyQuizOld;
+				}
+			}
+		}
 	}
 
 	private void wijzigQuiz() {		

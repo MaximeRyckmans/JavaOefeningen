@@ -14,12 +14,12 @@ import view.QuizWijzigenView;
 public class Start {
 
 	public static void main(String[] args) {
-		MenuView menuView = new MenuView();
-		MenuViewController mv = new MenuViewController(menuView);
+		//MenuView menuView = new MenuView();
+		//MenuViewController mv = new MenuViewController(menuView);
 
-		QuizCreatieView view = new QuizCreatieView();
-		OpdrachtCreatieView viewOp = new OpdrachtCreatieView();
-		//QuizWijzigenView qW = new QuizWijzigenView();
+		//QuizCreatieView view = new QuizCreatieView();
+		//OpdrachtCreatieView viewOp = new OpdrachtCreatieView();
+		QuizWijzigenView qW = new QuizWijzigenView();
 		
 		OpdrachtCatalogus cat = new OpdrachtCatalogus();
 		QuizCatalogus qcat = new QuizCatalogus();
@@ -28,8 +28,8 @@ public class Start {
 		qcat.leesQuizzenVanBestand();
 		
 		//QuizListView qlv = new QuizListView(qcat);
-		//QuizWijzigenController qC = new QuizWijzigenController(qW, qcat, cat);
-		QuizCreatieController c = new QuizCreatieController(cat, qcat, view);
+		QuizWijzigenController qC = new QuizWijzigenController(qW, qcat, cat);
+		//QuizCreatieController c = new QuizCreatieController(cat, qcat, view);
 
 	}
 

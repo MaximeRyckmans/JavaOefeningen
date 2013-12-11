@@ -3,12 +3,15 @@ package view;
 import java.awt.FlowLayout;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JSeparator;
+import javax.swing.JTextField;
 import javax.swing.ListModel;
 
 import java.awt.BorderLayout;
@@ -16,13 +19,16 @@ import java.awt.BorderLayout;
 import javax.swing.JList;
 import javax.swing.JButton;
 
+import model.Leraar;
 import model.Opdracht;
 import model.Quiz;
+import model.QuizStatus;
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -37,14 +43,19 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 
 	private static final long serialVersionUID = 1L;
 	
-	private JPanel pnlBackground, pnlLeft, pnlRight, pnlListQuizzen, pnlListOpdrInQuiz, pnlListOpdrachten;
-	private JLabel lblLijstVanQuizzen, lblOpdrachtenInQuiz, lblOpdrachtenInSystem;
+	private JPanel pnlBackground, pnlLeft, pnlMiddle, pnlRight, pnlListQuizzen, pnlListOpdrInQuiz, pnlListOpdrachten;
+	private JLabel lblLijstVanQuizzen, lblOpdrachtenInQuiz, lblOpdrachtenInSystem, lblMiddle, 
+	lblOnderwerp, lblLeerjaar, lblLeraar, lblAantalDeelnames, lblQuizStatus;
+	private JTextField txtOnderwerp, txtAantalDeelnames;
+	private JComboBox<String> cmbbxLeerjaar, cmbbxLeraar, cmbbxQuizStatus;
 	private JList<String> listQuizzen, listOpdrachtenInQuiz, listOpdrachten;
 	private JButton btnWijzigQuiz, btnVerwijderOpdracht, btnToevoegenOpdracht, btnWijzigingOpslaan, btnAnnuleerWijziging;
+	private boolean canceledIndicator = false;
+	private static final String NOT_SELECTABLE_OPTION = " - Selecteer waarde - ";
 	
 	public QuizWijzigenView() {
 		super("Wijzigen van quizzen");
-		this.setSize(900,900);
+		this.setSize(1350,900);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLayout(new FlowLayout());
 		
@@ -52,24 +63,83 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 		pnlBackground.setLayout(new GridBagLayout());
 		
 		CreateLeftPanel();
+		CreateMiddlePanel();
 		CreateRightPanel();
 		
 		GridBagConstraints gbc = new GridBagConstraints();
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.weightx = 0.5;
+		gbc.weightx = 0.3;
 		gbc.gridheight = GridBagConstraints.REMAINDER;
 		pnlBackground.add(pnlLeft);
 		
 		gbc.gridheight = GridBagConstraints.REMAINDER;
 		gbc.gridx++;
-		gbc.weightx = 0.5;
+		gbc.weightx = 0.3;
+		pnlBackground.add(pnlMiddle);
+		
+		gbc.gridheight = GridBagConstraints.REMAINDER;
+		gbc.gridx++;
+		gbc.weightx = 0.3;
 		pnlBackground.add(pnlRight);
 		
 		this.add(pnlBackground , BorderLayout.NORTH);
 		this.setVisible(true);
 	}
 	
+	private void CreateMiddlePanel() {
+		lblMiddle = new JLabel("Quizgegevens");
+		lblOnderwerp = new JLabel("Onderwerp:");
+		txtOnderwerp = new JTextField(20);
+		lblLeerjaar = new JLabel("Leerjaar:");
+		cmbbxLeerjaar = new JComboBox<String>();
+		lblLeraar = new JLabel("Leraar:");
+		cmbbxLeraar = new JComboBox<String>();
+		lblAantalDeelnames = new JLabel("Aantal deelnames:");
+		txtAantalDeelnames = new JTextField(3);
+		lblQuizStatus = new JLabel("Quiz status:");
+		cmbbxQuizStatus = new JComboBox<String>();
+		
+		pnlMiddle = new JPanel();
+		pnlMiddle.setPreferredSize(new Dimension(435,857));
+		pnlMiddle.setBorder(BorderFactory.createLineBorder(Color.black));
+		pnlMiddle.setLayout(new GridBagLayout());
+		
+		GridBagConstraints gbc = new GridBagConstraints();
+		
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.gridheight = 1;
+		gbc.insets = new Insets(0, 0, 30, 0);
+		gbc.anchor = GridBagConstraints.WEST;
+		pnlMiddle.add(lblMiddle, gbc);
+		gbc.insets = new Insets(0, 10, 20, 0);
+		gbc.gridy++;
+		pnlMiddle.add(lblOnderwerp, gbc);
+		gbc.gridx++;
+		pnlMiddle.add(txtOnderwerp, gbc);
+		gbc.gridx = 0;
+		gbc.gridy++;
+		pnlMiddle.add(lblLeerjaar, gbc);
+		gbc.gridx++;
+		pnlMiddle.add(cmbbxLeerjaar, gbc);
+		gbc.gridx = 0;
+		gbc.gridy++;
+		pnlMiddle.add(lblLeraar, gbc);
+		gbc.gridx++;
+		pnlMiddle.add(cmbbxLeraar, gbc);
+		gbc.gridx = 0;
+		gbc.gridy++;
+		pnlMiddle.add(lblAantalDeelnames, gbc);
+		gbc.gridx++;
+		pnlMiddle.add(txtAantalDeelnames, gbc);
+		gbc.gridx = 0;
+		gbc.gridy++;
+		pnlMiddle.add(lblQuizStatus, gbc);
+		gbc.gridx++;
+		pnlMiddle.add(cmbbxQuizStatus, gbc);
+	}
+
 	private void CreateLeftPanel() {
 		lblLijstVanQuizzen = new JLabel("Lijst van quizzen");
 		pnlListQuizzen = new JPanel();
@@ -131,10 +201,12 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 		
 		gbc.gridx = 0;
 		gbc.gridy = 2;
+		gbc.insets = new Insets(0, 0, 30, 0);
 		pnlRight.add(btnVerwijderOpdracht, gbc);
 		
 		gbc.gridx = 0;
 		gbc.gridy = 3;
+		gbc.insets = new Insets(0, 0, 0, 0);
 		pnlRight.add(lblOpdrachtenInSystem, gbc);
 		
 		pnlListOpdrachten.setPreferredSize(new Dimension(350, 300));
@@ -146,15 +218,17 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 		
 		gbc.gridx = 0;
 		gbc.gridy = 5;
+		gbc.insets = new Insets(0, 0, 30, 0);
 		pnlRight.add(btnToevoegenOpdracht, gbc);
 		
+		JPanel btns = new JPanel();
+		btns.add(btnWijzigingOpslaan);
+		btns.add(btnAnnuleerWijziging);
 		gbc.gridx = 0;
 		gbc.gridy = 6;
-		pnlRight.add(btnWijzigingOpslaan, gbc);
+		gbc.insets = new Insets(0, 0, 0, 0);
+		pnlRight.add(btns, gbc);
 		
-		gbc.gridx = 0;
-		gbc.gridy = 7;
-		pnlRight.add(btnAnnuleerWijziging, gbc);
 	}
 	
 	public void buttonActionListener(ActionListener al) {
@@ -187,6 +261,20 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 			modelO.addElement(o.getVraag());
 		}
 		listOpdrachten.setModel(modelO);
+		
+		DefaultComboBoxModel<String> modelL = new DefaultComboBoxModel<String>();
+		modelL.addElement(NOT_SELECTABLE_OPTION);
+		for (Leraar leraar : Leraar.values()) {
+			modelL.addElement(leraar.toString());
+		}
+		cmbbxLeraar.setModel(modelL);
+		
+		DefaultComboBoxModel<String> modelS = new DefaultComboBoxModel<String>();
+		modelS.addElement(NOT_SELECTABLE_OPTION);
+		for (QuizStatus quizStatus : QuizStatus.values()) {
+			modelS.addElement(quizStatus.toString());
+		}
+		cmbbxQuizStatus.setModel(modelS);
 	}
 	
 	public void setOpdrachtenInQuiz(List<Opdracht> opdrachten){
@@ -197,16 +285,19 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 		listOpdrachtenInQuiz.setModel(model);
 	}
 	
-	public void windowClosing(String Confirmation, String title)
-    {
+	public void windowClosing(String Confirmation, String title){
         int result = JOptionPane.showConfirmDialog(
             this,
             Confirmation,
             title,
             JOptionPane.YES_NO_OPTION);
 
-        if (result == JOptionPane.YES_OPTION)
+        if (result == JOptionPane.YES_OPTION){
             this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+            canceledIndicator = true;
+        } else {
+			canceledIndicator = false;
+		}
     }
 
 	public JPanel getPnlBackground() {
@@ -223,6 +314,14 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 
 	public void setPnlLeft(JPanel pnlLeft) {
 		this.pnlLeft = pnlLeft;
+	}
+
+	public JPanel getPnlMiddle() {
+		return pnlMiddle;
+	}
+
+	public void setPnlMiddle(JPanel pnlMiddle) {
+		this.pnlMiddle = pnlMiddle;
 	}
 
 	public JPanel getPnlRight() {
@@ -339,6 +438,110 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	public boolean isCanceledIndicator() {
+		return canceledIndicator;
+	}
+
+	public void setCanceledIndicator(boolean canceledIndicator) {
+		this.canceledIndicator = canceledIndicator;
+	}
+
+	public JLabel getLblMiddle() {
+		return lblMiddle;
+	}
+
+	public void setLblMiddle(JLabel lblMiddle) {
+		this.lblMiddle = lblMiddle;
+	}
+
+	public JLabel getLblOnderwerp() {
+		return lblOnderwerp;
+	}
+
+	public void setLblOnderwerp(JLabel lblOnderwerp) {
+		this.lblOnderwerp = lblOnderwerp;
+	}
+
+	public JLabel getLblLeerjaar() {
+		return lblLeerjaar;
+	}
+
+	public void setLblLeerjaar(JLabel lblLeerjaar) {
+		this.lblLeerjaar = lblLeerjaar;
+	}
+
+	public JLabel getLblLeraar() {
+		return lblLeraar;
+	}
+
+	public void setLblLeraar(JLabel lblLeraar) {
+		this.lblLeraar = lblLeraar;
+	}
+
+	public JLabel getLblAantalDeelnames() {
+		return lblAantalDeelnames;
+	}
+
+	public void setLblAantalDeelnames(JLabel lblAantalDeelnames) {
+		this.lblAantalDeelnames = lblAantalDeelnames;
+	}
+
+	public JLabel getLblQuizStatus() {
+		return lblQuizStatus;
+	}
+
+	public void setLblQuizStatus(JLabel lblQuizStatus) {
+		this.lblQuizStatus = lblQuizStatus;
+	}
+
+	public JTextField getTxtOnderwerp() {
+		return txtOnderwerp;
+	}
+
+	public void setTxtOnderwerp(JTextField txtOnderwerp) {
+		this.txtOnderwerp = txtOnderwerp;
+	}
+
+	public JTextField getTxtAantalDeelnames() {
+		return txtAantalDeelnames;
+	}
+
+	public void setTxtAantalDeelnames(JTextField txtAantalDeelnames) {
+		this.txtAantalDeelnames = txtAantalDeelnames;
+	}
+
+	public JComboBox<String> getCmbbxLeerjaar() {
+		return cmbbxLeerjaar;
+	}
+
+	public void setCmbbxLeerjaar(JComboBox<String> cmbbxLeerjaar) {
+		this.cmbbxLeerjaar = cmbbxLeerjaar;
+	}
+
+	public JComboBox<String> getCmbbxLeraar() {
+		return cmbbxLeraar;
+	}
+
+	public void setCmbbxLeraar(JComboBox<String> cmbbxLeraar) {
+		this.cmbbxLeraar = cmbbxLeraar;
+	}
+
+	public JComboBox<String> getCmbbxQuizStatus() {
+		return cmbbxQuizStatus;
+	}
+
+	public void setCmbbxQuizStatus(JComboBox<String> cmbbxQuizStatus) {
+		this.cmbbxQuizStatus = cmbbxQuizStatus;
+	}
+
+	public JButton getBtnAnnuleerWijziging() {
+		return btnAnnuleerWijziging;
+	}
+
+	public void setBtnAnnuleerWijziging(JButton btnAnnuleerWijziging) {
+		this.btnAnnuleerWijziging = btnAnnuleerWijziging;
 	}
 
 	@Override

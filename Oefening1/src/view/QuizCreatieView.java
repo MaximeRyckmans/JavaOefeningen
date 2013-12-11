@@ -149,6 +149,7 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 		naarRechts.setActionCommand(naarRechts.getName());
 		naarRechts.addActionListener(al);
 	}
+	
 	public void comboboxActionListener(ItemListener al){
 		
 		klas.setActionCommand(klas.getName());
