@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import javax.net.ssl.SSLEngineResult.Status;
 
+import model.Klas;
 import model.Leraar;
 import model.Quiz;
 import model.QuizStatus;
@@ -17,7 +18,7 @@ public class QuizTest {
         //RANDOM ARGUMENT TOEGEVOEGT OP PLAATS 3 DE 0 OM ERROR OP TE LOSSEN -Davy
         @Before
         public void setUp(){
-                quiz = new Quiz(4, 3, 0, Leraar.JoskeVermeulen, "Talen", QuizStatus.OPENGESTELD, null);
+                quiz = new Quiz(4, 3, Klas.A5, Leraar.JoskeVermeulen, "Talen", QuizStatus.OPENGESTELD, null);
         }
 
         /*@Test
@@ -33,7 +34,7 @@ public class QuizTest {
         @Test
         public void testQuizIntIntLeraarStringQuizStatusListOfOpdracht() {
                 assertEquals(4, quiz.getAantalDeelnames());
-                assertEquals(3, quiz.getLeerjaar());
+                assertEquals(Klas.A5 , quiz.getLeerjaar());
                 assertEquals(Leraar.JoskeVermeulen , quiz.getLeraar());
                 assertEquals("Talen", quiz.getOnderwerp());
                 assertEquals(QuizStatus.OPENGESTELD, quiz.getQuizStatus());
@@ -52,13 +53,13 @@ public class QuizTest {
 
         @Test
         public void testGetLeerjaar() {
-                assertEquals(3, quiz.getLeerjaar());
+                assertEquals(Klas.A5 , quiz.getLeerjaar());
         }
 
         @Test
         public void testSetLeerjaar() {
-                quiz.setLeerjaar(6);
-                assertEquals(6, quiz.getLeerjaar());
+                quiz.setLeerjaar(Klas.A2);
+                assertEquals(Klas.A2, quiz.getLeerjaar());
         }
 
         @Test
