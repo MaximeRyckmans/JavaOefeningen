@@ -19,7 +19,7 @@ public class Start {
 
 		QuizCreatieView view = new QuizCreatieView();
 		OpdrachtCreatieView viewOp = new OpdrachtCreatieView();
-		QuizWijzigenView qW = new QuizWijzigenView();
+		//QuizWijzigenView qW = new QuizWijzigenView();
 		
 		OpdrachtCatalogus cat = new OpdrachtCatalogus();
 		QuizCatalogus qcat = new QuizCatalogus();
@@ -27,8 +27,8 @@ public class Start {
 		cat.leesOpdrachtenVanBestand();
 		qcat.leesQuizzenVanBestand();
 		
-		QuizListView qlv = new QuizListView(qcat);
-		QuizWijzigenController qC = new QuizWijzigenController(qW, qcat, cat);
+		//QuizListView qlv = new QuizListView(qcat);
+		//QuizWijzigenController qC = new QuizWijzigenController(qW, qcat, cat);
 		QuizCreatieController c = new QuizCreatieController(cat, qcat, view);
 
 	}
