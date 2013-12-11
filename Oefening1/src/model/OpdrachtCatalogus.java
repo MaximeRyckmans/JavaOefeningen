@@ -107,7 +107,7 @@ public class OpdrachtCatalogus implements Cloneable,
 			PrintWriter writer = new PrintWriter(file);
 			for (int i = 0; i < this.getOpdrachten().size(); i++) {
 				Opdracht opdracht = opdrachten.get(i);
-				String typeOpdracht = opdracht.getClass().toString();
+				String typeOpdracht = opdracht.getClass().getSimpleName();
 				String lijn = opdracht.getId() + "," + opdracht.getVraag()
 						+ "," + opdracht.getAntwoord() + ","
 						+ opdracht.getMaxAantalPogingen() + ","
