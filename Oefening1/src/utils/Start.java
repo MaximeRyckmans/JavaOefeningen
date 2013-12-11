@@ -14,8 +14,8 @@ import view.QuizWijzigenView;
 public class Start {
 
 	public static void main(String[] args) {
-		//MenuView menuView = new MenuView();
-		//MenuViewController mv = new MenuViewController(menuView);
+		MenuView menuView = new MenuView();
+		MenuViewController mv = new MenuViewController(menuView);
 
 		//QuizCreatieView view = new QuizCreatieView();
 		//OpdrachtCreatieView viewOp = new OpdrachtCreatieView();

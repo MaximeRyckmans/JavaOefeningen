@@ -29,9 +29,10 @@ public class MenuViewController implements ActionListener {
 			OpdrachtCatalogus cat = new OpdrachtCatalogus();
 			QuizCatalogus qcat = new QuizCatalogus();
 			QuizCreatieView view = new QuizCreatieView();
-			QuizCreatieController c = new QuizCreatieController(cat, qcat, view);
+			new QuizCreatieController(cat, qcat, view);
 		} else if (action.equals("Opdrachten")) {
-			OpdrachtCreatieView ov = new OpdrachtCreatieView();
+			OpdrachtCreatieView opdrachtCreatieView = new OpdrachtCreatieView();
+			new OpdrachtCreatieController(opdrachtCreatieView);
 		} else if (action.equals("Sluiten")) {
 			menuView.close();
 		}
