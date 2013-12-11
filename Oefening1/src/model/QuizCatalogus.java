@@ -17,9 +17,9 @@ import test.LeraarTest;
  */
 public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iterable<Quiz> {
 	private int id;
-	private static List<Quiz> quizzen = new	ArrayList<Quiz>();
+	private List<Quiz> quizzen = new	ArrayList<Quiz>();
 
-	public static List<Quiz> getQuizzen() {
+	public List<Quiz> getQuizzen() {
 		return quizzen;
 	}
 

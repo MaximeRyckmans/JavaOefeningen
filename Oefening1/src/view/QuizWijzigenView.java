@@ -3,9 +3,11 @@ package view;
 import java.awt.FlowLayout;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.ListModel;
 
 import java.awt.BorderLayout;
 
@@ -21,6 +23,7 @@ import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 /**
  * @author Davy Pulinx
@@ -33,7 +36,7 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 	
 	private JPanel pnlBackground, pnlLeft, pnlRight, pnlListQuizzen, pnlListOpdrInQuiz, pnlListOpdrachten;
 	private JLabel lblLijstVanQuizzen, lblOpdrachtenInQuiz, lblOpdrachtenInSystem;
-	private JList<?> listQuizzen, listOpdrachtenInQuiz, listOpdrachten;
+	private JList<String> listQuizzen, listOpdrachtenInQuiz, listOpdrachten;
 	private JButton btnWijzigQuiz, btnVerwijderOpdracht, btnToevoegenOpdracht, btnWijzigingOpslaan;
 	
 	public QuizWijzigenView() {
@@ -67,7 +70,7 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 	private void CreateLeftPanel() {
 		lblLijstVanQuizzen = new JLabel("Lijst van quizzen");
 		pnlListQuizzen = new JPanel();
-		listQuizzen = new JList<Quiz>();
+		listQuizzen = new JList<String>();
 		btnWijzigQuiz = new JButton("Wijzig quiz");
 		
 		pnlLeft = new JPanel();
@@ -97,9 +100,9 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 		lblOpdrachtenInQuiz = new JLabel("Opdrachten in quiz");
 		lblOpdrachtenInSystem = new JLabel("Opdrachten in het systeem");
 		pnlListOpdrInQuiz = new JPanel();
-		listOpdrachtenInQuiz = new JList<Opdracht>();
+		listOpdrachtenInQuiz = new JList<String>();
 		pnlListOpdrachten = new JPanel();
-		listOpdrachten = new JList<Opdracht>();
+		listOpdrachten = new JList<String>();
 		btnToevoegenOpdracht = new JButton("Voeg opdracht toe aan quiz");
 		btnVerwijderOpdracht = new JButton(" Verwijder opdracht in quiz ");
 		btnWijzigingOpslaan = new JButton("Wijziging opslaan");
@@ -159,6 +162,28 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 
 		btnWijzigQuiz.setActionCommand(btnWijzigQuiz.getName());
 		btnWijzigQuiz.addActionListener(al);
+	}
+	
+	public void setInitiëleWaarden(List<Quiz> quizzen, List<Opdracht> opdrachten){
+		DefaultListModel<String> model = new DefaultListModel<String>();
+		for (Quiz q : quizzen) {
+			model.addElement(q.getOnderwerp());
+		}
+		listQuizzen.setModel(model);
+		
+		DefaultListModel<String> modelO = new DefaultListModel<String>();
+		for (Opdracht o : opdrachten) {
+			modelO.addElement(o.getVraag());
+		}
+		listOpdrachten.setModel(modelO);
+	}
+	
+	public void setOpdrachtenInQuiz(List<Opdracht> opdrachten){
+		DefaultListModel<String> model = new DefaultListModel<String>();
+		for (Opdracht o : opdrachten) {
+			model.addElement(o.getVraag());
+		}
+		listOpdrachtenInQuiz.setModel(model);
 	}
 
 	public JPanel getPnlBackground() {
@@ -233,27 +258,27 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 		this.lblOpdrachtenInSystem = lblOpdrachtenInSystem;
 	}
 
-	public JList<?> getListQuizzen() {
+	public JList<String> getListQuizzen() {
 		return listQuizzen;
 	}
 
-	public void setListQuizzen(JList<?> listQuizzen) {
+	public void setListQuizzen(JList<String> listQuizzen) {
 		this.listQuizzen = listQuizzen;
 	}
 
-	public JList<?> getListOpdrachtenInQuiz() {
+	public JList<String> getListOpdrachtenInQuiz() {
 		return listOpdrachtenInQuiz;
 	}
 
-	public void setListOpdrachtenInQuiz(JList<?> listOpdrachtenInQuiz) {
+	public void setListOpdrachtenInQuiz(JList<String> listOpdrachtenInQuiz) {
 		this.listOpdrachtenInQuiz = listOpdrachtenInQuiz;
 	}
 
-	public JList<?> getListOpdrachten() {
+	public JList<String> getListOpdrachten() {
 		return listOpdrachten;
 	}
 
-	public void setListOpdrachten(JList<?> listOpdrachten) {
+	public void setListOpdrachten(JList<String> listOpdrachten) {
 		this.listOpdrachten = listOpdrachten;
 	}
 
