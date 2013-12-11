@@ -52,7 +52,6 @@ public class QuizWijzigenController implements ActionListener {
 			}
 		} else if (e.getActionCommand().equals("Wijzig quiz")) {
 			wijzigQuiz();
-			quizWijzigenView.setOpdrachtenInQuiz(quiz);
 		} else if (e.getActionCommand().equals("Annuleer")) {
 			annuleer();
 		} else {
@@ -61,8 +60,8 @@ public class QuizWijzigenController implements ActionListener {
 		
 	}
 
-	private void annuleer() {
-		quizWijzigenView.windowClosing("Ben je zeker dat je de wijzigingen wilt annuleren?", "Annuleer wijzigingen");
+	private void annuleer() {	
+		quizWijzigenView.confirmationWindow("Ben je zeker dat je de wijzigingen wilt annuleren?", "Annuleer wijzigingen");
 		
 		if (quizWijzigenView.isTrueIndicator()) {
 			for (Quiz q : quizCatalogus.getQuizzen()) {
@@ -70,30 +69,41 @@ public class QuizWijzigenController implements ActionListener {
 					q = copyQuizOld;
 				}
 			}
+			quizWijzigenView.closeWindow();
 		}
 	}
 
-	private void wijzigQuiz() {		
-		for (Quiz q : quizCatalogus.getQuizzen()) {
-			if (q.getOnderwerp().equals(quizWijzigenView.getListQuizzen().getSelectedValue())) {
+	private void wijzigQuiz() {	
+		quiz = quizWijzigenView.getListQuizzen().getSelectedValue();
+		copyQuizOld = quiz.clone();
+		quizWijzigenView.setOpdrachtenInQuiz(quiz);
+		
+		/*for (Quiz q : quizCatalogus.getQuizzen()) {
+			if (q.equals(quizWijzigenView.getListQuizzen().getSelectedValue())) {
 				quiz = q;
-				copyQuizOld = quiz;
+				copyQuizOld = q.clone();
 			}
-		}
+		}*/
 	}
 
 	private void wijzigingQuizOpslaan() {
-		quizWijzigenView.windowClosing("Ben je zeker dat je deze wijzigingen wilt opslaan?", "Opslaan wijzigingen");
-		
+		quizWijzigenView.confirmationWindow("Ben je zeker dat je deze wijzigingen wilt opslaan?", "Opslaan wijzigingen");
 		if (quizWijzigenView.isTrueIndicator()) {
-			String parse = quizWijzigenView.getTxtAantalDeelnames().toString();
+			String parse = quizWijzigenView.getTxtAantalDeelnames().getText();
 			quiz.setAantalDeelnames(Integer.parseInt(parse));
 			
 			for (Leraar leraar : Leraar.values()) {
 				if (leraar.toString().equals(quizWijzigenView.getCmbbxLeraar().getSelectedItem())) {
-					
+					quiz.setLeraar(leraar);
 				}
 			}
+			
+			quiz.setOnderwerp(quizWijzigenView.getTxtOnderwerp().getText());
+			
+			System.out.println(quiz.getOnderwerp());
+			System.out.println(copyQuizOld.getOnderwerp());
+			
+			quizWijzigenView.closeWindow();
 		}
 	}
 
@@ -113,7 +123,7 @@ public class QuizWijzigenController implements ActionListener {
 	private void voegOpdrachtToeAanQuiz() {
 		try {
 			for (Opdracht opdracht : opdrachtCatalogus.getOpdrachten()) {
-				if (opdracht.getVraag().equals(quizWijzigenView.getListOpdrachten().getSelectedValue())) {
+				if (opdracht.equals(quizWijzigenView.getListOpdrachten().getSelectedValue())) {
 					quiz.getOpdrachten().add(opdracht);
 					quizWijzigenView.setOpdrachtenInQuiz(quiz);
 				}

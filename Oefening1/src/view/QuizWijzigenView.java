@@ -49,7 +49,9 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 	lblOnderwerp, lblLeerjaar, lblLeraar, lblAantalDeelnames, lblQuizStatus;
 	private JTextField txtOnderwerp, txtAantalDeelnames;
 	private JComboBox<String> cmbbxLeerjaar, cmbbxLeraar, cmbbxQuizStatus;
-	private JList<String> listQuizzen, listOpdrachtenInQuiz, listOpdrachten;
+	//private JList<String> listQuizzen, listOpdrachtenInQuiz, listOpdrachten;
+	private JList<Quiz> listQuizzen;
+	private JList<Opdracht> listOpdrachtenInQuiz, listOpdrachten;
 	private JButton btnWijzigQuiz, btnVerwijderOpdracht, btnToevoegenOpdracht, btnWijzigingOpslaan, btnAnnuleerWijziging;
 	private boolean trueIndicator = false;
 	private final String NOT_SELECTABLE_OPTION = " - Selecteer waarde - ";
@@ -144,7 +146,7 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 	private void CreateLeftPanel() {
 		lblLijstVanQuizzen = new JLabel("Lijst van quizzen");
 		pnlListQuizzen = new JPanel();
-		listQuizzen = new JList<String>();
+		listQuizzen = new JList<Quiz>();
 		btnWijzigQuiz = new JButton("Wijzig quiz");
 		
 		pnlLeft = new JPanel();
@@ -174,9 +176,9 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 		lblOpdrachtenInQuiz = new JLabel("Opdrachten in quiz");
 		lblOpdrachtenInSystem = new JLabel("Opdrachten in het systeem");
 		pnlListOpdrInQuiz = new JPanel();
-		listOpdrachtenInQuiz = new JList<String>();
+		listOpdrachtenInQuiz = new JList<Opdracht>();
 		pnlListOpdrachten = new JPanel();
-		listOpdrachten = new JList<String>();
+		listOpdrachten = new JList<Opdracht>();
 		btnToevoegenOpdracht = new JButton("Voeg opdracht toe aan quiz");
 		btnVerwijderOpdracht = new JButton(" Verwijder opdracht in quiz ");
 		btnWijzigingOpslaan = new JButton("Alle wijzigingen opslaan");
@@ -251,15 +253,15 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 	}
 	
 	public void setInitiëleWaarden(List<Quiz> quizzen, List<Opdracht> opdrachten){
-		DefaultListModel<String> model = new DefaultListModel<String>();
+		DefaultListModel<Quiz> model = new DefaultListModel<Quiz>();
 		for (Quiz q : quizzen) {
-			model.addElement(q.getOnderwerp());
+			model.addElement(q);
 		}
 		listQuizzen.setModel(model);
 		
-		DefaultListModel<String> modelO = new DefaultListModel<String>();
+		DefaultListModel<Opdracht> modelO = new DefaultListModel<Opdracht>();
 		for (Opdracht o : opdrachten) {
-			modelO.addElement(o.getVraag());
+			modelO.addElement(o);
 		}
 		listOpdrachten.setModel(modelO);
 		
@@ -279,19 +281,19 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 	}
 	
 	public void setOpdrachtenInQuiz(Quiz quiz){
-		DefaultListModel<String> model = new DefaultListModel<String>();
+		DefaultListModel<Opdracht> model = new DefaultListModel<Opdracht>();
 		for (Opdracht o : quiz.getOpdrachten()) {
 			Integer parse = quiz.getAantalDeelnames();
 			txtAantalDeelnames.setText(parse.toString());
 			txtOnderwerp.setText(quiz.getOnderwerp());
 			cmbbxLeraar.setSelectedItem(quiz.getLeraar().toString());
 			cmbbxQuizStatus.setSelectedItem(quiz.getQuizStatus().toString());
-			model.addElement(o.getVraag());
+			model.addElement(o);
 		}
 		listOpdrachtenInQuiz.setModel(model);
 	}
 	
-	public void windowClosing(String Confirmation, String title){
+	public void confirmationWindow(String Confirmation, String title){
         int result = JOptionPane.showConfirmDialog(
             this,
             Confirmation,
@@ -299,12 +301,15 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
             JOptionPane.YES_NO_OPTION);
 
         if (result == JOptionPane.YES_OPTION){
-            this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
             trueIndicator = true;
         } else {
 			trueIndicator = false;
 		}
     }
+	
+	public void closeWindow() {
+		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+	}
 	
 	public void popUpWindow(){
 		// check the pop up!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -399,27 +404,27 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 		this.lblOpdrachtenInSystem = lblOpdrachtenInSystem;
 	}
 
-	public JList<String> getListQuizzen() {
+	public JList<Quiz> getListQuizzen() {
 		return listQuizzen;
 	}
 
-	public void setListQuizzen(JList<String> listQuizzen) {
+	public void setListQuizzen(JList<Quiz> listQuizzen) {
 		this.listQuizzen = listQuizzen;
 	}
 
-	public JList<String> getListOpdrachtenInQuiz() {
+	public JList<Opdracht> getListOpdrachtenInQuiz() {
 		return listOpdrachtenInQuiz;
 	}
 
-	public void setListOpdrachtenInQuiz(JList<String> listOpdrachtenInQuiz) {
+	public void setListOpdrachtenInQuiz(JList<Opdracht> listOpdrachtenInQuiz) {
 		this.listOpdrachtenInQuiz = listOpdrachtenInQuiz;
 	}
 
-	public JList<String> getListOpdrachten() {
+	public JList<Opdracht> getListOpdrachten() {
 		return listOpdrachten;
 	}
 
-	public void setListOpdrachten(JList<String> listOpdrachten) {
+	public void setListOpdrachten(JList<Opdracht> listOpdrachten) {
 		this.listOpdrachten = listOpdrachten;
 	}
 

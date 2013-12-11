@@ -104,6 +104,12 @@ public class Quiz implements Cloneable, Comparable<Quiz>, Iterable<Opdracht> {
 			System.out.println(ex);
 		}
 	}
+	
+	public Quiz clone(){
+		Quiz quiz = new Quiz(id, aantalDeelnames, leerjaar, leraar, onderwerp, quizStatus,
+				opdrachten);
+		return quiz;
+	}
 
 	@Override
 	public int hashCode() {
@@ -153,10 +159,7 @@ public class Quiz implements Cloneable, Comparable<Quiz>, Iterable<Opdracht> {
 
 	@Override
 	public String toString() {
-		return "Quiz [aantalDeelnames=" + aantalDeelnames + ", leerjaar="
-				+ leerjaar + ", leraar=" + leraar + ", onderwerp=" + onderwerp
-				+ ", quizStatus=" + quizStatus + ", opdrachten=" + opdrachten
-				+ "]";
+		return this.getOnderwerp();
 	}
 
 	@Override
