@@ -19,6 +19,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import model.Klas;
 import model.Leraar;
 import model.Opdracht;
 import model.OpdrachtCategorie;
@@ -36,7 +37,8 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	
 	private JTextField onderwerpText;
 	
-	private JComboBox<String> klas, sorteerOpdr;
+	private JComboBox<String> sorteerOpdr;
+	private JComboBox<Klas> klas;
 	private JComboBox<OpdrachtCategorie> categorie;
 	private JComboBox<QuizStatus> quizStatus;
 	private JComboBox<Leraar> auteur;
@@ -78,7 +80,7 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 		onderwerpL = new JLabel();
 		onderwerpText = new JTextField(20);
 		klasL = new JLabel();
-		klas = new JComboBox<String>();
+		klas = new JComboBox<Klas>();
 		auteurL = new JLabel();
 		auteur = new JComboBox<Leraar>();
 		auteur.setModel(new DefaultComboBoxModel<>(Leraar.values()));
@@ -216,7 +218,7 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	/**
 	 * @return the klas
 	 */
-	public JComboBox<String> getKlas() {
+	public JComboBox<Klas> getKlas() {
 		return klas;
 	}
 
@@ -224,7 +226,7 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	 * @param klas
 	 *            the klas to set
 	 */
-	public void setKlas(JComboBox<String> klas) {
+	public void setKlas(JComboBox<Klas> klas) {
 		this.klas = klas;
 	}
 
