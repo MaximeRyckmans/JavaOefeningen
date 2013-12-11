@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JPopupMenu;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
@@ -50,9 +51,9 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 	private JComboBox<String> cmbbxLeerjaar, cmbbxLeraar, cmbbxQuizStatus;
 	private JList<String> listQuizzen, listOpdrachtenInQuiz, listOpdrachten;
 	private JButton btnWijzigQuiz, btnVerwijderOpdracht, btnToevoegenOpdracht, btnWijzigingOpslaan, btnAnnuleerWijziging;
-	private boolean canceledIndicator = false;
-	private static final String NOT_SELECTABLE_OPTION = " - Selecteer waarde - ";
-	
+	private boolean trueIndicator = false;
+	private final String NOT_SELECTABLE_OPTION = " - Selecteer waarde - ";
+
 	public QuizWijzigenView() {
 		super("Wijzigen van quizzen");
 		this.setSize(1350,900);
@@ -277,9 +278,14 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 		cmbbxQuizStatus.setModel(modelS);
 	}
 	
-	public void setOpdrachtenInQuiz(List<Opdracht> opdrachten){
+	public void setOpdrachtenInQuiz(Quiz quiz){
 		DefaultListModel<String> model = new DefaultListModel<String>();
-		for (Opdracht o : opdrachten) {
+		for (Opdracht o : quiz.getOpdrachten()) {
+			Integer parse = quiz.getAantalDeelnames();
+			txtAantalDeelnames.setText(parse.toString());
+			txtOnderwerp.setText(quiz.getOnderwerp());
+			cmbbxLeraar.setSelectedItem(quiz.getLeraar().toString());
+			cmbbxQuizStatus.setSelectedItem(quiz.getQuizStatus().toString());
 			model.addElement(o.getVraag());
 		}
 		listOpdrachtenInQuiz.setModel(model);
@@ -294,11 +300,24 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 
         if (result == JOptionPane.YES_OPTION){
             this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
-            canceledIndicator = true;
+            trueIndicator = true;
         } else {
-			canceledIndicator = false;
+			trueIndicator = false;
 		}
     }
+	
+	public void popUpWindow(){
+		// check the pop up!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		String text = "Selecteer een geldige waarde voor ";
+		
+		if (cmbbxLeraar.getSelectedItem().equals(NOT_SELECTABLE_OPTION)) {
+			JOptionPane.showMessageDialog(this, text + "leraar", text + "leraar", ABORT);
+		}else if (cmbbxQuizStatus.getSelectedItem().equals(NOT_SELECTABLE_OPTION)) {
+			JOptionPane.showMessageDialog(this, text + "quiz status", text + "quiz status", ABORT);
+		}else if (cmbbxLeerjaar.getSelectedItem().equals(NOT_SELECTABLE_OPTION)) {
+			JOptionPane.showMessageDialog(this, text + "leerjaar", text + "leerjaar", ABORT);
+		}
+	}
 
 	public JPanel getPnlBackground() {
 		return pnlBackground;
@@ -440,12 +459,12 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 		return serialVersionUID;
 	}
 
-	public boolean isCanceledIndicator() {
-		return canceledIndicator;
+	public boolean isTrueIndicator() {
+		return trueIndicator;
 	}
 
-	public void setCanceledIndicator(boolean canceledIndicator) {
-		this.canceledIndicator = canceledIndicator;
+	public void setTrueIndicator(boolean trueIndicator) {
+		this.trueIndicator = trueIndicator;
 	}
 
 	public JLabel getLblMiddle() {
@@ -544,6 +563,10 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 		this.btnAnnuleerWijziging = btnAnnuleerWijziging;
 	}
 
+	public String getNotSelectableOption() {
+		return NOT_SELECTABLE_OPTION;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub

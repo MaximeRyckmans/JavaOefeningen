@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
+import model.Leraar;
 import model.Opdracht;
 import model.OpdrachtCatalogus;
 import model.Quiz;
@@ -43,10 +44,15 @@ public class QuizWijzigenController implements ActionListener {
 		} else if (e.getActionCommand().equals(" Verwijder opdracht in quiz ")) {
 			verwijderOpdrachtInQuiz();
 		} else if (e.getActionCommand().equals("Alle wijzigingen opslaan")) {
-			wijzigingQuizOpslaan();
+			if (!quizWijzigenView.getCmbbxLeraar().getSelectedItem().equals(quizWijzigenView.getNotSelectableOption()) ||
+					!quizWijzigenView.getCmbbxQuizStatus().getSelectedItem().equals(quizWijzigenView.getNotSelectableOption())) {
+				wijzigingQuizOpslaan();
+			}else {
+				quizWijzigenView.popUpWindow();
+			}
 		} else if (e.getActionCommand().equals("Wijzig quiz")) {
 			wijzigQuiz();
-			quizWijzigenView.setOpdrachtenInQuiz(quiz.getOpdrachten());
+			quizWijzigenView.setOpdrachtenInQuiz(quiz);
 		} else if (e.getActionCommand().equals("Annuleer")) {
 			annuleer();
 		} else {
@@ -58,7 +64,7 @@ public class QuizWijzigenController implements ActionListener {
 	private void annuleer() {
 		quizWijzigenView.windowClosing("Ben je zeker dat je de wijzigingen wilt annuleren?", "Annuleer wijzigingen");
 		
-		if (quizWijzigenView.isCanceledIndicator()) {
+		if (quizWijzigenView.isTrueIndicator()) {
 			for (Quiz q : quizCatalogus.getQuizzen()) {
 				if (q.getId() == copyQuizOld.getId()) {
 					q = copyQuizOld;
@@ -78,6 +84,17 @@ public class QuizWijzigenController implements ActionListener {
 
 	private void wijzigingQuizOpslaan() {
 		quizWijzigenView.windowClosing("Ben je zeker dat je deze wijzigingen wilt opslaan?", "Opslaan wijzigingen");
+		
+		if (quizWijzigenView.isTrueIndicator()) {
+			String parse = quizWijzigenView.getTxtAantalDeelnames().toString();
+			quiz.setAantalDeelnames(Integer.parseInt(parse));
+			
+			for (Leraar leraar : Leraar.values()) {
+				if (leraar.toString().equals(quizWijzigenView.getCmbbxLeraar().getSelectedItem())) {
+					
+				}
+			}
+		}
 	}
 
 	private void verwijderOpdrachtInQuiz() {
@@ -85,7 +102,7 @@ public class QuizWijzigenController implements ActionListener {
 			for (Opdracht opdracht : quiz.getOpdrachten()) {
 				if (opdracht.getVraag().equals(quizWijzigenView.getListOpdrachtenInQuiz().getSelectedValue())) {
 					quiz.getOpdrachten().remove(opdracht);
-					quizWijzigenView.setOpdrachtenInQuiz(quiz.getOpdrachten());
+					quizWijzigenView.setOpdrachtenInQuiz(quiz);
 				}
 			}
 		} catch (Exception e) {
@@ -98,7 +115,7 @@ public class QuizWijzigenController implements ActionListener {
 			for (Opdracht opdracht : opdrachtCatalogus.getOpdrachten()) {
 				if (opdracht.getVraag().equals(quizWijzigenView.getListOpdrachten().getSelectedValue())) {
 					quiz.getOpdrachten().add(opdracht);
-					quizWijzigenView.setOpdrachtenInQuiz(quiz.getOpdrachten());
+					quizWijzigenView.setOpdrachtenInQuiz(quiz);
 				}
 			}
 		} catch (Exception e) {
