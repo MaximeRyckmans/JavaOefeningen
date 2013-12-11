@@ -11,6 +11,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 
+import model.Klas;
 import model.Leraar;
 import model.Opdracht;
 import model.OpdrachtCatalogus;
@@ -28,8 +29,7 @@ public class QuizCreatieController implements ActionListener, ItemListener {
 	private OpdrachtCatalogus opdrachtCatalogusModel;
 	private QuizCatalogus quizCatalogusModel;
 	private List<Opdracht> opdrachten;
-	private String[] klassen = { "1A", "1B", "1C", "2A", "2B", "2C", "3A",
-			"3B", "4A", "5A", "6A" };
+	private Klas klas;
 	private String[] sorterenOp = { "geen", "categorie", "vraag" };
 	private String[] col = { "Opdracht", "MaximumScore" };
 
@@ -114,7 +114,8 @@ public class QuizCreatieController implements ActionListener, ItemListener {
 		quizCreatieView.getAantalToegevoegdeOpdr().setText("0");
 
 		// Set all the comboboxes
-		quizCreatieView.getKlas().setModel(new DefaultComboBoxModel<>(klassen));
+		quizCreatieView.getKlas().setModel(new DefaultComboBoxModel<>(klas.values()));
+		
 		quizCreatieView.getSorteerOpdr().setModel(
 				new DefaultComboBoxModel<>(sorterenOp));
 		quizCreatieView.getCategorie().setModel(
