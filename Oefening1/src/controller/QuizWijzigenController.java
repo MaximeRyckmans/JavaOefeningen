@@ -56,10 +56,7 @@ public class QuizWijzigenController implements ActionListener {
 			wijzigQuiz();
 		} else if (e.getActionCommand().equals("Annuleer")) {
 			annuleer();
-		} else {
-
-		}
-		
+		}		
 	}
 
 	private void annuleer() {	
