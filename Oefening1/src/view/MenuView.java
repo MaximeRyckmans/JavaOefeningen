@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
- * @author Goossens Nicolas
+ * @author Goossens Nicolas & Davy Pulinx
  * @version 1.0
  */
 
@@ -35,8 +35,8 @@ public class MenuView extends JFrame implements ActionListener {
 		JPanel panel = new JPanel();
 		panel.setVisible(true);
 		panel.setLayout(new GridLayout(3,0));
-		quiz = new JButton("Quizes");
-		opdracht = new JButton("Opdrachten");
+		quiz = new JButton("Lijst van Quizzen");
+		opdracht = new JButton("Lijst van Opdrachten");
 		sluit = new JButton("Sluiten");
 		
 		panel.add(quiz);

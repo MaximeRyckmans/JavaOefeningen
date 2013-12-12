@@ -20,6 +20,7 @@ import java.awt.BorderLayout;
 import javax.swing.JList;
 import javax.swing.JButton;
 
+import model.Klas;
 import model.Leraar;
 import model.Opdracht;
 import model.Quiz;
@@ -44,12 +45,11 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 
 	private static final long serialVersionUID = 1L;
 	
-	private JPanel pnlBackground, pnlLeft, pnlMiddle, pnlRight, pnlListQuizzen, pnlListOpdrInQuiz, pnlListOpdrachten;
+	private JPanel pnlBackground, pnlRightBackground, pnlRightBot, pnlLeft, pnlMiddle, pnlRight, pnlListQuizzen, pnlListOpdrInQuiz, pnlListOpdrachten;
 	private JLabel lblLijstVanQuizzen, lblOpdrachtenInQuiz, lblOpdrachtenInSystem, lblMiddle, 
 	lblOnderwerp, lblLeerjaar, lblLeraar, lblAantalDeelnames, lblQuizStatus;
 	private JTextField txtOnderwerp, txtAantalDeelnames;
 	private JComboBox<String> cmbbxLeerjaar, cmbbxLeraar, cmbbxQuizStatus;
-	//private JList<String> listQuizzen, listOpdrachtenInQuiz, listOpdrachten;
 	private JList<Quiz> listQuizzen;
 	private JList<Opdracht> listOpdrachtenInQuiz, listOpdrachten;
 	private JButton btnWijzigQuiz, btnVerwijderOpdracht, btnToevoegenOpdracht, btnWijzigingOpslaan, btnAnnuleerWijziging;
@@ -64,6 +64,9 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 		
 		pnlBackground = new JPanel();
 		pnlBackground.setLayout(new GridBagLayout());
+		pnlRightBackground = new JPanel();
+		pnlRightBackground.setLayout(new GridBagLayout());
+		pnlRightBot = new JPanel();
 		
 		CreateLeftPanel();
 		CreateMiddlePanel();
@@ -84,7 +87,7 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 		gbc.gridheight = GridBagConstraints.REMAINDER;
 		gbc.gridx++;
 		gbc.weightx = 0.3;
-		pnlBackground.add(pnlRight);
+		pnlBackground.add(pnlRight);		
 		
 		this.add(pnlBackground , BorderLayout.NORTH);
 		this.setVisible(true);
@@ -195,7 +198,7 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 		gbc.gridy = 0;
 		pnlRight.add(lblOpdrachtenInQuiz, gbc);
 		
-		pnlListOpdrInQuiz.setPreferredSize(new Dimension(350, 300));
+		pnlListOpdrInQuiz.setPreferredSize(new Dimension(400, 300));
 		pnlListOpdrInQuiz.setBorder(BorderFactory.createLoweredBevelBorder());
 		pnlListOpdrInQuiz.add(listOpdrachtenInQuiz);
 		gbc.gridx = 0;
@@ -212,7 +215,7 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 		gbc.insets = new Insets(0, 0, 0, 0);
 		pnlRight.add(lblOpdrachtenInSystem, gbc);
 		
-		pnlListOpdrachten.setPreferredSize(new Dimension(350, 300));
+		pnlListOpdrachten.setPreferredSize(new Dimension(400, 300));
 		pnlListOpdrachten.setBorder(BorderFactory.createLoweredBevelBorder());
 		pnlListOpdrachten.add(listOpdrachten);
 		gbc.gridx = 0;
@@ -224,13 +227,12 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 		gbc.insets = new Insets(0, 0, 30, 0);
 		pnlRight.add(btnToevoegenOpdracht, gbc);
 		
-		JPanel btns = new JPanel();
-		btns.add(btnWijzigingOpslaan);
-		btns.add(btnAnnuleerWijziging);
+		pnlRightBot.add(btnWijzigingOpslaan);
+		pnlRightBot.add(btnAnnuleerWijziging);
 		gbc.gridx = 0;
 		gbc.gridy = 6;
 		gbc.insets = new Insets(0, 0, 0, 0);
-		pnlRight.add(btns, gbc);
+		pnlRight.add(pnlRightBot, gbc);
 		
 	}
 	
@@ -265,6 +267,13 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 		}
 		listOpdrachten.setModel(modelO);
 		
+		DefaultComboBoxModel<String> modelLj = new DefaultComboBoxModel<String>();
+		modelLj.addElement(NOT_SELECTABLE_OPTION);
+		for (Klas klas : Klas.values()) {
+			modelLj.addElement(klas.toString());
+		}
+		cmbbxLeerjaar.setModel(modelLj);
+		
 		DefaultComboBoxModel<String> modelL = new DefaultComboBoxModel<String>();
 		modelL.addElement(NOT_SELECTABLE_OPTION);
 		for (Leraar leraar : Leraar.values()) {
@@ -286,6 +295,7 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 			Integer parse = quiz.getAantalDeelnames();
 			txtAantalDeelnames.setText(parse.toString());
 			txtOnderwerp.setText(quiz.getOnderwerp());
+			cmbbxLeerjaar.setSelectedItem(quiz.getLeerjaar().toString());
 			cmbbxLeraar.setSelectedItem(quiz.getLeraar().toString());
 			cmbbxQuizStatus.setSelectedItem(quiz.getQuizStatus().toString());
 			model.addElement(o);
