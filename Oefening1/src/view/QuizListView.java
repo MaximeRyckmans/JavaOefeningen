@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
 
 import model.Opdracht;
 import model.Quiz;
@@ -55,6 +56,7 @@ public class QuizListView extends JFrame implements ActionListener{
 		top = new DefaultMutableTreeNode("Lijst van Quizen");
 		
 		tree = new JTree(top);
+		tree.expandPath(tree.getPathForRow(0));
 		JScrollPane pane = new JScrollPane(tree);
 		pane.setPreferredSize(new Dimension(450, 600));
 		
@@ -92,22 +94,26 @@ public class QuizListView extends JFrame implements ActionListener{
 			DefaultMutableTreeNode opdracht = null;
 			List<Quiz> quizzen = quizCatalogus.getQuizzen();
 			for(Quiz q : quizzen){
-				String nameQuiz = q.getOnderwerp();
+				String nameQuiz = q.toString();
 		
 				quiz = new DefaultMutableTreeNode(nameQuiz);
 				top.add(quiz);
 		
-				for (Opdracht opdr : q) {
-					String nameOpdracht = opdr.getVraag();
+				for (Opdracht opdr : q.getOpdrachten()) {
+					String nameOpdracht = opdr.toString();
 			
 					opdracht = new DefaultMutableTreeNode(nameOpdracht);
 					quiz.add(opdracht);
 				}
 			}
 			
-			for (int i = 0; i < tree.getComponentCount(); i++) {
-				tree.expandRow(i);
-			}
+			DefaultMutableTreeNode currentNode = top.getNextNode();
+		    do {
+		       if (currentNode.getLevel()==1) 
+		            tree.expandPath(new TreePath(currentNode.getPath()));
+		       currentNode = currentNode.getNextNode();
+		       }
+		    while (currentNode != null);
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
