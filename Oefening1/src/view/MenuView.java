@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -27,6 +28,20 @@ public class MenuView extends JFrame implements ActionListener {
 		this.setLocation(500, 400);
 		this.setSize(400, 100);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		this.addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent e) {
+		        int result = JOptionPane.showConfirmDialog(
+		        		e.getWindow(),
+		        		"Bent u zeker dat u wilt afsluiten? Niet opgeslagen gegevens kunnen verloren gaan.",
+		        		"Confirmatie voor aflsuiten",
+		        		JOptionPane.YES_NO_OPTION);
+		        if (result == JOptionPane.YES_OPTION) {
+					System.exit(0);
+				}
+		    }
+		});
 		
 		this.add(createPanel());
 		this.setVisible(true);
