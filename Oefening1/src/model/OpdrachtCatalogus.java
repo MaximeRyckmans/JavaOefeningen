@@ -138,7 +138,6 @@ public class OpdrachtCatalogus implements Cloneable,
 	public void leesOpdrachtenVanBestand() {
 
 		File file = new File("bestanden/opdrachten");
-
 		try {
 			Scanner scanner = new Scanner(file);
 			while (scanner.hasNext()) {
@@ -175,7 +174,7 @@ public class OpdrachtCatalogus implements Cloneable,
 							opdrachtCategorie);
 				}
 				this.opdrachten.add(opdracht);
-
+				file.delete();
 			}
 			if (scanner != null) {
 				scanner.close();

@@ -25,7 +25,7 @@ public class OpdrachtCreatieController implements ActionListener {
 	public OpdrachtCreatieController(OpdrachtCreatieView opdrCreatieView, OpdrachtCatalogus opdrachtCatalogus) {
 		this.opdrCreatieView = opdrCreatieView;
 		this.opdrachtCatalogus = opdrachtCatalogus;
-		opdrCreatieView.buttonActionListener(this);
+		this.opdrCreatieView.buttonActionListener(this);
 	}
 
 	public void createOpdracht() {
@@ -44,8 +44,6 @@ public class OpdrachtCreatieController implements ActionListener {
 								.toString()),
 						(OpdrachtCategorie) opdrCreatieView
 								.getOpdrachtCategorie().getSelectedItem());
-				opdrachtCatalogus.addOpdrachtToList(opdracht);
-				opdrachtCatalogus.schrijfOpdrachtenNaarBestand();
 			} else if (Categorie.Meerkeuze.toString() == opdrCreatieView
 					.getCategorie().getSelectedItem().toString()) {
 				OpdrachtCategorie categorie = (OpdrachtCategorie)opdrCreatieView.getOpdrachtCategorie().getSelectedItem();
@@ -56,8 +54,7 @@ public class OpdrachtCreatieController implements ActionListener {
 								.getAntwoordT().getText(),
 						aantalPogingen, "één;twee;drie;vier",
 						categorie);
-				opdrachtCatalogus.addOpdrachtToList(opdracht);
-				opdrachtCatalogus.schrijfOpdrachtenNaarBestand();
+				
 
 			}
 		} catch (Exception ex) {
@@ -71,6 +68,8 @@ public class OpdrachtCreatieController implements ActionListener {
 		if (action.equals("Toevoegen")) {
 			System.out.println("here");
 			createOpdracht();
+			opdrachtCatalogus.addOpdrachtToList(opdracht);
+			opdrachtCatalogus.schrijfOpdrachtenNaarBestand();
 		}
 
 	}
