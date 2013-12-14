@@ -42,6 +42,7 @@ public class OpdrachtCatalogus implements Cloneable,
 
 	public void addOpdrachtToList(Opdracht opdracht) {
 		if (!opdracht.equals(null) || !opdrachten.contains(opdracht)) {
+			opdracht.setId(opdrachten.size()+1);
 			this.opdrachten.add(opdracht);
 		}
 	}

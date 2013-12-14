@@ -35,7 +35,7 @@ public class MenuViewController implements ActionListener {
 			QuizListController controller = new QuizListController(view, qCat, opdrachtCatalogus);
 			/*QuizCreatieView view = new QuizCreatieView();
 			new QuizCreatieController(cat, qcat, view);*/
-		} else if (action.equals("Lijst vanOpdrachten")) {
+		} else if (action.equals("Lijst van Opdrachten")) {
 			OpdrachtCreatieView opdrachtCreatieView = new OpdrachtCreatieView();
 			new OpdrachtCreatieController(opdrachtCreatieView);
 		} else if (action.equals("Sluiten")) {
