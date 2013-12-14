@@ -19,11 +19,12 @@ import view.QuizCreatieView;
 
 public class OpdrachtCreatieController implements ActionListener {
 	private Opdracht opdracht;
-	OpdrachtCatalogus oc = new OpdrachtCatalogus();
+	private OpdrachtCatalogus opdrachtCatalogus;
 	private OpdrachtCreatieView opdrCreatieView;
 
-	public OpdrachtCreatieController(OpdrachtCreatieView opdrCreatieView) {
+	public OpdrachtCreatieController(OpdrachtCreatieView opdrCreatieView, OpdrachtCatalogus opdrachtCatalogus) {
 		this.opdrCreatieView = opdrCreatieView;
+		this.opdrachtCatalogus = opdrachtCatalogus;
 		opdrCreatieView.buttonActionListener(this);
 	}
 
@@ -43,8 +44,8 @@ public class OpdrachtCreatieController implements ActionListener {
 								.toString()),
 						(OpdrachtCategorie) opdrCreatieView
 								.getOpdrachtCategorie().getSelectedItem());
-				oc.addOpdrachtToList(opdracht);
-				oc.schrijfOpdrachtenNaarBestand();
+				opdrachtCatalogus.addOpdrachtToList(opdracht);
+				opdrachtCatalogus.schrijfOpdrachtenNaarBestand();
 			} else if (Categorie.Meerkeuze.toString() == opdrCreatieView
 					.getCategorie().getSelectedItem().toString()) {
 				OpdrachtCategorie categorie = (OpdrachtCategorie)opdrCreatieView.getOpdrachtCategorie().getSelectedItem();
@@ -55,8 +56,8 @@ public class OpdrachtCreatieController implements ActionListener {
 								.getAntwoordT().getText(),
 						aantalPogingen, "één;twee;drie;vier",
 						categorie);
-				oc.addOpdrachtToList(opdracht);
-				oc.schrijfOpdrachtenNaarBestand();
+				opdrachtCatalogus.addOpdrachtToList(opdracht);
+				opdrachtCatalogus.schrijfOpdrachtenNaarBestand();
 
 			}
 		} catch (Exception ex) {

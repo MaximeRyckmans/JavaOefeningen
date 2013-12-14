@@ -24,6 +24,7 @@ public class MenuViewController implements ActionListener {
 		this.menuView = menuView;
 		this.qCat = quizCatalogus;
 		this.opdrachtCatalogus = opdrachtCatalogus;
+		this.opdrachtCatalogus.leesOpdrachtenVanBestand();
 		menuView.buttonActionListener(this);
 	}
 
@@ -36,8 +37,7 @@ public class MenuViewController implements ActionListener {
 			/*QuizCreatieView view = new QuizCreatieView();
 			new QuizCreatieController(cat, qcat, view);*/
 		} else if (action.equals("Lijst van Opdrachten")) {
-			OpdrachtCreatieView opdrachtCreatieView = new OpdrachtCreatieView();
-			new OpdrachtCreatieController(opdrachtCreatieView);
+			new OpdrachtCreatieController(new OpdrachtCreatieView(), opdrachtCatalogus);
 		} else if (action.equals("Sluiten")) {
 			menuView.close();
 		}
