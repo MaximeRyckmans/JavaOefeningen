@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 /**
- * @author Goossens Nicolas & Davy Pulinx
+ * @author Goossens Nicolas
  * @version 1.0
  */
 

@@ -11,7 +11,7 @@ import view.QuizCreatieView;
 import view.QuizListView;
 
 /**
- * @author Goossens Nicolas & Davy Pulinx
+ * @author Goossens Nicolas
  * @version 1.0
  */
 

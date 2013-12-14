@@ -9,6 +9,13 @@ import view.QuizCreatieView;
 import view.QuizListView;
 import view.QuizWijzigenView;
 
+/**
+ * 
+ * @author Davy Pulinx
+ * @version 1.0
+ *
+ */
+
 public class QuizListController implements ActionListener{
 	
 	private QuizListView quizListView;
