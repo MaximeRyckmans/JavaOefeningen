@@ -8,6 +8,7 @@ import java.awt.event.ItemListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -18,11 +19,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import model.Klas;
 import model.Leraar;
 import model.Opdracht;
 import model.OpdrachtCategorie;
+import model.OpdrachtTableModel;
 import model.QuizStatus;
 
 /**
@@ -49,6 +52,7 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	
 	private JList<Opdracht> opdrachten;
 	
+	private DefaultTableModel tableModel;
 	private JTable geselecteerdeOpdrachten;
 	
 	JScrollPane pane;
@@ -134,6 +138,45 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 		lowerPanel.add(naarLinks);
 		lowerPanel.add(naarBoven);
 		lowerPanel.add(pane);
+
+	}
+	public void setInitiëleWaardenQuizCreatieView(DefaultTableModel tableModel,String[] sorterenOp, Klas klas, DefaultListModel<Opdracht> listModel) {
+		// Set the text of all labels in the quizCreatieView
+		this.getOnderwerpL().setText("Onderwerp:");
+		this.getKlasL().setText("Klas:");
+		this.getAuteurL().setText("Auteur:");
+		this.getCategorieL().setText("Toon opdrachten van:");
+		this.getAantalToegevoegdeOpdrL().setText(
+				"Aantal toegevoegde opdrachten:");
+		this.getSorteerOpdrL().setText("Sorteer opdrachten op:");
+		this.getAantalToegevoegdeOpdr().setText("0");
+
+		// Set all the comboboxes
+		this.getKlas().setModel(new DefaultComboBoxModel<>(klas.values()));
+		
+		this.getSorteerOpdr().setModel(
+				new DefaultComboBoxModel<>(sorterenOp));
+		this.getCategorie().setModel(
+				new DefaultComboBoxModel<>(OpdrachtCategorie.values()));
+		this.getQuizStatus().setModel(
+				new DefaultComboBoxModel<>(QuizStatus.values()));
+		this.getAuteur().setModel(
+				new DefaultComboBoxModel<>(Leraar.values()));
+
+		// Set all the buttons
+		this.getNieuweQuiz().setText("Registreer nieuwe quiz");
+		this.getNaarBoven().setText("^^^^");
+		this.getNaarRechts().setText(">>>>");
+		this.getNaarLinks().setText("<<<<");
+
+		// Set the data in the JList that contains all the opdrachten
+	//	DefaultListModel<Opdracht> listModel = new DefaultListModel<Opdracht>();
+	//	this.populeerListModel(listModel);
+		this.getOpdrachten().setModel(listModel);
+
+		// Set the headers for the JTable that holds the selected Opdrachten.
+		this.tableModel = tableModel;
+		this.getGeselecteerdeOpdrachten().setModel(tableModel);
 
 	}
 		
@@ -348,6 +391,14 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	 */
 	public void setCategorie(JComboBox<OpdrachtCategorie> categorie) {
 		this.categorie = categorie;
+	}
+
+	public DefaultTableModel getTableModel() {
+		return tableModel;
+	}
+
+	public void setTableModel(DefaultTableModel tableModel) {
+		this.tableModel = tableModel;
 	}
 
 	/**

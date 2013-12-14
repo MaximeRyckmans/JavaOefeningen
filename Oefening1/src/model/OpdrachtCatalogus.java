@@ -177,7 +177,7 @@ public class OpdrachtCatalogus implements Cloneable,
 								maxAntwoordTijd, opdrachtCategorie);
 					}
 					this.opdrachten.add(opdracht);
-					file.delete();
+			//		file.delete();
 				}
 				if (scanner != null) {
 					scanner.close();

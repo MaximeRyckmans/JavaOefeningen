@@ -19,12 +19,13 @@ public class OpdrachtTableModel extends AbstractTableModel {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	protected Vector dataVector;
+	
+	private List<Opdracht> data = null;
 	private String [] columnNames;
 	
 	
-	public OpdrachtTableModel(String[] columnNames){
-		this.dataVector= new Vector();
+	public OpdrachtTableModel(String[] columnNames, List<Opdracht> data){
+		this.data= new ArrayList<>(data) ;
 		this.columnNames = columnNames;
 	}
 
@@ -34,7 +35,7 @@ public class OpdrachtTableModel extends AbstractTableModel {
 	@Override
 	public int getRowCount() {
 		// TODO Auto-generated method stub
-		return dataVector.size();
+		return data.size();
 	}
 
 	/* (non-Javadoc)
@@ -50,26 +51,19 @@ public class OpdrachtTableModel extends AbstractTableModel {
 	 * @see javax.swing.table.TableModel#getValueAt(int, int)
 	 */
 	@Override
-	public Opdracht getValueAt(int rowIndex, int columnIndex) {
-	/*	Opdracht opdracht = (Opdracht) dataVector.get(rowIndex);
-		
+	public Object getValueAt(int rowIndex, int columnIndex) {
+		Opdracht opdracht = (Opdracht) data.get(rowIndex);
+		Object waarde=null;
 		switch(columnIndex){
 		
 		case 0:
-			return opdracht.getVraag();
+			waarde= opdracht.getVraag();
+			break;
 		case 1:
+			waarde = opdracht.getMaxAantalPunten();
 			
-		}*/
-		return null;
-	}
-
-
-	public Vector getDataVector() {
-		return dataVector;
-	}
-
-	public void setDataVector(Vector dataVector) {
-		this.dataVector = dataVector;
+		}
+		return waarde;
 	}
 
 	public String [] getColumnNames() {
@@ -78,6 +72,14 @@ public class OpdrachtTableModel extends AbstractTableModel {
 
 	public void setColumnNames(String [] columnNames) {
 		this.columnNames = columnNames;
+	}
+
+	public List<Opdracht> getData() {
+		return data;
+	}
+
+	public void setData(List<Opdracht> data) {
+		this.data = data;
 	}
 
 }

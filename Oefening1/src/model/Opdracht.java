@@ -18,6 +18,7 @@ public abstract class Opdracht implements Cloneable, Comparable<Opdracht>, Seria
 	private String antwoordHint;
 	private int maxAntwoordTijd;
 	private OpdrachtCategorie opdrachtCategorie;
+	private int maxAantalPunten;
 	
 	public Opdracht(){}
 	
@@ -30,6 +31,7 @@ public abstract class Opdracht implements Cloneable, Comparable<Opdracht>, Seria
 		}else {
 			this.maxAantalPogingen = 1;
 		}
+		this.maxAantalPunten=0;
 	}
 	
 	public Opdracht(String vraag, String antwoord, int maxAantalPogingen, String antwoordHint, OpdrachtCategorie opdrachtCategorie) {
@@ -158,6 +160,14 @@ public abstract class Opdracht implements Cloneable, Comparable<Opdracht>, Seria
 
 	public void setOpdrachtCategorie(OpdrachtCategorie opdrachtCategorie) {
 		this.opdrachtCategorie = opdrachtCategorie;
+	}
+
+	public int getMaxAantalPunten() {
+		return maxAantalPunten;
+	}
+
+	public void setMaxAantalPunten(int maxAantalPunten) {
+		this.maxAantalPunten = maxAantalPunten;
 	}
 
 	public abstract boolean isJuisteAntwoord(String antwoord);

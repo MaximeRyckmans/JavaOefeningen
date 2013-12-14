@@ -7,19 +7,16 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 
 import model.Klas;
-import model.Leraar;
 import model.Opdracht;
 import model.OpdrachtCatalogus;
 import model.OpdrachtCategorie;
 import model.OpdrachtTableModel;
 import model.Quiz;
 import model.QuizCatalogus;
-import model.QuizStatus;
 import view.QuizCreatieView;
 
 public class QuizCreatieController implements ActionListener, ItemListener {
@@ -32,6 +29,10 @@ public class QuizCreatieController implements ActionListener, ItemListener {
 	private Klas klas;
 	private String[] sorterenOp = { "geen", "categorie", "vraag" };
 	private String[] col = { "Opdracht", "MaximumScore" };
+	private DefaultListModel<Opdracht> listModel;
+	private DefaultTableModel tableModel;
+	private int aantalToegevoegdeOpdrachten = 0;
+	private List<Opdracht> geselecteerdeOpdrachten = null;
 
 	public QuizCreatieController() {
 
@@ -46,9 +47,15 @@ public class QuizCreatieController implements ActionListener, ItemListener {
 		this.quizCatalogusModel.leesQuizzenVanBestand();
 		opdrachten = opdrachtCatalogusModel.getOpdrachten();
 
-		this.quizCreatieView = quizCreatieView;
-		setInitiëleWaardenQuizCreatieView();
+		listModel = new DefaultListModel<Opdracht>();
+		populeerListModel(listModel);
 
+		tableModel = new DefaultTableModel(col, 0);
+
+		this.quizCreatieView = quizCreatieView;
+
+		quizCreatieView.setInitiëleWaardenQuizCreatieView(tableModel,
+				sorterenOp, klas, listModel);
 		quizCreatieView.buttonActionListener(this);
 		quizCreatieView.comboboxActionListener(this);
 
@@ -65,7 +72,7 @@ public class QuizCreatieController implements ActionListener, ItemListener {
 
 		} else if (action.equals("<<<<")) {
 
-			verplaatsOpdrachtNaarLinks();
+			verwijderOpdrachtVanToegevoegdeOpdrachten();
 
 		} else if (action.equals("^^^^")) {
 
@@ -78,11 +85,39 @@ public class QuizCreatieController implements ActionListener, ItemListener {
 		}
 	}
 
-	private void verplaatsOpdrachtNaarRechts() {
-
+	private void verplaatsOpdrachtNaarRechts()
+			throws IllegalArgumentException {
+		boolean opdrachtAlToegevoegd = false;
+		if (quizCreatieView.getOpdrachten().getSelectedValue() != null) {
+			for (String s : getLijstVanToegevoegdeOpdrachten()) {
+				if (s.equals(quizCreatieView.getOpdrachten().getSelectedValue()
+						.toString())) {
+					opdrachtAlToegevoegd = true;
+					throw new IllegalArgumentException(
+							"Opdracht is al toegevoegd. Selecteer een andere opdracht.");
+				}
+			}
+			if (opdrachtAlToegevoegd == false) {
+				quizCreatieView.getTableModel().addRow(
+						new Opdracht[] {
+								quizCreatieView.getOpdrachten()
+										.getSelectedValue(), null });
+				aantalToegevoegdeOpdrachten++;
+				quizCreatieView.getAantalToegevoegdeOpdr().setText(Integer.toString(aantalToegevoegdeOpdrachten));
+			}
+		} else {
+			throw new IllegalArgumentException(
+					"Geen opdracht geselecteerd. Selecteer een opdracht");
+		}
 	}
 
-	private void verplaatsOpdrachtNaarLinks() {
+	private void verwijderOpdrachtVanToegevoegdeOpdrachten() {
+		int selectedRow = quizCreatieView.getGeselecteerdeOpdrachten().getSelectedRow();
+		if(selectedRow != -1) {
+		    quizCreatieView.getTableModel().removeRow(selectedRow);
+		    aantalToegevoegdeOpdrachten--;
+			quizCreatieView.getAantalToegevoegdeOpdr().setText(Integer.toString(aantalToegevoegdeOpdrachten));
+		}
 
 	}
 
@@ -102,76 +137,54 @@ public class QuizCreatieController implements ActionListener, ItemListener {
 
 	}
 
-	private void setInitiëleWaardenQuizCreatieView() {
-		// Set the text of all labels in the quizCreatieView
-		quizCreatieView.getOnderwerpL().setText("Onderwerp:");
-		quizCreatieView.getKlasL().setText("Klas:");
-		quizCreatieView.getAuteurL().setText("Auteur:");
-		quizCreatieView.getCategorieL().setText("Toon opdrachten van:");
-		quizCreatieView.getAantalToegevoegdeOpdrL().setText(
-				"Aantal toegevoegde opdrachten:");
-		quizCreatieView.getSorteerOpdrL().setText("Sorteer opdrachten op:");
-		quizCreatieView.getAantalToegevoegdeOpdr().setText("0");
-
-		// Set all the comboboxes
-		quizCreatieView.getKlas().setModel(new DefaultComboBoxModel<>(klas.values()));
-		
-		quizCreatieView.getSorteerOpdr().setModel(
-				new DefaultComboBoxModel<>(sorterenOp));
-		quizCreatieView.getCategorie().setModel(
-				new DefaultComboBoxModel<>(OpdrachtCategorie.values()));
-		quizCreatieView.getQuizStatus().setModel(
-				new DefaultComboBoxModel<>(QuizStatus.values()));
-		quizCreatieView.getAuteur().setModel(
-				new DefaultComboBoxModel<>(Leraar.values()));
-
-		// Set all the buttons
-		quizCreatieView.getNieuweQuiz().setText("Registreer nieuwe quiz");
-		quizCreatieView.getNaarBoven().setText("^^^^");
-		quizCreatieView.getNaarRechts().setText(">>>>");
-		quizCreatieView.getNaarLinks().setText("<<<<");
-
-		// Set the data in the JList that contains all the opdrachten
-		DefaultListModel<Opdracht> listModel = new DefaultListModel<Opdracht>();
-		this.populeerListModel(listModel);
-		quizCreatieView.getOpdrachten().setModel(listModel);
-
-		// Set the headers for the JTable that holds the selected Opdrachten.
-		DefaultTableModel tableModel = new DefaultTableModel(null, col);
-		quizCreatieView.getGeselecteerdeOpdrachten().setModel(tableModel);
-
-	}
-
 	@Override
 	public void itemStateChanged(ItemEvent e) {
-		
-		if (e.getStateChange() == ItemEvent.SELECTED) {
-			
-			if(e.getItemSelectable() == quizCreatieView.getSorteerOpdr())
-	        {
-				System.out.println(e.getItem());
-	        }else if(e.getItemSelectable() == quizCreatieView.getCategorie()){
-	        	
-	        }
 
-			
+		if (e.getStateChange() == ItemEvent.SELECTED) {
+
+			if (e.getItemSelectable() == quizCreatieView.getSorteerOpdr()) {
+				System.out.println(e.getItem());
+			} else if (e.getItemSelectable() == quizCreatieView.getCategorie()) {
+
+			}
+
 		}
 	}
-	private List<Opdracht> toonOpdrachtenVanCategorie(ItemEvent e){
+
+	private List<Opdracht> toonOpdrachtenVanCategorie(ItemEvent e) {
 		List<Opdracht> tempList = new ArrayList<Opdracht>();
-		for(Opdracht opdr : opdrachtCatalogusModel.getOpdrachten()){
-			if(e.getItem().equals(OpdrachtCategorie.Aardrijkskunde) && opdr.getOpdrachtCategorie().equals(OpdrachtCategorie.Aardrijkskunde)){
+		for (Opdracht opdr : opdrachtCatalogusModel.getOpdrachten()) {
+			if (e.getItem().equals(OpdrachtCategorie.Aardrijkskunde)
+					&& opdr.getOpdrachtCategorie().equals(
+							OpdrachtCategorie.Aardrijkskunde)) {
 				tempList.add(opdr);
-			}else if(e.getItem().equals(OpdrachtCategorie.Nederlands)&& opdr.getOpdrachtCategorie().equals(OpdrachtCategorie.Nederlands)){
-				
+			} else if (e.getItem().equals(OpdrachtCategorie.Nederlands)
+					&& opdr.getOpdrachtCategorie().equals(
+							OpdrachtCategorie.Nederlands)) {
+
 				tempList.add(opdr);
-			}else if (e.getItem().equals(OpdrachtCategorie.Wetenschappen)&& opdr.getOpdrachtCategorie().equals(OpdrachtCategorie.Wetenschappen)){
+			} else if (e.getItem().equals(OpdrachtCategorie.Wetenschappen)
+					&& opdr.getOpdrachtCategorie().equals(
+							OpdrachtCategorie.Wetenschappen)) {
 				tempList.add(opdr);
-			}else if (e.getItem().equals(OpdrachtCategorie.Wiskunde)&& opdr.getOpdrachtCategorie().equals(OpdrachtCategorie.Wiskunde)){
+			} else if (e.getItem().equals(OpdrachtCategorie.Wiskunde)
+					&& opdr.getOpdrachtCategorie().equals(
+							OpdrachtCategorie.Wiskunde)) {
 				tempList.add(opdr);
 			}
 		}
 		return tempList;
+	}
+
+	public List<String> getLijstVanToegevoegdeOpdrachten() {
+		List<String> toegevoegdeOpdrachten = new ArrayList<String>();
+
+		for (int i = 0; i < quizCreatieView.getTableModel().getRowCount(); i++) {
+			toegevoegdeOpdrachten.add(String.valueOf(quizCreatieView
+					.getTableModel().getValueAt(i, 0)));
+		}
+
+		return toegevoegdeOpdrachten;
 	}
 
 }
