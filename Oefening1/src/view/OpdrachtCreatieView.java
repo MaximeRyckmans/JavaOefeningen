@@ -42,10 +42,11 @@ public class OpdrachtCreatieView extends JFrame implements ActionListener {
 
 	public OpdrachtCreatieView() {
 
-		JFrame frame = new JFrame("Aanmaken nieuwe Opdracht");
-		frame.setSize(1000, 600);
-		frame.add(createPanel());
-		frame.setVisible(true);
+		super("Aanmaken nieuwe Opdracht");
+		this.setSize(1000, 600);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.add(createPanel());
+		this.setVisible(true);
 
 	}
 

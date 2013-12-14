@@ -3,6 +3,7 @@ package view;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -20,15 +21,15 @@ public class MenuView extends JFrame implements ActionListener {
 	 */
 	private static final long serialVersionUID = 4793454034322997018L;
 	private JButton quiz, opdracht, sluit;
-	private JFrame frame;
 
 	public MenuView() {
-		frame = new JFrame("Menu");
-		frame.setLocation(500, 400);
-		frame.setSize(400, 100);
+		super("Menu");
+		this.setLocation(500, 400);
+		this.setSize(400, 100);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
-		frame.add(createPanel());
-		frame.setVisible(true);
+		this.add(createPanel());
+		this.setVisible(true);
 	}
 	
 	public JPanel createPanel() {
@@ -58,7 +59,7 @@ public class MenuView extends JFrame implements ActionListener {
 	}
 	
 	public void close() {
-		frame.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSED));
 	}
 
 	public JButton getQuiz() {

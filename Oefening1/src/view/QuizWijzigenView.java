@@ -59,7 +59,7 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 	public QuizWijzigenView() {
 		super("Wijzigen van quizzen");
 		this.setSize(1350,900);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLayout(new FlowLayout());
 		
 		pnlBackground = new JPanel();
@@ -318,7 +318,7 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
     }
 	
 	public void closeWindow() {
-		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSING));
+		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSED));
 	}
 	
 	public void popUpWindow(){

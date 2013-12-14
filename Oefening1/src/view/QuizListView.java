@@ -42,7 +42,7 @@ public class QuizListView extends JFrame implements ActionListener{
 	
 	public QuizListView(){
 		super("Lijst van quizzen");
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLayout(new FlowLayout());
 		
 		content = new JPanel();

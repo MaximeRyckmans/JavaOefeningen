@@ -60,7 +60,7 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	public QuizCreatieView() {
 		super("Aanmaken nieuwe Quiz");
 		this.setSize(900,900);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		createUpperPanel();
 		createLowerPanel();
