@@ -138,45 +138,56 @@ public class QuizCreatieController implements ActionListener, ItemListener {
 
 	}
 
-	private void registreerNieuweQuiz() throws IllegalArgumentException{
+	private void registreerNieuweQuiz() throws IllegalArgumentException {
 		boolean isQuizOk = true;
+		geselecteerdeOpdrachten = new ArrayList<Opdracht>();
 		for (Quiz q : quizCatalogusModel.getQuizzen()) {
 			if (q.getOnderwerp().equals(quizCreatieView.getOnderwerpText())) {
 				isQuizOk = false;
 				throw new IllegalArgumentException(
 						"Quiz bestaat al, kies een andere naam");
 			}
-			if(quizCreatieView.getTableModel().getRowCount() == -1){
-				isQuizOk = false;
-				throw new IllegalArgumentException("Voeg eerst opdrachten toe.");
+		}
+		if (quizCreatieView.getTableModel().getRowCount() == -1) {
+			isQuizOk = false;
+			throw new IllegalArgumentException("Voeg eerst opdrachten toe.");
+		}
+		/*
+		 * if(!quizCreatieView.getQuizStatus().getSelectedItem().toString().equals
+		 * (QuizStatus.AFGEWERKT)){ isQuizOk=false; }
+		 */
+		if (isQuizOk == true) {
+			int id = quizCatalogusModel.getQuizzen().size() + 1;
+
+			String leerjaarString = quizCreatieView.getKlas().getSelectedItem()
+					.toString();
+			Klas leerjaar = Klas.valueOf(leerjaarString);
+
+			String leraarString = quizCreatieView.getAuteur().getSelectedItem()
+					.toString();
+			Leraar leraar = Leraar.valueOf(leraarString);
+
+			String onderwerp = quizCreatieView.getOnderwerpText().getText();
+
+			String quizStatusString = quizCreatieView.getQuizStatus()
+					.getSelectedItem().toString();
+			QuizStatus quizStatus = QuizStatus.valueOf(quizStatusString);
+
+			for (int i = 0; i < quizCreatieView.getTableModel().getRowCount(); i++) {
+				Opdracht opdr = (Opdracht) quizCreatieView.getTableModel()
+						.getValueAt(i, 0);
+				System.out.println(quizCreatieView.getTableModel().getValueAt(
+						i, 1));
+				opdr.setMaxAantalPunten(Integer
+						.parseInt((String) quizCreatieView.getTableModel()
+								.getValueAt(i, 1)));
+				geselecteerdeOpdrachten.add(opdr);
 			}
-			if(!quizCreatieView.getQuizStatus().getSelectedItem().toString().equals(QuizStatus.AFGEWERKT)){
-				isQuizOk=false;
-			}
-			if (isQuizOk == true) {
-				int id = quizCatalogusModel.getQuizzen().size()+1;
-				
-				String leerjaarString = quizCreatieView.getKlas().getSelectedItem().toString();
-				Klas leerjaar = Klas.valueOf(leerjaarString);
-				
-				String leraarString = quizCreatieView.getAuteur().getSelectedItem().toString();
-				Leraar leraar = Leraar.valueOf(leraarString);
-				
-				String onderwerp = quizCreatieView.getOnderwerpText().getText();
-				
-				String quizStatusString = quizCreatieView.getQuizStatus().getSelectedItem().toString();
-				QuizStatus quizStatus = QuizStatus.valueOf(quizStatusString);
-				
-				for(int i=0; i<= quizCreatieView.getTableModel().getRowCount(); i++){
-					Opdracht opdr = (Opdracht)quizCreatieView.getTableModel().getValueAt(i, 0);
-					opdr.setMaxAantalPunten(Integer.parseInt((String) quizCreatieView.getTableModel().getValueAt(i, 1)));
-					geselecteerdeOpdrachten.add(opdr);
-				}
-				
-				Quiz quiz = new Quiz(id, 0, leerjaar, leraar, onderwerp, quizStatus, geselecteerdeOpdrachten);
-				
-				quizCatalogusModel.addQuizToList(quiz);
-			}
+
+			Quiz quiz = new Quiz(id, 0, leerjaar, leraar, onderwerp,
+					quizStatus, geselecteerdeOpdrachten);
+
+			quizCatalogusModel.addQuizToList(quiz);
 		}
 	}
 
