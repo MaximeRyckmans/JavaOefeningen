@@ -11,12 +11,14 @@ import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 
 import model.Klas;
+import model.Leraar;
 import model.Opdracht;
 import model.OpdrachtCatalogus;
 import model.OpdrachtCategorie;
 import model.OpdrachtTableModel;
 import model.Quiz;
 import model.QuizCatalogus;
+import model.QuizStatus;
 import view.QuizCreatieView;
 
 public class QuizCreatieController implements ActionListener, ItemListener {
@@ -85,8 +87,7 @@ public class QuizCreatieController implements ActionListener, ItemListener {
 		}
 	}
 
-	private void verplaatsOpdrachtNaarRechts()
-			throws IllegalArgumentException {
+	private void verplaatsOpdrachtNaarRechts() throws IllegalArgumentException {
 		boolean opdrachtAlToegevoegd = false;
 		if (quizCreatieView.getOpdrachten().getSelectedValue() != null) {
 			for (String s : getLijstVanToegevoegdeOpdrachten()) {
@@ -103,7 +104,8 @@ public class QuizCreatieController implements ActionListener, ItemListener {
 								quizCreatieView.getOpdrachten()
 										.getSelectedValue(), null });
 				aantalToegevoegdeOpdrachten++;
-				quizCreatieView.getAantalToegevoegdeOpdr().setText(Integer.toString(aantalToegevoegdeOpdrachten));
+				quizCreatieView.getAantalToegevoegdeOpdr().setText(
+						Integer.toString(aantalToegevoegdeOpdrachten));
 			}
 		} else {
 			throw new IllegalArgumentException(
@@ -112,21 +114,70 @@ public class QuizCreatieController implements ActionListener, ItemListener {
 	}
 
 	private void verwijderOpdrachtVanToegevoegdeOpdrachten() {
-		int selectedRow = quizCreatieView.getGeselecteerdeOpdrachten().getSelectedRow();
-		if(selectedRow != -1) {
-		    quizCreatieView.getTableModel().removeRow(selectedRow);
-		    aantalToegevoegdeOpdrachten--;
-			quizCreatieView.getAantalToegevoegdeOpdr().setText(Integer.toString(aantalToegevoegdeOpdrachten));
+		int selectedRow = quizCreatieView.getGeselecteerdeOpdrachten()
+				.getSelectedRow();
+		if (selectedRow != -1) {
+			quizCreatieView.getTableModel().removeRow(selectedRow);
+			aantalToegevoegdeOpdrachten--;
+			quizCreatieView.getAantalToegevoegdeOpdr().setText(
+					Integer.toString(aantalToegevoegdeOpdrachten));
 		}
 
 	}
 
 	private void verplaatsOpdrachtNaarBoven() {
+		int selectedRow = quizCreatieView.getGeselecteerdeOpdrachten()
+				.getSelectedRow();
+		if (selectedRow == 0) {
+			quizCreatieView.getTableModel().moveRow(selectedRow, selectedRow,
+					quizCreatieView.getTableModel().getRowCount() - 1);
+		} else if (selectedRow != -1) {
+			quizCreatieView.getTableModel().moveRow(selectedRow, selectedRow,
+					selectedRow - 1);
+		}
 
 	}
 
-	private void registreerNieuweQuiz() {
-
+	private void registreerNieuweQuiz() throws IllegalArgumentException{
+		boolean isQuizOk = true;
+		for (Quiz q : quizCatalogusModel.getQuizzen()) {
+			if (q.getOnderwerp().equals(quizCreatieView.getOnderwerpText())) {
+				isQuizOk = false;
+				throw new IllegalArgumentException(
+						"Quiz bestaat al, kies een andere naam");
+			}
+			if(quizCreatieView.getTableModel().getRowCount() == -1){
+				isQuizOk = false;
+				throw new IllegalArgumentException("Voeg eerst opdrachten toe.");
+			}
+			if(!quizCreatieView.getQuizStatus().getSelectedItem().toString().equals(QuizStatus.AFGEWERKT)){
+				isQuizOk=false;
+			}
+			if (isQuizOk == true) {
+				int id = quizCatalogusModel.getQuizzen().size()+1;
+				
+				String leerjaarString = quizCreatieView.getKlas().getSelectedItem().toString();
+				Klas leerjaar = Klas.valueOf(leerjaarString);
+				
+				String leraarString = quizCreatieView.getAuteur().getSelectedItem().toString();
+				Leraar leraar = Leraar.valueOf(leraarString);
+				
+				String onderwerp = quizCreatieView.getOnderwerpText().getText();
+				
+				String quizStatusString = quizCreatieView.getQuizStatus().getSelectedItem().toString();
+				QuizStatus quizStatus = QuizStatus.valueOf(quizStatusString);
+				
+				for(int i=0; i<= quizCreatieView.getTableModel().getRowCount(); i++){
+					Opdracht opdr = (Opdracht)quizCreatieView.getTableModel().getValueAt(i, 0);
+					opdr.setMaxAantalPunten(Integer.parseInt((String) quizCreatieView.getTableModel().getValueAt(i, 1)));
+					geselecteerdeOpdrachten.add(opdr);
+				}
+				
+				Quiz quiz = new Quiz(id, 0, leerjaar, leraar, onderwerp, quizStatus, geselecteerdeOpdrachten);
+				
+				quizCatalogusModel.addQuizToList(quiz);
+			}
+		}
 	}
 
 	public void populeerListModel(DefaultListModel<Opdracht> model) {
