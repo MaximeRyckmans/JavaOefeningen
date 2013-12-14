@@ -42,7 +42,9 @@ public class OpdrachtCatalogus implements Cloneable,
 
 	public void addOpdrachtToList(Opdracht opdracht) {
 		if (!opdracht.equals(null) || !opdrachten.contains(opdracht)) {
-			opdracht.setId(opdrachten.size()+1);
+			Opdracht o = opdrachten.get(opdrachten.size() - 1);
+			opdracht.setId(o.getId() + 1);
+			//opdracht.setId(opdrachten.size() + 1);
 			this.opdrachten.add(opdracht);
 		}
 	}
@@ -105,7 +107,7 @@ public class OpdrachtCatalogus implements Cloneable,
 	public void schrijfOpdrachtenNaarBestand() {
 		File file = new File("bestanden/opdrachten");
 		try {
-			//Wegschrijven
+			// Wegschrijven
 			PrintWriter writer = new PrintWriter(file);
 			for (int i = 0; i < this.getOpdrachten().size(); i++) {
 				Opdracht opdracht = opdrachten.get(i);
@@ -138,54 +140,56 @@ public class OpdrachtCatalogus implements Cloneable,
 	public void leesOpdrachtenVanBestand() {
 
 		File file = new File("bestanden/opdrachten");
-		try {
-			Scanner scanner = new Scanner(file);
-			while (scanner.hasNext()) {
-				String lijn = scanner.nextLine();
-				String[] velden = lijn.split(",");
-				int id = Integer.parseInt(velden[0]);
-				String vraag = velden[1];
-				String antwoord = velden[2];
-				int maxAantalPogingen = Integer.parseInt(velden[3]);
-				String antwoordHint = velden[4];
-				int maxAntwoordTijd = Integer.parseInt(velden[5]);
-				String soortOpdracht = velden[6];
-				String opdrachtCategorieString = velden[7];
-				OpdrachtCategorie opdrachtCategorie = OpdrachtCategorie
-						.valueOf(opdrachtCategorieString);
-				Opdracht opdracht = null;
-				if (soortOpdracht.equals("Meerkeuze")) {
-					String alleKeuzes = velden[8];
-					opdracht = new Meerkeuze(vraag, antwoord,
-							maxAantalPogingen, alleKeuzes, antwoordHint,
-							maxAntwoordTijd, opdrachtCategorie);
-					opdracht.setId(id);
-				} else if (soortOpdracht.equals("Reproductie")) {
-					String trefwoorden = velden[8];
-					int minAantalJuisteTrefwoorden = Integer
-							.parseInt(velden[9]);
-					opdracht = new Reproductie(vraag, antwoordHint,
-							maxAantalPogingen, antwoordHint, maxAntwoordTijd,
-							trefwoorden, minAantalJuisteTrefwoorden,
-							opdrachtCategorie);
-				} else if (soortOpdracht.equals("Opsomming")) {
-					opdracht = new Opsomming(vraag, antwoord,
-							maxAantalPogingen, antwoordHint, maxAntwoordTijd,
-							opdrachtCategorie);
+		if (file != null) {
+			try {
+				Scanner scanner = new Scanner(file);
+				while (scanner.hasNext()) {
+					String lijn = scanner.nextLine();
+					String[] velden = lijn.split(",");
+					int id = Integer.parseInt(velden[0]);
+					String vraag = velden[1];
+					String antwoord = velden[2];
+					int maxAantalPogingen = Integer.parseInt(velden[3]);
+					String antwoordHint = velden[4];
+					int maxAntwoordTijd = Integer.parseInt(velden[5]);
+					String soortOpdracht = velden[6];
+					String opdrachtCategorieString = velden[7];
+					OpdrachtCategorie opdrachtCategorie = OpdrachtCategorie
+							.valueOf(opdrachtCategorieString);
+					Opdracht opdracht = null;
+					if (soortOpdracht.equals("Meerkeuze")) {
+						String alleKeuzes = velden[8];
+						opdracht = new Meerkeuze(vraag, antwoord,
+								maxAantalPogingen, alleKeuzes, antwoordHint,
+								maxAntwoordTijd, opdrachtCategorie);
+						opdracht.setId(id);
+					} else if (soortOpdracht.equals("Reproductie")) {
+						String trefwoorden = velden[8];
+						int minAantalJuisteTrefwoorden = Integer
+								.parseInt(velden[9]);
+						opdracht = new Reproductie(vraag, antwoordHint,
+								maxAantalPogingen, antwoordHint,
+								maxAntwoordTijd, trefwoorden,
+								minAantalJuisteTrefwoorden, opdrachtCategorie);
+					} else if (soortOpdracht.equals("Opsomming")) {
+						opdracht = new Opsomming(vraag, antwoord,
+								maxAantalPogingen, antwoordHint,
+								maxAntwoordTijd, opdrachtCategorie);
+					}
+					this.opdrachten.add(opdracht);
+					file.delete();
 				}
-				this.opdrachten.add(opdracht);
-				file.delete();
+				if (scanner != null) {
+					scanner.close();
+				}
+			} catch (FileNotFoundException ex) {
+				System.out.println("bestand niet gevonden");
+			} catch (NullPointerException ex) {
+				System.out.println(ex.getMessage());
+			} catch (Exception ex) {
+				System.out.println("here");
+				System.out.println(ex.getMessage());
 			}
-			if (scanner != null) {
-				scanner.close();
-			}
-		} catch (FileNotFoundException ex) {
-			System.out.println("bestand niet gevonden");
-		} catch (NullPointerException ex) {
-			System.out.println(ex.getMessage());
-		} catch (Exception ex) {
-			System.out.println("here");
-			System.out.println(ex.getMessage());
 		}
 	}
 
