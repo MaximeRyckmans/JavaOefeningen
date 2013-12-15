@@ -25,6 +25,8 @@ public class MenuViewController implements ActionListener {
 		this.qCat = quizCatalogus;
 		this.opdrachtCatalogus = opdrachtCatalogus;
 		this.opdrachtCatalogus.leesOpdrachtenVanBestand();
+		this.qCat = quizCatalogus;
+		this.qCat.leesQuizzenVanBestand(opdrachtCatalogus);
 		menuView.buttonActionListener(this);
 	}
 

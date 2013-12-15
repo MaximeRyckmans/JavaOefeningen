@@ -205,9 +205,15 @@ public class QuizCreatieController implements ActionListener, ItemListener {
 		if (e.getStateChange() == ItemEvent.SELECTED) {
 
 			if (e.getItemSelectable() == quizCreatieView.getSorteerOpdr()) {
+				System.out.println("here");
 				System.out.println(e.getItem());
 			} else if (e.getItemSelectable() == quizCreatieView.getCategorie()) {
-
+				listModel.clear();
+				for (Opdracht opdr : toonOpdrachtenVanCategorie(e)) {
+					listModel.addElement(opdr);
+				}
+				quizCreatieView.getOpdrachten().setModel(listModel);
+				;
 			}
 
 		}
