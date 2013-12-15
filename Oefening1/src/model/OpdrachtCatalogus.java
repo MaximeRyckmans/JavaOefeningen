@@ -2,6 +2,8 @@ package model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -114,13 +116,10 @@ public class OpdrachtCatalogus implements Cloneable,
 	}
 
 	public void schrijfOpdrachtenNaarBestand() {
-		if (file.exists() == true) {
-			file.delete();
-		}
-		file = new File("bestanden/opdrachten");
+		File fileWrite = new File("bestanden/opdrachten");
 		try {
 			// Wegschrijven
-			PrintWriter writer = new PrintWriter(file);
+			FileWriter writer = new FileWriter(fileWrite, false);
 			for (int i = 0; i < this.getOpdrachten().size(); i++) {
 				Opdracht opdracht = opdrachten.get(i);
 				String typeOpdracht = opdracht.getClass().getSimpleName();
@@ -140,7 +139,7 @@ public class OpdrachtCatalogus implements Cloneable,
 									.getMinAantalJuisteTrefwoorden();
 				}
 
-				writer.println(lijn);
+				writer.write(lijn + "\n");
 			}
 			if (writer != null)
 				writer.close();
