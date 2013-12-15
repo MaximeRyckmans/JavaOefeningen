@@ -74,7 +74,7 @@ public class MenuView extends JFrame implements ActionListener {
 	}
 	
 	public void close() {
-		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSED));
+		System.exit(0);
 	}
 
 	public JButton getQuiz() {

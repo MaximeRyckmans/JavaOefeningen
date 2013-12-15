@@ -8,6 +8,7 @@ import model.Meerkeuze;
 import model.Opdracht;
 import model.OpdrachtCatalogus;
 import model.OpdrachtCategorie;
+import model.Opsomming;
 import model.Reproductie;
 import view.OpdrachtCreatieView;
 import view.QuizCreatieView;
@@ -22,7 +23,8 @@ public class OpdrachtCreatieController implements ActionListener {
 	private OpdrachtCatalogus opdrachtCatalogus;
 	private OpdrachtCreatieView opdrCreatieView;
 
-	public OpdrachtCreatieController(OpdrachtCreatieView opdrCreatieView, OpdrachtCatalogus opdrachtCatalogus) {
+	public OpdrachtCreatieController(OpdrachtCreatieView opdrCreatieView,
+			OpdrachtCatalogus opdrachtCatalogus) {
 		this.opdrCreatieView = opdrCreatieView;
 		this.opdrachtCatalogus = opdrachtCatalogus;
 		this.opdrCreatieView.buttonActionListener(this);
@@ -30,9 +32,6 @@ public class OpdrachtCreatieController implements ActionListener {
 
 	public void createOpdracht() {
 		try {
-			System.out.println(opdrCreatieView.getCategorie().getSelectedItem()
-					.toString());
-			System.out.println(Categorie.Meerkeuze.toString());
 			if (Categorie.Reproductie.toString() == opdrCreatieView
 					.getCategorie().getSelectedItem().toString()) {
 				opdracht = new Reproductie(opdrCreatieView.getVraagT()
@@ -46,16 +45,22 @@ public class OpdrachtCreatieController implements ActionListener {
 								.getOpdrachtCategorie().getSelectedItem());
 			} else if (Categorie.Meerkeuze.toString() == opdrCreatieView
 					.getCategorie().getSelectedItem().toString()) {
-				OpdrachtCategorie categorie = (OpdrachtCategorie)opdrCreatieView.getOpdrachtCategorie().getSelectedItem();
+				/*OpdrachtCategorie categorie = (OpdrachtCategorie) opdrCreatieView
+						.getOpdrachtCategorie().getSelectedItem();
 				int aantalPogingen = Integer.parseInt(opdrCreatieView
-						.getMaxAantalPogingenC().getSelectedItem().toString());
-				opdracht = new Meerkeuze(
-						opdrCreatieView.getVraagT().getText(), opdrCreatieView
-								.getAntwoordT().getText(),
-						aantalPogingen, "één;twee;drie;vier",
-						categorie);
-				
-
+						.getMaxAantalPogingenC().getSelectedItem().toString());*/
+				opdracht = new Meerkeuze(opdrCreatieView.getVraagT().getText(),
+						opdrCreatieView.getAntwoordT().getText(),
+						Integer.parseInt(opdrCreatieView
+								.getMaxAantalPogingenC().getSelectedItem().toString()), "één;twee;drie;vier", (OpdrachtCategorie) opdrCreatieView
+						.getOpdrachtCategorie().getSelectedItem());
+			} else if (Categorie.Opsomming.toString() == opdrCreatieView
+					.getCategorie().getSelectedItem().toString()) {
+				opdracht = new Opsomming(opdrCreatieView.getVraagT().getText(),
+						opdrCreatieView.getAntwoordT().getText(),
+						Integer.parseInt(opdrCreatieView
+								.getMaxAantalPogingenC().getSelectedItem().toString()), "één;twee;drie;vier", (OpdrachtCategorie) opdrCreatieView
+						.getOpdrachtCategorie().getSelectedItem());
 			}
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
@@ -70,6 +75,8 @@ public class OpdrachtCreatieController implements ActionListener {
 			createOpdracht();
 			opdrachtCatalogus.addOpdrachtToList(opdracht);
 			opdrachtCatalogus.schrijfOpdrachtenNaarBestand();
+			
+			
 		}
 
 	}
