@@ -45,22 +45,28 @@ public class OpdrachtCreatieController implements ActionListener {
 								.getOpdrachtCategorie().getSelectedItem());
 			} else if (Categorie.Meerkeuze.toString() == opdrCreatieView
 					.getCategorie().getSelectedItem().toString()) {
-				/*OpdrachtCategorie categorie = (OpdrachtCategorie) opdrCreatieView
-						.getOpdrachtCategorie().getSelectedItem();
-				int aantalPogingen = Integer.parseInt(opdrCreatieView
-						.getMaxAantalPogingenC().getSelectedItem().toString());*/
+				/*
+				 * OpdrachtCategorie categorie = (OpdrachtCategorie)
+				 * opdrCreatieView .getOpdrachtCategorie().getSelectedItem();
+				 * int aantalPogingen = Integer.parseInt(opdrCreatieView
+				 * .getMaxAantalPogingenC().getSelectedItem().toString());
+				 */
 				opdracht = new Meerkeuze(opdrCreatieView.getVraagT().getText(),
 						opdrCreatieView.getAntwoordT().getText(),
 						Integer.parseInt(opdrCreatieView
-								.getMaxAantalPogingenC().getSelectedItem().toString()), "één;twee;drie;vier", (OpdrachtCategorie) opdrCreatieView
-						.getOpdrachtCategorie().getSelectedItem());
+								.getMaxAantalPogingenC().getSelectedItem()
+								.toString()), "één;twee;drie;vier",
+						(OpdrachtCategorie) opdrCreatieView
+								.getOpdrachtCategorie().getSelectedItem());
 			} else if (Categorie.Opsomming.toString() == opdrCreatieView
 					.getCategorie().getSelectedItem().toString()) {
 				opdracht = new Opsomming(opdrCreatieView.getVraagT().getText(),
 						opdrCreatieView.getAntwoordT().getText(),
 						Integer.parseInt(opdrCreatieView
-								.getMaxAantalPogingenC().getSelectedItem().toString()), "één;twee;drie;vier", (OpdrachtCategorie) opdrCreatieView
-						.getOpdrachtCategorie().getSelectedItem());
+								.getMaxAantalPogingenC().getSelectedItem()
+								.toString()), "één;twee;drie;vier",
+						(OpdrachtCategorie) opdrCreatieView
+								.getOpdrachtCategorie().getSelectedItem());
 			}
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
@@ -70,13 +76,27 @@ public class OpdrachtCreatieController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();
-		if (opdrCreatieView.getCategorie().getSelectedItem().toString() == "Opsomming") {System.out.println("test"); opdrCreatieView.getAntwoordT().setVisible(false);}
+		if (opdrCreatieView.getCategorie().getSelectedItem().toString() == "Opsomming") {
+			opdrCreatieView.getOpsommingPanel().setVisible(true);
+			opdrCreatieView.getMeerKeuzePanel().setVisible(false);
+			opdrCreatieView.getReproductiePanel().setVisible(false);
+		}
+		if (opdrCreatieView.getCategorie().getSelectedItem().toString() == "Meerkeuze") {
+			opdrCreatieView.getOpsommingPanel().setVisible(false);
+			opdrCreatieView.getMeerKeuzePanel().setVisible(true);
+			opdrCreatieView.getReproductiePanel().setVisible(false);
+		}
+		if (opdrCreatieView.getCategorie().getSelectedItem().toString() == "Reproductie") {
+			opdrCreatieView.getOpsommingPanel().setVisible(false);
+			opdrCreatieView.getMeerKeuzePanel().setVisible(false);
+			opdrCreatieView.getReproductiePanel().setVisible(true);
+		}
 		if (action.equals("Toevoegen")) {
 			System.out.println("here");
 			createOpdracht();
 			opdrachtCatalogus.addOpdrachtToList(opdracht);
 			opdrachtCatalogus.schrijfOpdrachtenNaarBestand();
-			
+
 			opdrCreatieView.getAntwoordHintT().setText("");
 			opdrCreatieView.getAntwoordT().setText("");
 			opdrCreatieView.getVraagT().setText("");
