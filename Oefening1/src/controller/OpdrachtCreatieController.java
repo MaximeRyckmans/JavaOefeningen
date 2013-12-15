@@ -70,6 +70,7 @@ public class OpdrachtCreatieController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();
+		if (opdrCreatieView.getCategorie().getSelectedItem().toString() == "Opsomming") {System.out.println("test"); opdrCreatieView.getAntwoordT().setVisible(false);}
 		if (action.equals("Toevoegen")) {
 			System.out.println("here");
 			createOpdracht();

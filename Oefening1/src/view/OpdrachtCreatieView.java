@@ -215,7 +215,7 @@ public class OpdrachtCreatieView extends JFrame implements ActionListener {
 		toevoegen.setActionCommand(toevoegen.getName());
 		toevoegen.addActionListener(al);
 		
-		categorie.setActionCommand(categorie.getName());
+		categorie.setActionCommand(categorie.getSelectedItem().toString());
 		categorie.addActionListener(al);
 	}
 

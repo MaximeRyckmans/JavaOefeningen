@@ -27,7 +27,7 @@ public class MenuView extends JFrame implements ActionListener {
 		super("Menu");
 		this.setLocation(500, 400);
 		this.setSize(400, 100);
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		
 		this.addWindowListener(new java.awt.event.WindowAdapter() {
 		    @Override
@@ -42,6 +42,7 @@ public class MenuView extends JFrame implements ActionListener {
 				}
 		    }
 		});
+		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		
 		this.add(createPanel());
 		this.setVisible(true);
