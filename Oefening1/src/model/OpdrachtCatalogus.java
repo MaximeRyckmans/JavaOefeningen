@@ -2,6 +2,7 @@ package model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -19,6 +20,7 @@ public class OpdrachtCatalogus implements Cloneable,
 
 	private List<Opdracht> opdrachten;
 	private int id;
+	private File file;
 
 	public OpdrachtCatalogus() {
 		opdrachten = new ArrayList<Opdracht>();
@@ -41,11 +43,18 @@ public class OpdrachtCatalogus implements Cloneable,
 	}
 
 	public void addOpdrachtToList(Opdracht opdracht) {
-		if (!opdracht.equals(null) || !opdrachten.contains(opdracht)) {
-			Opdracht o = opdrachten.get(opdrachten.size() - 1);
-			opdracht.setId(o.getId() + 1);
-			//opdracht.setId(opdrachten.size() + 1);
+		try {
+			if (opdrachten.size() != 0) {
+				if (!opdracht.equals(null) || !opdrachten.contains(opdracht)) {
+					Opdracht o = opdrachten.get(opdrachten.size() - 1);
+					opdracht.setId(o.getId() + 1);
+				}
+			} else {
+				opdracht.setId(opdrachten.size() + 1);
+			}
 			this.opdrachten.add(opdracht);
+		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
 		}
 	}
 
@@ -105,7 +114,10 @@ public class OpdrachtCatalogus implements Cloneable,
 	}
 
 	public void schrijfOpdrachtenNaarBestand() {
-		File file = new File("bestanden/opdrachten");
+		if (file.exists() == true) {
+			file.delete();
+		}
+		file = new File("bestanden/opdrachten");
 		try {
 			// Wegschrijven
 			PrintWriter writer = new PrintWriter(file);
@@ -138,9 +150,8 @@ public class OpdrachtCatalogus implements Cloneable,
 	}
 
 	public void leesOpdrachtenVanBestand() {
-
-		File file = new File("bestanden/opdrachten");
-		if (file != null) {
+		file = new File("bestanden/opdrachten");
+		if (file.exists() == true) {
 			try {
 				Scanner scanner = new Scanner(file);
 				while (scanner.hasNext()) {
@@ -177,7 +188,6 @@ public class OpdrachtCatalogus implements Cloneable,
 								maxAntwoordTijd, opdrachtCategorie);
 					}
 					this.opdrachten.add(opdracht);
-			//		file.delete();
 				}
 				if (scanner != null) {
 					scanner.close();
