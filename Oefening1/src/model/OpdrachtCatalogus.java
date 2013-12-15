@@ -193,9 +193,18 @@ public class OpdrachtCatalogus implements Cloneable,
 		}
 	}
 
-	public Opdracht LeesBepaaldeOpdrachtenVanBestand(List<Integer> ids) {
-
-		File file = new File("bestanden/opdrachten");
+	public Opdracht getBepaaldeOpdrachten(Integer i) {
+		
+		Opdracht opdracht = null;
+		for (Opdracht opdr : getOpdrachten()) {
+			if (i.equals(opdr.getId())) {
+				opdracht = opdr;
+				return opdracht;
+			}
+		}
+		opdracht = null;
+		return opdracht;
+		/*File file = new File("bestanden/opdrachten");
 		Opdracht opdracht = null;
 		try {
 			Scanner scanner = new Scanner(file);
@@ -245,7 +254,6 @@ public class OpdrachtCatalogus implements Cloneable,
 			System.out.println(ex.getMessage());
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
-		}
-		return opdracht;
+		}*/
 	}
 }

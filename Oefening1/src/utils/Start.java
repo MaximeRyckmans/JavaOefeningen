@@ -20,7 +20,7 @@ public class Start {
 		QuizCatalogus qcat = new QuizCatalogus();
 		
 		cat.leesOpdrachtenVanBestand();
-		qcat.leesQuizzenVanBestand();
+		qcat.leesQuizzenVanBestand(cat);
 		
 		MenuViewController mv = new MenuViewController(menuView, qcat, cat);
 	}

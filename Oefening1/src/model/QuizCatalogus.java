@@ -119,8 +119,8 @@ public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iter
 			System.out.println(ex.getMessage());
 		}
 	}
-	public void leesQuizzenVanBestand(){
-		OpdrachtCatalogus opdrc = new OpdrachtCatalogus();
+	public void leesQuizzenVanBestand(OpdrachtCatalogus opdrachtCatalogus){
+		OpdrachtCatalogus opdrc = opdrachtCatalogus;
 		  File file = new File("bestanden/quizzen");
 		  List<Opdracht> opdrachten = new ArrayList<Opdracht>();
 		  try{
@@ -145,7 +145,7 @@ public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iter
 			  }
 			  
 			  for(int i = 0; i< ids.size(); i++){
-				  opdrachten.add(opdrc.LeesBepaaldeOpdrachtenVanBestand(ids));
+				  opdrachten.add(opdrc.getBepaaldeOpdrachten(ids.get(i)));
 			  }
 			//  List<Opdracht> opdrachten = opdrc.LeesBepaaldeOpdrachtenVanBestand(ids);
 			  Quiz quiz = new Quiz(id,aantalDeelnames, leerjaar, leraar, onderwerp, quizStatus, opdrachten);
