@@ -1,6 +1,7 @@
 package model;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 /**
  * @author Pulinx Davy

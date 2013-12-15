@@ -5,6 +5,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
@@ -19,6 +21,8 @@ import model.OpdrachtTableModel;
 import model.Quiz;
 import model.QuizCatalogus;
 import model.QuizStatus;
+import utils.OpdrachtCategorieComparator;
+import utils.OpdrachtVraagComparator;
 import view.QuizCreatieView;
 
 public class QuizCreatieController implements ActionListener, ItemListener {
@@ -45,8 +49,8 @@ public class QuizCreatieController implements ActionListener, ItemListener {
 
 		this.opdrachtCatalogusModel = opdrachtCatalogusModel;
 		this.quizCatalogusModel = quizCatalogusModel;
-	//	this.opdrachtCatalogusModel.leesOpdrachtenVanBestand();
-	//	this.quizCatalogusModel.leesQuizzenVanBestand(opdrachtCatalogusModel);
+		// this.opdrachtCatalogusModel.leesOpdrachtenVanBestand();
+		// this.quizCatalogusModel.leesQuizzenVanBestand(opdrachtCatalogusModel);
 		opdrachten = opdrachtCatalogusModel.getOpdrachten();
 
 		listModel = new DefaultListModel<Opdracht>();
@@ -205,42 +209,77 @@ public class QuizCreatieController implements ActionListener, ItemListener {
 		if (e.getStateChange() == ItemEvent.SELECTED) {
 
 			if (e.getItemSelectable() == quizCreatieView.getSorteerOpdr()) {
-				System.out.println("here");
-				System.out.println(e.getItem());
-			} else if (e.getItemSelectable() == quizCreatieView.getCategorie()) {
-				listModel.clear();
-				for (Opdracht opdr : toonOpdrachtenVanCategorie(e)) {
-					listModel.addElement(opdr);
+				
+				if (e.getItem().equals("categorie")) {
+					sorteerOpComparator(new OpdrachtCategorieComparator());
+				} else if (e.getItem().equals("geen")) {
+					setOpdrachtModelVanCategorie();
+				}else if(e.getItem().equals("vraag")){
+					sorteerOpComparator(new OpdrachtVraagComparator());
 				}
-				quizCreatieView.getOpdrachten().setModel(listModel);
-				;
+
+			} else if (e.getItemSelectable() == quizCreatieView.getCategorie()) {
+				setOpdrachtModelVanCategorie();
 			}
 
 		}
 	}
+	
+	private void sorteerOpComparator(Comparator<Opdracht> comp){
+		List<Opdracht> tempList = new ArrayList<Opdracht>();
+		tempList.clear();
+		for (int i = 0; i < quizCreatieView.getOpdrachten()
+				.getModel().getSize(); i++) {
+			tempList.add(quizCreatieView.getOpdrachten().getModel()
+					.getElementAt(i));
+		}
+		Collections.sort(tempList,
+				comp);
+		listModel.clear();
+		for (Opdracht opdr : tempList) {
+			listModel.addElement(opdr);
+		}
+		quizCreatieView.getOpdrachten().setModel(listModel);
+	}
 
-	private List<Opdracht> toonOpdrachtenVanCategorie(ItemEvent e) {
+	private void setOpdrachtModelVanCategorie() {
+		listModel.clear();
+		for (Opdracht opdr : toonOpdrachtenVanCategorie()) {
+			listModel.addElement(opdr);
+		}
+		quizCreatieView.getOpdrachten().setModel(listModel);
+	}
+
+	private List<Opdracht> toonOpdrachtenVanCategorie() {
 		List<Opdracht> tempList = new ArrayList<Opdracht>();
 		for (Opdracht opdr : opdrachtCatalogusModel.getOpdrachten()) {
-			if (e.getItem().equals(OpdrachtCategorie.Aardrijkskunde)
+			if (quizCreatieView.getCategorie().getSelectedItem()
+					.equals(OpdrachtCategorie.Aardrijkskunde)
 					&& opdr.getOpdrachtCategorie().equals(
 							OpdrachtCategorie.Aardrijkskunde)) {
 				tempList.add(opdr);
-			} else if (e.getItem().equals(OpdrachtCategorie.Nederlands)
+			} else if (quizCreatieView.getCategorie().getSelectedItem()
+					.equals(OpdrachtCategorie.Nederlands)
 					&& opdr.getOpdrachtCategorie().equals(
 							OpdrachtCategorie.Nederlands)) {
 
 				tempList.add(opdr);
-			} else if (e.getItem().equals(OpdrachtCategorie.Wetenschappen)
+			} else if (quizCreatieView.getCategorie().getSelectedItem()
+					.equals(OpdrachtCategorie.Wetenschappen)
 					&& opdr.getOpdrachtCategorie().equals(
 							OpdrachtCategorie.Wetenschappen)) {
 				tempList.add(opdr);
-			} else if (e.getItem().equals(OpdrachtCategorie.Wiskunde)
+			} else if (quizCreatieView.getCategorie().getSelectedItem()
+					.equals(OpdrachtCategorie.Wiskunde)
 					&& opdr.getOpdrachtCategorie().equals(
 							OpdrachtCategorie.Wiskunde)) {
 				tempList.add(opdr);
 			}
 		}
+	/*	if(quizCreatieView.getCategorie().getSelectedItem()
+					.equals(OpdrachtCategorie.Alles)){
+			tempList = opdrachten;
+		}*/
 		return tempList;
 	}
 
