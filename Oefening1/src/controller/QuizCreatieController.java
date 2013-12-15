@@ -45,8 +45,8 @@ public class QuizCreatieController implements ActionListener, ItemListener {
 
 		this.opdrachtCatalogusModel = opdrachtCatalogusModel;
 		this.quizCatalogusModel = quizCatalogusModel;
-		this.opdrachtCatalogusModel.leesOpdrachtenVanBestand();
-		this.quizCatalogusModel.leesQuizzenVanBestand(opdrachtCatalogusModel);
+	//	this.opdrachtCatalogusModel.leesOpdrachtenVanBestand();
+	//	this.quizCatalogusModel.leesQuizzenVanBestand(opdrachtCatalogusModel);
 		opdrachten = opdrachtCatalogusModel.getOpdrachten();
 
 		listModel = new DefaultListModel<Opdracht>();
