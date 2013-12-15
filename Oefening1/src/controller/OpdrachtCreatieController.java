@@ -76,7 +76,9 @@ public class OpdrachtCreatieController implements ActionListener {
 			opdrachtCatalogus.addOpdrachtToList(opdracht);
 			opdrachtCatalogus.schrijfOpdrachtenNaarBestand();
 			
-			
+			opdrCreatieView.getAntwoordHintT().setText("");
+			opdrCreatieView.getAntwoordT().setText("");
+			opdrCreatieView.getVraagT().setText("");
 		}
 
 	}

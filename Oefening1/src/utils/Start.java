@@ -19,10 +19,7 @@ public class Start {
 		
 		OpdrachtCatalogus cat = new OpdrachtCatalogus();
 		QuizCatalogus qcat = new QuizCatalogus();
-		
-		cat.leesOpdrachtenVanBestand();
-		qcat.leesQuizzenVanBestand(cat);
-		
+				
 		MenuViewController mv = new MenuViewController(menuView, qcat, cat);
 	}
 }

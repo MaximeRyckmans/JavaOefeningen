@@ -20,7 +20,7 @@ public class OpdrachtCatalogus implements Cloneable,
 
 	private List<Opdracht> opdrachten;
 	private int id;
-	private File file;
+	private File file = new File("bestanden/opdrachten");
 
 	public OpdrachtCatalogus() {
 		opdrachten = new ArrayList<Opdracht>();
@@ -150,7 +150,7 @@ public class OpdrachtCatalogus implements Cloneable,
 	}
 
 	public void leesOpdrachtenVanBestand() {
-		file = new File("bestanden/opdrachten");
+		//file = new File("bestanden/opdrachten");
 		if (file.exists() == true) {
 			try {
 				Scanner scanner = new Scanner(file);
