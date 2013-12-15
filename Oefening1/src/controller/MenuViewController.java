@@ -7,6 +7,7 @@ import model.OpdrachtCatalogus;
 import model.QuizCatalogus;
 import view.MenuView;
 import view.OpdrachtCreatieView;
+import view.OpdrachtListView;
 import view.QuizCreatieView;
 import view.QuizListView;
 
@@ -39,7 +40,8 @@ public class MenuViewController implements ActionListener {
 			/*QuizCreatieView view = new QuizCreatieView();
 			new QuizCreatieController(cat, qcat, view);*/
 		} else if (action.equals("Lijst van Opdrachten")) {
-			new OpdrachtCreatieController(new OpdrachtCreatieView(), opdrachtCatalogus);
+			OpdrachtListView view = new OpdrachtListView();
+			OpdrachtListController controller = new OpdrachtListController(view, opdrachtCatalogus);
 		} else if (action.equals("Sluiten")) {
 			menuView.close();
 		}
