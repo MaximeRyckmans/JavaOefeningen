@@ -3,6 +3,8 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
+
 import model.OpdrachtCatalogus;
 import model.QuizCatalogus;
 import view.MenuView;
@@ -21,7 +23,8 @@ public class MenuViewController implements ActionListener {
 	private QuizCatalogus qCat;
 	private OpdrachtCatalogus opdrachtCatalogus;
 
-	public MenuViewController(MenuView menuView, QuizCatalogus quizCatalogus, OpdrachtCatalogus opdrachtCatalogus) {
+	public MenuViewController(MenuView menuView, QuizCatalogus quizCatalogus,
+			OpdrachtCatalogus opdrachtCatalogus) {
 		this.menuView = menuView;
 		this.qCat = quizCatalogus;
 		this.opdrachtCatalogus = opdrachtCatalogus;
@@ -36,16 +39,27 @@ public class MenuViewController implements ActionListener {
 		String action = e.getActionCommand();
 		if (action.equals("Lijst van Quizzen")) {
 			QuizListView view = new QuizListView();
-			QuizListController controller = new QuizListController(view, qCat, opdrachtCatalogus);
-			/*QuizCreatieView view = new QuizCreatieView();
-			new QuizCreatieController(cat, qcat, view);*/
+			QuizListController controller = new QuizListController(view, qCat,
+					opdrachtCatalogus);
+			/*
+			 * QuizCreatieView view = new QuizCreatieView(); new
+			 * QuizCreatieController(cat, qcat, view);
+			 */
 		} else if (action.equals("Lijst van Opdrachten")) {
 			OpdrachtListView view = new OpdrachtListView();
-			OpdrachtListController controller = new OpdrachtListController(view, opdrachtCatalogus);
+			OpdrachtListController controller = new OpdrachtListController(
+					view, opdrachtCatalogus);
 		} else if (action.equals("Sluiten")) {
-			menuView.close();
+			int result = JOptionPane
+					.showConfirmDialog(
+							menuView,
+							"Bent u zeker dat u wilt afsluiten? Niet opgeslagen gegevens kunnen verloren gaan.",
+							"Confirmatie voor aflsuiten",
+							JOptionPane.YES_NO_OPTION);
+			if (result == JOptionPane.YES_OPTION) {
+				System.exit(0);
+			}
 		}
-
 	}
 
 }
