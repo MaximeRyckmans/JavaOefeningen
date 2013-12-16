@@ -103,6 +103,9 @@ public class OpdrachtCreatieController implements ActionListener {
 			opdrCreatieView.getAntwoordHintT().setText("");
 			opdrCreatieView.getAntwoordT().setText("");
 			opdrCreatieView.getVraagT().setText("");
+			opdrCreatieView.getAlleKeuzesT().setText("");
+			opdrCreatieView.getMaxAntwoordTijdC().setSelectedIndex(0);
+			opdrCreatieView.getMaxAantalPogingenC().setSelectedIndex(0);
 		}
 
 	}
