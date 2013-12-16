@@ -104,9 +104,6 @@ public class QuizWijzigenController implements ActionListener {
 				}
 			}
 			
-			System.out.println(quiz.getOnderwerp());
-			System.out.println(copyQuizOld.getOnderwerp());
-			
 			quizWijzigenView.closeWindow();
 		}
 	}
