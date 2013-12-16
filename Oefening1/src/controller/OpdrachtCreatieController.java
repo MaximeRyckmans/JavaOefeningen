@@ -55,7 +55,7 @@ public class OpdrachtCreatieController implements ActionListener {
 						opdrCreatieView.getAntwoordT().getText(),
 						Integer.parseInt(opdrCreatieView
 								.getMaxAantalPogingenC().getSelectedItem()
-								.toString()), "één;twee;drie;vier",
+								.toString()), opdrCreatieView.getAlleKeuzesT().getText(),
 						(OpdrachtCategorie) opdrCreatieView
 								.getOpdrachtCategorie().getSelectedItem());
 			} else if (Categorie.Opsomming.toString() == opdrCreatieView
@@ -77,8 +77,6 @@ public class OpdrachtCreatieController implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();
 		if (opdrCreatieView.getCategorie().getSelectedItem().toString() == "Opsomming") {
-			/*opdrCreatieView.add(opdrCreatieView.getOpsommingPanel());
-			opdrCreatieView.remove(opdrCreatieView.getMeerKeuzePanel());*/
 			opdrCreatieView.getOpsommingPanel().setVisible(true);
 			opdrCreatieView.getMeerKeuzePanel().setVisible(false);
 			opdrCreatieView.getReproductiePanel().setVisible(false);
