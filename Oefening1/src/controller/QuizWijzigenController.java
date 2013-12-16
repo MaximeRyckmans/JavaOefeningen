@@ -111,9 +111,11 @@ public class QuizWijzigenController implements ActionListener {
 	private void verwijderOpdrachtInQuiz() {
 		try {
 			for (Opdracht opdracht : quiz.getOpdrachten()) {
-				if (opdracht.getVraag().equals(quizWijzigenView.getListOpdrachtenInQuiz().getSelectedValue())) {
+				Opdracht geselecteerdeOpdracht = (Opdracht)quizWijzigenView.getListOpdrachtenInQuiz().getSelectedValue();
+				if (opdracht.getVraag().equals(geselecteerdeOpdracht.getVraag())) {
 					quiz.getOpdrachten().remove(opdracht);
 					quizWijzigenView.setOpdrachtenInQuiz(quiz);
+					System.out.println(opdracht.getVraag());
 				}
 			}
 		} catch (Exception e) {
