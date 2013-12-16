@@ -46,29 +46,37 @@ public class OpdrachtCreatieView extends JFrame implements ActionListener {
 	public OpdrachtCreatieView() {
 
 		super("Aanmaken nieuwe Opdracht");
-		this.setSize(500,300);
+		JPanel panel = new JPanel();
+		this.setSize(600,400);
 		this.setLocation(500, 400);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
-		createDefaultPanel();
-		createOpsommingPanel();
+		//createDefaultPanel();
+		/*createOpsommingPanel();
 		createReproductiePanel();
-		createMeerkeuzePanel();
+		createMeerkeuzePanel();*/
 		
-		this.add(defaultPanel, BorderLayout.NORTH);
+		panel.setLayout(new GridLayout(2,2));
+		panel.add(createMeerkeuzePanel());
+		panel.add(createReproductiePanel());
+		panel.add(createOpsommingPanel());
+		panel.add(toevoegenButton());
+		this.add(createDefaultPanel());
+		this.add(panel, BorderLayout.SOUTH);
+		/*this.add(defaultPanel, BorderLayout.NORTH);
 		this.add(meerKeuzePanel, BorderLayout.SOUTH);
-		/*this.add(reproductiePanel, BorderLayout.SOUTH);*/
-		//this.add(opsommingPanel, BorderLayout.SOUTH);
-		opsommingPanel.setVisible(false);
+		this.add(reproductiePanel, BorderLayout.SOUTH);
+		this.add(opsommingPanel, BorderLayout.SOUTH);*/
+		/*opsommingPanel.setVisible(false);
 		meerKeuzePanel.setVisible(true);
-		reproductiePanel.setVisible(false);;
+		reproductiePanel.setVisible(false);*/
 		this.setVisible(true);
 
 	}
 
 	public JPanel createDefaultPanel() {
 		defaultPanel = new JPanel();
-		defaultPanel.setLayout(new GridLayout(9, 2));
+		defaultPanel.setLayout(new GridLayout(6, 2));
 		categorie = new JComboBox(Categorie.values());
 		opdrachtCategorie = new JComboBox(OpdrachtCategorie.values());
 		vraagL = new JLabel("Vraag :");
@@ -99,34 +107,41 @@ public class OpdrachtCreatieView extends JFrame implements ActionListener {
 	}
 	public JPanel createOpsommingPanel() {
 		opsommingPanel = new JPanel();
-		opsommingPanel.setLayout(new GridLayout(2, 2));
-		opsommingPanel.add(toevoegen);
-		
+		opsommingPanel.setLayout(new GridLayout(2, 1));  
+		opsommingPanel.setVisible(false);
 		return opsommingPanel;
 	}
 	
 	public JPanel createMeerkeuzePanel() {
 		meerKeuzePanel = new JPanel();
-		meerKeuzePanel.setLayout(new GridLayout(2, 2));
+		meerKeuzePanel.setLayout(new GridLayout(3, 2));
 		alleKeuzesL = new JLabel("Keuzes :");
 		alleKeuzesT = new JTextField(20);
 		meerKeuzePanel.add(alleKeuzesL);
 		meerKeuzePanel.add(alleKeuzesT);
-		meerKeuzePanel.add(toevoegen);
-		
+		meerKeuzePanel.setVisible(true);
 		return meerKeuzePanel;
 	}
 	
 	public JPanel createReproductiePanel() {
 		reproductiePanel = new JPanel();
-		reproductiePanel.setLayout(new GridLayout(2, 2));
+		reproductiePanel.setLayout(new GridLayout(5, 2));
 		trefwoordenL = new JLabel("Trefwoorden :");
 		trefwoordenT = new JTextField(20);
 		minAantalJuisteTrefwoordenL = new JLabel("Minimum aantal trefwoorden :");
 		minAantalJuisteTrefwoordenC = new JComboBox(minAantalJuisteTrefwoorden);
-		reproductiePanel.add(toevoegen);
-		
+		reproductiePanel.add(trefwoordenL);
+		reproductiePanel.add(trefwoordenT);
+		reproductiePanel.add(minAantalJuisteTrefwoordenL);
+		reproductiePanel.add(minAantalJuisteTrefwoordenC);
+		reproductiePanel.setVisible(false);
 		return reproductiePanel;
+	}
+	
+	public JPanel toevoegenButton() {
+		JPanel panel = new JPanel();
+		panel.add(toevoegen);
+		return panel;
 	}
 	
 	public JLabel getAlleKeuzesL() {
