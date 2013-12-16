@@ -47,6 +47,7 @@ public class OpdrachtCreatieView extends JFrame implements ActionListener {
 
 		super("Aanmaken nieuwe Opdracht");
 		this.setSize(500,300);
+		this.setLocation(500, 400);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		createDefaultPanel();
@@ -56,8 +57,8 @@ public class OpdrachtCreatieView extends JFrame implements ActionListener {
 		
 		this.add(defaultPanel, BorderLayout.NORTH);
 		this.add(meerKeuzePanel, BorderLayout.SOUTH);
-		this.add(reproductiePanel, BorderLayout.SOUTH);
-		this.add(opsommingPanel, BorderLayout.SOUTH);
+		/*this.add(reproductiePanel, BorderLayout.SOUTH);*/
+		//this.add(opsommingPanel, BorderLayout.SOUTH);
 		opsommingPanel.setVisible(false);
 		meerKeuzePanel.setVisible(true);
 		reproductiePanel.setVisible(false);;

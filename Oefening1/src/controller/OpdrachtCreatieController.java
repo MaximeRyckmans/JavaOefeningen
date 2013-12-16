@@ -77,19 +77,24 @@ public class OpdrachtCreatieController implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();
 		if (opdrCreatieView.getCategorie().getSelectedItem().toString() == "Opsomming") {
-			opdrCreatieView.getOpsommingPanel().setVisible(true);
+			/*opdrCreatieView.add(opdrCreatieView.getOpsommingPanel());
+			opdrCreatieView.remove(opdrCreatieView.getMeerKeuzePanel());*/
+			/*opdrCreatieView.getOpsommingPanel().setVisible(true);
 			opdrCreatieView.getMeerKeuzePanel().setVisible(false);
-			opdrCreatieView.getReproductiePanel().setVisible(false);
+			opdrCreatieView.getReproductiePanel().setVisible(false);*/
+			System.out.println(opdrCreatieView.getCategorie().getSelectedItem().toString());
 		}
 		if (opdrCreatieView.getCategorie().getSelectedItem().toString() == "Meerkeuze") {
 			opdrCreatieView.getOpsommingPanel().setVisible(false);
 			opdrCreatieView.getMeerKeuzePanel().setVisible(true);
 			opdrCreatieView.getReproductiePanel().setVisible(false);
+			System.out.println(opdrCreatieView.getCategorie().getSelectedItem().toString());
 		}
 		if (opdrCreatieView.getCategorie().getSelectedItem().toString() == "Reproductie") {
 			opdrCreatieView.getOpsommingPanel().setVisible(false);
 			opdrCreatieView.getMeerKeuzePanel().setVisible(false);
 			opdrCreatieView.getReproductiePanel().setVisible(true);
+			System.out.println(opdrCreatieView.getCategorie().getSelectedItem().toString());
 		}
 		if (action.equals("Toevoegen")) {
 			System.out.println("here");
