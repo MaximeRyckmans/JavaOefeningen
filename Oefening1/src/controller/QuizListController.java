@@ -41,6 +41,8 @@ public class QuizListController implements ActionListener{
 		}else if (e.getActionCommand().equals("Wijzigen van een quiz")) {
 			QuizWijzigenView quizWijzigenView = new QuizWijzigenView();
 			QuizWijzigenController quizWijzigenController = new QuizWijzigenController(quizWijzigenView, quizCatalogus, opdrachtCatalogus);
+		}else if (e.getActionCommand().equals("Verwijder quiz")) {
+			
 		}
 	}
 }

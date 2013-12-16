@@ -38,7 +38,7 @@ public class QuizListView extends JFrame implements ActionListener{
 	private JTree tree;
 	private DefaultMutableTreeNode top;
 	private JPanel content;
-	private JButton btnCreatieQuiz, btnWijzigQuiz;
+	private JButton btnCreatieQuiz, btnWijzigQuiz, btnDeleteQuiz;
 	
 	public QuizListView(){
 		super("Lijst van quizzen");
@@ -64,12 +64,14 @@ public class QuizListView extends JFrame implements ActionListener{
 		
 		btnCreatieQuiz = new JButton("Creëer nieuwe quiz");
 		btnWijzigQuiz = new JButton("Wijzigen van een quiz");
+		btnDeleteQuiz = new JButton("Verwijder quiz");
 		
 		JPanel btns = new JPanel();
 		gbc.gridy++;
 		
 		btns.add(btnCreatieQuiz);
 		btns.add(btnWijzigQuiz);
+		btns.add(btnDeleteQuiz);
 		content.add(btns, gbc);
 		
 		this.add(content);
@@ -85,7 +87,9 @@ public class QuizListView extends JFrame implements ActionListener{
 
 		btnWijzigQuiz.setActionCommand(btnWijzigQuiz.getName());
 		btnWijzigQuiz.addActionListener(al);
-
+		
+		btnDeleteQuiz.setActionCommand(btnDeleteQuiz.getName());
+		btnDeleteQuiz.addActionListener(al);
 	}
 	
 	public void createNodes(QuizCatalogus quizCatalogus){
@@ -120,6 +124,54 @@ public class QuizListView extends JFrame implements ActionListener{
 		}
 	}
 
+	public JTree getTree() {
+		return tree;
+	}
+
+	public void setTree(JTree tree) {
+		this.tree = tree;
+	}
+
+	public DefaultMutableTreeNode getTop() {
+		return top;
+	}
+
+	public void setTop(DefaultMutableTreeNode top) {
+		this.top = top;
+	}
+
+	public JPanel getContent() {
+		return content;
+	}
+
+	public void setContent(JPanel content) {
+		this.content = content;
+	}
+
+	public JButton getBtnCreatieQuiz() {
+		return btnCreatieQuiz;
+	}
+
+	public void setBtnCreatieQuiz(JButton btnCreatieQuiz) {
+		this.btnCreatieQuiz = btnCreatieQuiz;
+	}
+
+	public JButton getBtnWijzigQuiz() {
+		return btnWijzigQuiz;
+	}
+
+	public void setBtnWijzigQuiz(JButton btnWijzigQuiz) {
+		this.btnWijzigQuiz = btnWijzigQuiz;
+	}
+
+	public JButton getBtnDeleteQuiz() {
+		return btnDeleteQuiz;
+	}
+
+	public void setBtnDeleteQuiz(JButton btnDeleteQuiz) {
+		this.btnDeleteQuiz = btnDeleteQuiz;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
