@@ -79,9 +79,9 @@ public class OpdrachtCreatieController implements ActionListener {
 		if (opdrCreatieView.getCategorie().getSelectedItem().toString() == "Opsomming") {
 			/*opdrCreatieView.add(opdrCreatieView.getOpsommingPanel());
 			opdrCreatieView.remove(opdrCreatieView.getMeerKeuzePanel());*/
-			/*opdrCreatieView.getOpsommingPanel().setVisible(true);
+			opdrCreatieView.getOpsommingPanel().setVisible(true);
 			opdrCreatieView.getMeerKeuzePanel().setVisible(false);
-			opdrCreatieView.getReproductiePanel().setVisible(false);*/
+			opdrCreatieView.getReproductiePanel().setVisible(false);
 			System.out.println(opdrCreatieView.getCategorie().getSelectedItem().toString());
 		}
 		if (opdrCreatieView.getCategorie().getSelectedItem().toString() == "Meerkeuze") {
