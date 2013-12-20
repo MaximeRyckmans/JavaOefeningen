@@ -25,7 +25,8 @@ import utils.OpdrachtCategorieComparator;
 import utils.OpdrachtVraagComparator;
 import view.QuizCreatieView;
 
-public class QuizCreatieController implements ActionListener, ItemListener {
+public class QuizCreatieController extends QuizController implements
+		ItemListener {
 
 	private QuizCreatieView quizCreatieView;
 	private Quiz quiz;
@@ -92,21 +93,18 @@ public class QuizCreatieController implements ActionListener, ItemListener {
 	}
 
 	private void verplaatsOpdrachtNaarRechts() throws IllegalArgumentException {
-		boolean opdrachtAlToegevoegd = false;
+		// boolean opdrachtAlToegevoegd = false;
+		List<Opdracht> tempList = new ArrayList<Opdracht>();
 		if (quizCreatieView.getOpdrachten().getSelectedValue() != null) {
-			for (String s : getLijstVanToegevoegdeOpdrachten()) {
-				if (s.equals(quizCreatieView.getOpdrachten().getSelectedValue()
-						.toString())) {
-					opdrachtAlToegevoegd = true;
-					throw new IllegalArgumentException(
-							"Opdracht is al toegevoegd. Selecteer een andere opdracht.");
-				}
-			}
-			if (opdrachtAlToegevoegd == false) {
+			Opdracht opdracht = quizCreatieView.getOpdrachten()
+					.getSelectedValue();
+			
+			if (isToegevoegdeOpdracht(tempList, opdracht) == false) {
 				quizCreatieView.getTableModel().addRow(
 						new Opdracht[] {
 								quizCreatieView.getOpdrachten()
 										.getSelectedValue(), null });
+				tempList.add(opdracht);
 				aantalToegevoegdeOpdrachten++;
 				quizCreatieView.getAantalToegevoegdeOpdr().setText(
 						Integer.toString(aantalToegevoegdeOpdrachten));
@@ -209,12 +207,12 @@ public class QuizCreatieController implements ActionListener, ItemListener {
 		if (e.getStateChange() == ItemEvent.SELECTED) {
 
 			if (e.getItemSelectable() == quizCreatieView.getSorteerOpdr()) {
-				
+
 				if (e.getItem().equals("categorie")) {
 					sorteerOpComparator(new OpdrachtCategorieComparator());
 				} else if (e.getItem().equals("geen")) {
 					setOpdrachtModelVanCategorie();
-				}else if(e.getItem().equals("vraag")){
+				} else if (e.getItem().equals("vraag")) {
 					sorteerOpComparator(new OpdrachtVraagComparator());
 				}
 
@@ -224,17 +222,16 @@ public class QuizCreatieController implements ActionListener, ItemListener {
 
 		}
 	}
-	
-	private void sorteerOpComparator(Comparator<Opdracht> comp){
+
+	private void sorteerOpComparator(Comparator<Opdracht> comp) {
 		List<Opdracht> tempList = new ArrayList<Opdracht>();
 		tempList.clear();
-		for (int i = 0; i < quizCreatieView.getOpdrachten()
-				.getModel().getSize(); i++) {
+		for (int i = 0; i < quizCreatieView.getOpdrachten().getModel()
+				.getSize(); i++) {
 			tempList.add(quizCreatieView.getOpdrachten().getModel()
 					.getElementAt(i));
 		}
-		Collections.sort(tempList,
-				comp);
+		Collections.sort(tempList, comp);
 		listModel.clear();
 		for (Opdracht opdr : tempList) {
 			listModel.addElement(opdr);
@@ -276,10 +273,10 @@ public class QuizCreatieController implements ActionListener, ItemListener {
 				tempList.add(opdr);
 			}
 		}
-	/*	if(quizCreatieView.getCategorie().getSelectedItem()
-					.equals(OpdrachtCategorie.Alles)){
-			tempList = opdrachten;
-		}*/
+		/*
+		 * if(quizCreatieView.getCategorie().getSelectedItem()
+		 * .equals(OpdrachtCategorie.Alles)){ tempList = opdrachten; }
+		 */
 		return tempList;
 	}
 
