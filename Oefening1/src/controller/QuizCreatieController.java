@@ -40,6 +40,7 @@ public class QuizCreatieController extends QuizController implements
 	private DefaultTableModel tableModel;
 	private int aantalToegevoegdeOpdrachten = 0;
 	private List<Opdracht> geselecteerdeOpdrachten = null;
+	List<Opdracht> tempList = new ArrayList<Opdracht>();
 
 	public QuizCreatieController() {
 
@@ -94,7 +95,7 @@ public class QuizCreatieController extends QuizController implements
 
 	private void verplaatsOpdrachtNaarRechts() throws IllegalArgumentException {
 		// boolean opdrachtAlToegevoegd = false;
-		List<Opdracht> tempList = new ArrayList<Opdracht>();
+	
 		if (quizCreatieView.getOpdrachten().getSelectedValue() != null) {
 			Opdracht opdracht = quizCreatieView.getOpdrachten()
 					.getSelectedValue();
