@@ -11,7 +11,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListModel;
 
@@ -19,6 +21,9 @@ import java.awt.BorderLayout;
 
 import javax.swing.JList;
 import javax.swing.JButton;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import model.Klas;
 import model.Leraar;
@@ -45,13 +50,15 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 
 	private static final long serialVersionUID = 1L;
 	
-	private JPanel pnlBackground, pnlRightBackground, pnlRightBot, pnlLeft, pnlMiddle, pnlRight, pnlListQuizzen, pnlListOpdrInQuiz, pnlListOpdrachten;
+	private JPanel pnlBackground, pnlRightBackground, pnlRightBot, pnlLeft, pnlMiddle, pnlRight, pnlListQuizzen, pnlListOpdrachten;
+	private JScrollPane scrlPnlOpdrachtenInQuiz;
 	private JLabel lblLijstVanQuizzen, lblOpdrachtenInQuiz, lblOpdrachtenInSystem, lblMiddle, 
 	lblOnderwerp, lblLeerjaar, lblLeraar, lblAantalDeelnames, lblQuizStatus;
 	private JTextField txtOnderwerp, txtAantalDeelnames;
 	private JComboBox<String> cmbbxLeerjaar, cmbbxLeraar, cmbbxQuizStatus;
 	private JList<Quiz> listQuizzen;
-	private JList<Opdracht> listOpdrachtenInQuiz, listOpdrachten;
+	private JList<Opdracht> listOpdrachten;
+	private JTable tableOpdrachtenInQuiz;
 	private JButton btnWijzigQuiz, btnVerwijderOpdracht, btnToevoegenOpdracht, btnWijzigingOpslaan, btnAnnuleerWijziging;
 	private boolean trueIndicator = false;
 	private final String NOT_SELECTABLE_OPTION = " - Selecteer waarde - ";
@@ -178,14 +185,17 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 	private void CreateRightPanel() {
 		lblOpdrachtenInQuiz = new JLabel("Opdrachten in quiz");
 		lblOpdrachtenInSystem = new JLabel("Opdrachten in het systeem");
-		pnlListOpdrInQuiz = new JPanel();
-		listOpdrachtenInQuiz = new JList<Opdracht>();
+		scrlPnlOpdrachtenInQuiz = new JScrollPane();
+		//pnlListOpdrInQuiz = new JPanel();
+		//listOpdrachtenInQuiz = new JList<Opdracht>();
+		tableOpdrachtenInQuiz = new JTable();
 		pnlListOpdrachten = new JPanel();
 		listOpdrachten = new JList<Opdracht>();
 		btnToevoegenOpdracht = new JButton("Voeg opdracht toe aan quiz");
 		btnVerwijderOpdracht = new JButton(" Verwijder opdracht in quiz ");
 		btnWijzigingOpslaan = new JButton("Alle wijzigingen opslaan");
 		btnAnnuleerWijziging = new JButton("Annuleer");
+		final String[] col = { "Opdracht", "MaximumScore" };
 		
 		pnlRight = new JPanel();
 		pnlRight.setPreferredSize(new Dimension(435,857));
@@ -198,12 +208,20 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 		gbc.gridy = 0;
 		pnlRight.add(lblOpdrachtenInQuiz, gbc);
 		
-		pnlListOpdrInQuiz.setPreferredSize(new Dimension(400, 300));
+		scrlPnlOpdrachtenInQuiz.setPreferredSize(new Dimension(400, 300));
+		scrlPnlOpdrachtenInQuiz.setBorder(BorderFactory.createLoweredBevelBorder());
+		DefaultTableModel tblModel = new DefaultTableModel(col, 0);
+		tableOpdrachtenInQuiz.setModel(tblModel);
+		scrlPnlOpdrachtenInQuiz.add(tableOpdrachtenInQuiz);
+		gbc.gridy = 1;
+		gbc.gridx = 0;
+		pnlRight.add(scrlPnlOpdrachtenInQuiz, gbc);
+		/*pnlListOpdrInQuiz.setPreferredSize(new Dimension(400, 300));
 		pnlListOpdrInQuiz.setBorder(BorderFactory.createLoweredBevelBorder());
 		pnlListOpdrInQuiz.add(listOpdrachtenInQuiz);
 		gbc.gridx = 0;
 		gbc.gridy = 1;
-		pnlRight.add(pnlListOpdrInQuiz, gbc);
+		pnlRight.add(pnlListOpdrInQuiz, gbc);*/
 		
 		gbc.gridx = 0;
 		gbc.gridy = 2;
@@ -300,7 +318,7 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 			cmbbxQuizStatus.setSelectedItem(quiz.getQuizStatus().toString());
 			model.addElement(o);
 		}
-		listOpdrachtenInQuiz.setModel(model);
+		//listOpdrachtenInQuiz.setModel(model);
 	}
 	
 	public void confirmationWindow(String Confirmation, String title){
@@ -374,13 +392,13 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 		this.pnlListQuizzen = pnlListQuizzen;
 	}
 
-	public JPanel getPnlListOpdrInQuiz() {
+	/*public JPanel getPnlListOpdrInQuiz() {
 		return pnlListOpdrInQuiz;
 	}
 
 	public void setPnlListOpdrInQuiz(JPanel pnlListOpdrInQuiz) {
 		this.pnlListOpdrInQuiz = pnlListOpdrInQuiz;
-	}
+	}*/
 
 	public JPanel getPnlListOpdrachten() {
 		return pnlListOpdrachten;
@@ -422,13 +440,13 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 		this.listQuizzen = listQuizzen;
 	}
 
-	public JList<Opdracht> getListOpdrachtenInQuiz() {
+	/*public JList<Opdracht> getListOpdrachtenInQuiz() {
 		return listOpdrachtenInQuiz;
 	}
 
 	public void setListOpdrachtenInQuiz(JList<Opdracht> listOpdrachtenInQuiz) {
 		this.listOpdrachtenInQuiz = listOpdrachtenInQuiz;
-	}
+	}*/
 
 	public JList<Opdracht> getListOpdrachten() {
 		return listOpdrachten;

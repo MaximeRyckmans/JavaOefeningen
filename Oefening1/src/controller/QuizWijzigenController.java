@@ -20,7 +20,7 @@ import view.QuizWijzigenView;
  *
  */
 
-public class QuizWijzigenController implements ActionListener {
+public class QuizWijzigenController extends QuizController {
 
 	private QuizWijzigenView quizWijzigenView;
 	private QuizCatalogus quizCatalogus;
@@ -109,9 +109,9 @@ public class QuizWijzigenController implements ActionListener {
 	}
 
 	private void verwijderOpdrachtInQuiz() {
-		try {
+		/*try {
 			for (Opdracht opdracht : quiz.getOpdrachten()) {
-				Opdracht geselecteerdeOpdracht = (Opdracht)quizWijzigenView.getListOpdrachtenInQuiz().getSelectedValue();
+				Opdracht geselecteerdeOpdracht = quizWijzigenView.getListOpdrachtenInQuiz().getSelectedValue();
 				if (opdracht.getVraag().equals(geselecteerdeOpdracht.getVraag())) {
 					quiz.getOpdrachten().remove(opdracht);
 					quizWijzigenView.setOpdrachtenInQuiz(quiz);
@@ -120,17 +120,21 @@ public class QuizWijzigenController implements ActionListener {
 			}
 		} catch (Exception e) {
 			System.out.println(e);
-		}	
+		}	*/
 	}
 
 	private void voegOpdrachtToeAanQuiz() {
 		try {
-			for (Opdracht opdracht : opdrachtCatalogus.getOpdrachten()) {
-				if (opdracht.equals(quizWijzigenView.getListOpdrachten().getSelectedValue())) {
-					quiz.getOpdrachten().add(opdracht);
-					quizWijzigenView.setOpdrachtenInQuiz(quiz);
+			if (isToegevoegdeOpdracht(quiz.getOpdrachten(), quizWijzigenView.getListOpdrachten().getSelectedValue())) {
+				for (Opdracht opdracht : opdrachtCatalogus.getOpdrachten()) {
+					if (opdracht.equals(quizWijzigenView.getListOpdrachten().getSelectedValue())) {
+						quiz.getOpdrachten().add(opdracht);
+						quizWijzigenView.setOpdrachtenInQuiz(quiz);
+					}
 				}
 			}
+		}catch (IllegalArgumentException e) {
+			System.out.println(e);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
