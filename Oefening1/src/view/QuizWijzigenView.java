@@ -309,13 +309,14 @@ public class QuizWijzigenView extends JFrame implements ActionListener  {
 	
 	public void setOpdrachtenInQuiz(Quiz quiz){
 		DefaultListModel<Opdracht> model = new DefaultListModel<Opdracht>();
+		Integer parse = quiz.getAantalDeelnames();
+		txtAantalDeelnames.setText(parse.toString());
+		txtOnderwerp.setText(quiz.getOnderwerp());
+		cmbbxLeerjaar.setSelectedItem(quiz.getLeerjaar().toString());
+		cmbbxLeraar.setSelectedItem(quiz.getLeraar().toString());
+		cmbbxQuizStatus.setSelectedItem(quiz.getQuizStatus().toString());
 		for (Opdracht o : quiz.getOpdrachten()) {
-			Integer parse = quiz.getAantalDeelnames();
-			txtAantalDeelnames.setText(parse.toString());
-			txtOnderwerp.setText(quiz.getOnderwerp());
-			cmbbxLeerjaar.setSelectedItem(quiz.getLeerjaar().toString());
-			cmbbxLeraar.setSelectedItem(quiz.getLeraar().toString());
-			cmbbxQuizStatus.setSelectedItem(quiz.getQuizStatus().toString());
+			
 			model.addElement(o);
 		}
 		//listOpdrachtenInQuiz.setModel(model);
