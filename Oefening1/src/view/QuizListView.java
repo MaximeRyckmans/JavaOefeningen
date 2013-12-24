@@ -58,21 +58,23 @@ public class QuizListView extends JFrame implements ActionListener{
 		tree = new JTree(top);
 		tree.expandPath(tree.getPathForRow(0));
 		JScrollPane pane = new JScrollPane(tree);
-		pane.setPreferredSize(new Dimension(450, 600));
+		pane.setPreferredSize(new Dimension(450, 550));
 		
 		content.add(pane, gbc);
 		
 		btnCreatieQuiz = new JButton("Creëer nieuwe quiz");
 		btnWijzigQuiz = new JButton("Wijzigen van een quiz");
-		//btnDeleteQuiz = new JButton("Verwijder quiz");
+		btnDeleteQuiz = new JButton("Verwijder quiz");
 		
 		JPanel btns = new JPanel();
 		gbc.gridy++;
 		
 		btns.add(btnCreatieQuiz);
 		btns.add(btnWijzigQuiz);
-		//btns.add(btnDeleteQuiz);
 		content.add(btns, gbc);
+		
+		gbc.gridy++;
+		content.add(btnDeleteQuiz, gbc);
 		
 		this.add(content);
 		this.setSize(900,900);
@@ -88,8 +90,8 @@ public class QuizListView extends JFrame implements ActionListener{
 		btnWijzigQuiz.setActionCommand(btnWijzigQuiz.getName());
 		btnWijzigQuiz.addActionListener(al);
 		
-		/*btnDeleteQuiz.setActionCommand(btnDeleteQuiz.getName());
-		btnDeleteQuiz.addActionListener(al);*/
+		btnDeleteQuiz.setActionCommand(btnDeleteQuiz.getName());
+		btnDeleteQuiz.addActionListener(al);
 	}
 	
 	public void createNodes(QuizCatalogus quizCatalogus){

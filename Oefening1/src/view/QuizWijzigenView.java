@@ -67,8 +67,10 @@ public class QuizWijzigenView extends JFrame implements ActionListener {
 	private boolean trueIndicator = false;
 	private final String NOT_SELECTABLE_OPTION = " - Selecteer waarde - ";
 	private DefaultTableModel tblModel;
+	
+	public QuizWijzigenView() {}
 
-	public QuizWijzigenView() {
+	public QuizWijzigenView(String nameButton) {
 		super("Wijzigen van quizzen");
 		this.setSize(1350, 900);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -80,7 +82,7 @@ public class QuizWijzigenView extends JFrame implements ActionListener {
 		pnlRightBackground.setLayout(new GridBagLayout());
 		pnlRightBot = new JPanel();
 
-		CreateLeftPanel();
+		CreateLeftPanel(nameButton);
 		CreateMiddlePanel();
 		CreateRightPanel();
 
@@ -105,7 +107,7 @@ public class QuizWijzigenView extends JFrame implements ActionListener {
 		this.setVisible(true);
 	}
 
-	private void CreateMiddlePanel() {
+	protected void CreateMiddlePanel() {
 		lblMiddle = new JLabel("Quizgegevens");
 		lblOnderwerp = new JLabel("Onderwerp:");
 		txtOnderwerp = new JTextField(20);
@@ -158,11 +160,11 @@ public class QuizWijzigenView extends JFrame implements ActionListener {
 		pnlMiddle.add(cmbbxQuizStatus, gbc);
 	}
 
-	private void CreateLeftPanel() {
+	protected void CreateLeftPanel(String nameButton) {
 		lblLijstVanQuizzen = new JLabel("Lijst van quizzen");
 		pnlListQuizzen = new JPanel();
 		listQuizzen = new JList<Quiz>();
-		btnWijzigQuiz = new JButton("Wijzig quiz");
+		btnWijzigQuiz = new JButton(nameButton);
 
 		pnlLeft = new JPanel();
 		pnlLeft.setPreferredSize(new Dimension(435, 857));
@@ -186,7 +188,7 @@ public class QuizWijzigenView extends JFrame implements ActionListener {
 
 	}
 
-	private void CreateRightPanel() {
+	protected void CreateRightPanel() {
 		lblOpdrachtenInQuiz = new JLabel("Opdrachten in quiz");
 		lblOpdrachtenInSystem = new JLabel("Opdrachten in het systeem");
 		scrlPnlOpdrachtenInQuiz = new JScrollPane();
