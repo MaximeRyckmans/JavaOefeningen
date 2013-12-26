@@ -3,6 +3,7 @@ package utils;
 import model.OpdrachtCatalogus;
 import model.QuizCatalogus;
 import controller.MenuViewController;
+import controller.OpstartController;
 import controller.QuizCreatieController;
 import view.MenuView;
 import controller.QuizWijzigenController;
@@ -14,12 +15,6 @@ import view.QuizWijzigenView;
 public class Start {
 
 	public static void main(String[] args) {
-		
-		MenuView menuView = new MenuView();
-		
-		OpdrachtCatalogus cat = new OpdrachtCatalogus();
-		QuizCatalogus qcat = new QuizCatalogus();
-				
-		MenuViewController mv = new MenuViewController(menuView, qcat, cat);
+		OpstartController opstartController = new OpstartController();
 	}
 }
