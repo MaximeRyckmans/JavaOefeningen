@@ -16,7 +16,12 @@ import model.Opdracht;
 import model.OpdrachtCategorie;
 import model.Opsomming;
 import model.Reproductie;
-
+/**
+ * 
+ * @author Maxime Ryckmans
+ * @version 1.0
+ *
+ */
 public class FileToDBAdder {
 	Connection con = null;
 	PreparedStatement pst = null;

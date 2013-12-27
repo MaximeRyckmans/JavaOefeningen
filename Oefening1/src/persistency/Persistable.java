@@ -5,6 +5,12 @@ import model.OpdrachtCatalogus;
 import model.Quiz;
 import model.QuizCatalogus;
 
+/**
+ * 
+ * @author Maxime Ryckmans
+ * @version 1.0
+ *
+ */
 public interface Persistable {
 	
 	public void getAlleOpdrachten(OpdrachtCatalogus opdrachtCatalogus);

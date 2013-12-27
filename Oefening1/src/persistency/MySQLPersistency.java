@@ -14,7 +14,12 @@ import model.Opsomming;
 import model.Quiz;
 import model.QuizCatalogus;
 import model.Reproductie;
-
+/**
+ * 
+ * @author Maxime Ryckmans
+ * @version 1.0
+ *
+ */
 public class MySQLPersistency implements Persistable {
 
 	Connection con = null;

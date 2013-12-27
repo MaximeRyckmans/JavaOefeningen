@@ -19,7 +19,12 @@ import model.Quiz;
 import model.QuizCatalogus;
 import model.QuizStatus;
 import model.Reproductie;
-
+/**
+ * 
+ * @author Maxime Ryckmans
+ * @version 1.0
+ *
+ */
 public class TekstPersistency implements Persistable {
 
 	@Override
