@@ -16,9 +16,9 @@ public class PersistencyFacade {
 	//facade constructor for the persistence of the quizzes and opdrachten.
 	public PersistencyFacade() {
 		if (getPersistencyMethode().equals("Tekst persistentie")) {
-			persistable = new TekstPersistency();
+			setPersistable(new TekstPersistency());
 		} else if (getPersistencyMethode().equals("MySQL persistentie")) {
-			persistable = new MySQLPersistency();
+			setPersistable(new MySQLPersistency());
 		}
 	}
 	
@@ -51,5 +51,13 @@ public class PersistencyFacade {
 		}
 
 		return juist;
+	}
+
+	public Persistable getPersistable() {
+		return persistable;
+	}
+
+	public void setPersistable(Persistable persistable) {
+		this.persistable = persistable;
 	}
 }

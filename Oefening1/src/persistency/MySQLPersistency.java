@@ -1,21 +1,36 @@
 package persistency;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+
+import model.Opdracht;
 import model.OpdrachtCatalogus;
 import model.Quiz;
 import model.QuizCatalogus;
 
 public class MySQLPersistency implements Persistable {
+	
+	Connection con = null;
+	String url = "jdbc:mysql://localhost:3306/quizdb";
+	String user="root";
+	String password="";
 
 	@Override
 	public void getAlleOpdrachten(OpdrachtCatalogus opdrachtCatalogus) {
-		// TODO Auto-generated method stub
+		try {
+			con=DriverManager.getConnection(url, user, password);
+			
+		
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 
 	}
-
 	@Override
-	public void getAlleQuizzen(QuizCatalogus quizCatalogus) {
+	public void getAlleQuizzen(OpdrachtCatalogus opdrachtCatalogus,
+			QuizCatalogus quizCatalogus) {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
@@ -36,4 +51,10 @@ public class MySQLPersistency implements Persistable {
 
 	}
 
+	@Override
+	public Opdracht getBepaaldeOpdracht(Integer i,
+			OpdrachtCatalogus opdrachtCatalogus) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

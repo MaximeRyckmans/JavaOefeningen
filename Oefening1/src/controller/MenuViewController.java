@@ -5,12 +5,11 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JOptionPane;
 
+import persistency.PersistencyFacade;
 import model.OpdrachtCatalogus;
 import model.QuizCatalogus;
 import view.MenuView;
-import view.OpdrachtCreatieView;
 import view.OpdrachtListView;
-import view.QuizCreatieView;
 import view.QuizListView;
 
 /**
@@ -22,15 +21,19 @@ public class MenuViewController implements ActionListener {
 	private MenuView menuView;
 	private QuizCatalogus qCat;
 	private OpdrachtCatalogus opdrachtCatalogus;
+	private PersistencyFacade facade;
 
 	public MenuViewController(MenuView menuView, QuizCatalogus quizCatalogus,
-			OpdrachtCatalogus opdrachtCatalogus) {
+			OpdrachtCatalogus opdrachtCatalogus, PersistencyFacade facade) {
 		this.menuView = menuView;
 		this.qCat = quizCatalogus;
 		this.opdrachtCatalogus = opdrachtCatalogus;
-		this.opdrachtCatalogus.leesOpdrachtenVanBestand();
+		this.facade=facade;
+//		this.opdrachtCatalogus.leesOpdrachtenVanBestand();
+		facade.getPersistable().getAlleOpdrachten(opdrachtCatalogus);
 		this.qCat = quizCatalogus;
-		this.qCat.leesQuizzenVanBestand(opdrachtCatalogus);
+//		this.qCat.leesQuizzenVanBestand(opdrachtCatalogus);
+		facade.getPersistable().getAlleQuizzen(opdrachtCatalogus, quizCatalogus);
 		menuView.buttonActionListener(this);
 	}
 
@@ -48,7 +51,7 @@ public class MenuViewController implements ActionListener {
 		} else if (action.equals("Lijst van Opdrachten")) {
 			OpdrachtListView view = new OpdrachtListView();
 			OpdrachtListController controller = new OpdrachtListController(
-					view, opdrachtCatalogus);
+					view, opdrachtCatalogus, facade);
 		} else if (action.equals("Sluiten")) {
 			int result = JOptionPane
 					.showConfirmDialog(

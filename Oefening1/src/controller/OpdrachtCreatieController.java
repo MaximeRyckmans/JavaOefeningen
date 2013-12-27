@@ -3,6 +3,7 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import persistency.PersistencyFacade;
 import model.Categorie;
 import model.Meerkeuze;
 import model.Opdracht;
@@ -22,12 +23,14 @@ public class OpdrachtCreatieController implements ActionListener {
 	private Opdracht opdracht;
 	private OpdrachtCatalogus opdrachtCatalogus;
 	private OpdrachtCreatieView opdrCreatieView;
+	private PersistencyFacade facade;
 
 	public OpdrachtCreatieController(OpdrachtCreatieView opdrCreatieView,
-			OpdrachtCatalogus opdrachtCatalogus) {
+			OpdrachtCatalogus opdrachtCatalogus, PersistencyFacade facade) {
 		this.opdrCreatieView = opdrCreatieView;
 		this.opdrachtCatalogus = opdrachtCatalogus;
 		this.opdrCreatieView.buttonActionListener(this);
+		this.facade=facade;
 	}
 
 	public void createOpdracht() {
@@ -98,7 +101,8 @@ public class OpdrachtCreatieController implements ActionListener {
 			System.out.println("here");
 			createOpdracht();
 			opdrachtCatalogus.addOpdrachtToList(opdracht);
-			opdrachtCatalogus.schrijfOpdrachtenNaarBestand();
+			//opdrachtCatalogus.schrijfOpdrachtenNaarBestand();
+			facade.getPersistable().slaOpdrachtOp(opdrachtCatalogus);
 
 			opdrCreatieView.getAntwoordHintT().setText("");
 			opdrCreatieView.getAntwoordT().setText("");

@@ -1,5 +1,6 @@
 package persistency;
 
+import model.Opdracht;
 import model.OpdrachtCatalogus;
 import model.Quiz;
 import model.QuizCatalogus;
@@ -7,9 +8,10 @@ import model.QuizCatalogus;
 public interface Persistable {
 	
 	public void getAlleOpdrachten(OpdrachtCatalogus opdrachtCatalogus);
-	public void getAlleQuizzen(QuizCatalogus quizCatalogus);
+	public void getAlleQuizzen(OpdrachtCatalogus opdrachtCatalogus,QuizCatalogus quizCatalogus);
 	public void slaOpdrachtOp (OpdrachtCatalogus opdrachtCatalogus);
 	public void slaQuizOp (QuizCatalogus quizCatalogus);
 	public void verwijderQuiz(Quiz quiz);
+	public Opdracht getBepaaldeOpdracht(Integer i,OpdrachtCatalogus opdrachtCatalogus);
 
 }
