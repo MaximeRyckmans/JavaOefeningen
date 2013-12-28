@@ -208,9 +208,11 @@ public class OpdrachtCatalogus implements Cloneable,
 //		for (Opdracht opdr : getOpdrachten()) {
 //			if (i.equals(opdr.getId())) {
 //				opdracht = opdr;
-//				return opdracht;
+//				
 //			}
 //		}
+//		return opdracht;
+//	}
 //		opdracht = null;
 //		return opdracht;
 		/*File file = new File("bestanden/opdrachten");

@@ -41,7 +41,8 @@ public class TekstPersistency implements Persistable {
 	}
 
 	@Override
-	public void slaOpdrachtOp(OpdrachtCatalogus opdrachtCatalogus) {
+	public void slaOpdrachtOp(OpdrachtCatalogus opdrachtCatalogus, Opdracht opdracht) {
+		opdrachtCatalogus.addOpdrachtToList(opdracht);
 		schrijfOpdrachtenNaarBestand(opdrachtCatalogus);
 
 	}
@@ -54,15 +55,24 @@ public class TekstPersistency implements Persistable {
 	}
 
 	@Override
-	public void slaQuizOp(QuizCatalogus quizCatalogus) {
+	public void slaQuizOp(QuizCatalogus quizCatalogus, Quiz quiz) {
 		schrijfQuizzenNaarBestand(quizCatalogus);
 
 	}
 
 	@Override
-	public void verwijderQuiz(Quiz quiz) {
-		// TODO Auto-generated method stub
+	public void verwijderQuiz(Quiz quiz, QuizCatalogus quizCatalogus) {
+		quizCatalogus.removeQuizFromList(quiz);
+		schrijfQuizzenNaarBestand(quizCatalogus);
 
+	}
+	
+	@Override
+	public void verwijderOpdracht(Opdracht opdracht,
+			OpdrachtCatalogus opdrachtCatalogus) {
+		opdrachtCatalogus.removeOpdrachtFromList(opdracht);
+		schrijfOpdrachtenNaarBestand(opdrachtCatalogus);
+		
 	}
 	
 
@@ -187,7 +197,7 @@ public class TekstPersistency implements Persistable {
 		}
 	}
 	public void leesQuizzenVanBestand(OpdrachtCatalogus opdrachtCatalogus, QuizCatalogus quizCatalogus){
-		OpdrachtCatalogus opdrc = opdrachtCatalogus;
+		
 		  File file = new File("bestanden/quizzen");
 		  List<Opdracht> opdrachten = new ArrayList<Opdracht>();
 		  try{
@@ -214,7 +224,7 @@ public class TekstPersistency implements Persistable {
 			  for(int i = 0; i< ids.size(); i++){
 				  opdrachten.add(this.getBepaaldeOpdrachten(ids.get(i), opdrachtCatalogus));
 			  }
-			//  List<Opdracht> opdrachten = opdrc.LeesBepaaldeOpdrachtenVanBestand(ids);
+			
 			  Quiz quiz = new Quiz(id,aantalDeelnames, leerjaar, leraar, onderwerp, quizStatus, opdrachten);
 			  quizCatalogus.getQuizzen().add(quiz);
 			}
@@ -229,4 +239,6 @@ public class TekstPersistency implements Persistable {
 		    System.out.println(ex.getMessage());
 		  }
 		}
+
+
 }

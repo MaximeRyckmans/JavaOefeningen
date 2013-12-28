@@ -100,9 +100,9 @@ public class OpdrachtCreatieController implements ActionListener {
 		if (action.equals("Toevoegen")) {
 			System.out.println("here");
 			createOpdracht();
-			opdrachtCatalogus.addOpdrachtToList(opdracht);
+//			opdrachtCatalogus.addOpdrachtToList(opdracht);
 			//opdrachtCatalogus.schrijfOpdrachtenNaarBestand();
-			facade.getPersistable().slaOpdrachtOp(opdrachtCatalogus);
+			facade.getPersistable().slaOpdrachtOp(opdrachtCatalogus, opdracht);
 
 			opdrCreatieView.getAntwoordHintT().setText("");
 			opdrCreatieView.getAntwoordT().setText("");

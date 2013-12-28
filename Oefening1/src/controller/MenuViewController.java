@@ -26,13 +26,13 @@ public class MenuViewController implements ActionListener {
 	public MenuViewController(MenuView menuView, QuizCatalogus quizCatalogus,
 			OpdrachtCatalogus opdrachtCatalogus, PersistencyFacade facade) {
 		this.menuView = menuView;
-		this.qCat = quizCatalogus;
+	//	this.qCat = quizCatalogus;
 		this.opdrachtCatalogus = opdrachtCatalogus;
 		this.facade=facade;
-//		this.opdrachtCatalogus.leesOpdrachtenVanBestand();
+
 		facade.getPersistable().getAlleOpdrachten(opdrachtCatalogus);
 		this.qCat = quizCatalogus;
-//		this.qCat.leesQuizzenVanBestand(opdrachtCatalogus);
+
 		facade.getPersistable().getAlleQuizzen(opdrachtCatalogus, quizCatalogus);
 		menuView.buttonActionListener(this);
 	}

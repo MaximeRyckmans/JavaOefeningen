@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.table.DefaultTableModel;
 
+import persistency.PersistencyFacade;
 import model.Klas;
 import model.Leraar;
 import model.Opdracht;
@@ -41,18 +42,18 @@ public class QuizCreatieController extends QuizController implements
 	private int aantalToegevoegdeOpdrachten = 0;
 	private List<Opdracht> geselecteerdeOpdrachten = null;
 	List<Opdracht> tempList = new ArrayList<Opdracht>();
+	private PersistencyFacade facade;
 
 	public QuizCreatieController() {
 
 	}
 
 	public QuizCreatieController(OpdrachtCatalogus opdrachtCatalogusModel,
-			QuizCatalogus quizCatalogusModel, QuizCreatieView quizCreatieView) {
+			QuizCatalogus quizCatalogusModel, QuizCreatieView quizCreatieView, PersistencyFacade facade) {
 
 		this.opdrachtCatalogusModel = opdrachtCatalogusModel;
 		this.quizCatalogusModel = quizCatalogusModel;
-		// this.opdrachtCatalogusModel.leesOpdrachtenVanBestand();
-		// this.quizCatalogusModel.leesQuizzenVanBestand(opdrachtCatalogusModel);
+		
 		opdrachten = opdrachtCatalogusModel.getOpdrachten();
 
 		listModel = new DefaultListModel<Opdracht>();
@@ -61,7 +62,7 @@ public class QuizCreatieController extends QuizController implements
 		tableModel = new DefaultTableModel(col, 0);
 
 		this.quizCreatieView = quizCreatieView;
-
+		this.facade=facade;
 		quizCreatieView.setInitiëleWaardenQuizCreatieView(tableModel,
 				sorterenOp, klas, listModel);
 		quizCreatieView.buttonActionListener(this);
@@ -94,7 +95,7 @@ public class QuizCreatieController extends QuizController implements
 	}
 
 	private void verplaatsOpdrachtNaarRechts() throws IllegalArgumentException {
-		// boolean opdrachtAlToegevoegd = false;
+		
 	
 		if (quizCreatieView.getOpdrachten().getSelectedValue() != null) {
 			Opdracht opdracht = quizCreatieView.getOpdrachten()
@@ -191,6 +192,7 @@ public class QuizCreatieController extends QuizController implements
 					quizStatus, geselecteerdeOpdrachten);
 
 			quizCatalogusModel.addQuizToList(quiz);
+			facade.getPersistable().slaQuizOp(quizCatalogusModel, quiz);
 		}
 	}
 

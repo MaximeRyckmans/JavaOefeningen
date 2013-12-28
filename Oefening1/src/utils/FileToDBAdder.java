@@ -11,16 +11,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.mysql.jdbc.Statement;
+
+import model.Klas;
+import model.Leraar;
 import model.Meerkeuze;
 import model.Opdracht;
+import model.OpdrachtCatalogus;
 import model.OpdrachtCategorie;
 import model.Opsomming;
+import model.Quiz;
+import model.QuizCatalogus;
+import model.QuizStatus;
 import model.Reproductie;
+
 /**
  * 
  * @author Maxime Ryckmans
  * @version 1.0
- *
+ * 
  */
 public class FileToDBAdder {
 	Connection con = null;
@@ -114,6 +123,10 @@ public class FileToDBAdder {
 		// closeConnection();
 	}
 
+	public void addQuizzenFromFileToDB() {
+		leesQuizzenVanBestand();
+	}
+
 	private List<Opdracht> leesOpdrachtenVanBestand() {
 		File file = new File("bestanden/opdrachten");
 		List<Opdracht> list = new ArrayList<Opdracht>();
@@ -170,6 +183,94 @@ public class FileToDBAdder {
 		return list;
 	}
 
+	public void leesQuizzenVanBestand() {
+		con = createConnection();
+		ResultSet rs = null;
+		File file = new File("bestanden/quizzen");
+		
+		try {
+			Scanner scanner = new Scanner(file);
+			while (scanner.hasNext()) {
+				String lijn = scanner.nextLine();
+				String[] velden = lijn.split(",");
+
+				int aantalDeelnames = Integer.parseInt(velden[1]);
+				String leerjaarNaam = velden[2];
+
+				pst = con
+						.prepareStatement("select idklassen from klassen where klassen.klassenNaam=?");
+				pst.setString(1, leerjaarNaam);
+				rs = pst.executeQuery();
+				int klassenID = 0;
+				while (rs.next()) {
+					klassenID = rs.getInt(1);
+				}
+				String onderwerp = velden[3];
+				String quizStatusNaam = velden[4];
+
+				pst = con
+						.prepareStatement("select idquizStatussen from quizstatussen where quizstatussen.quizStatus=?");
+				pst.setString(1, quizStatusNaam);
+				rs = pst.executeQuery();
+				int quizStatusID = 0;
+
+				while (rs.next()) {
+					quizStatusID = rs.getInt(1);
+				}
+
+				pst = con
+						.prepareStatement("select idleraren from leraren where leraren.voornaam=? and leraren.naam=?");
+				pst.setString(1, velden[5]);
+				pst.setString(2, velden[6]);
+				int lerarenID = 0;
+				rs = pst.executeQuery();
+				while (rs.next()) {
+					lerarenID = rs.getInt(1);
+				}
+
+				List<Integer> ids = new ArrayList<Integer>();
+
+				for (int i = 7; i < velden.length; i++) {
+					ids.add(Integer.parseInt(velden[i]));
+				}
+				if (klassenID != 0 && lerarenID != 0 && quizStatusID != 0) {
+
+					pst = con
+							.prepareStatement(
+									"insert into quizzen(onderwerp,aantalDeelnames, klassenID, lerarenId, quizStatusID) values (?,?,?,?,?)",
+									Statement.RETURN_GENERATED_KEYS);
+					pst.setString(1, onderwerp);
+					pst.setInt(2, aantalDeelnames);
+					pst.setInt(3, klassenID);
+					pst.setInt(4, lerarenID);
+					pst.setInt(5, quizStatusID);
+					pst.executeUpdate();
+					rs = pst.getGeneratedKeys();
+					int keyId = 0;
+					while (rs.next()) {
+						keyId = rs.getInt(1);
+					}
+
+					pst = con
+							.prepareStatement("insert into quizzen_opdrachten(idQuiz,idOpdracht) values(?,?)");
+					for (int opdrIDs : ids) {
+						pst.setInt(1, keyId);
+						pst.setInt(2, opdrIDs);
+						pst.executeUpdate();
+					}
+
+				}
+			}
+			if (scanner != null) {
+				scanner.close();
+			}
+		} catch (FileNotFoundException ex) {
+			System.out.println("bestand niet gevonden");
+		} catch (Exception ex) {
+			System.out.println(ex.getMessage());
+		}
+	}
+
 	private Connection createConnection() {
 		try {
 			String url = "jdbc:mysql://localhost:3306/quizdb2";
@@ -184,16 +285,17 @@ public class FileToDBAdder {
 		return con;
 	}
 
-	private void closeConnection() {
-		try {
-			this.con.close();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-	}
-
-//	public static void main(String[] args) {
-//		FileToDBAdder ftdb = new FileToDBAdder();
-//		ftdb.addOpdrachtenFromFileToDB();
+//	private void closeConnection() {
+//		try {
+//			this.con.close();
+//		} catch (Exception e) {
+//			System.out.println(e.getMessage());
+//		}
 //	}
+
+//	 public static void main(String[] args) {
+//	 FileToDBAdder ftdb = new FileToDBAdder();
+//	 ftdb.addOpdrachtenFromFileToDB();
+//	 ftdb.addQuizzenFromFileToDB();
+//	 }
 }
