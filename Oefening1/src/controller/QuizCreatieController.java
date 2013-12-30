@@ -10,6 +10,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.DefaultListModel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 import persistency.PersistencyFacade;
@@ -73,7 +74,6 @@ public class QuizCreatieController extends QuizController implements
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String action = e.getActionCommand();
-		System.out.println("this is: " + action);
 
 		if (action.equals(">>>>")) {
 
@@ -94,7 +94,7 @@ public class QuizCreatieController extends QuizController implements
 		}
 	}
 
-	private void verplaatsOpdrachtNaarRechts() throws IllegalArgumentException {
+	private void verplaatsOpdrachtNaarRechts(){
 		
 	
 		if (quizCreatieView.getOpdrachten().getSelectedValue() != null) {
@@ -105,15 +105,16 @@ public class QuizCreatieController extends QuizController implements
 				quizCreatieView.getTableModel().addRow(
 						new Opdracht[] {
 								quizCreatieView.getOpdrachten()
-										.getSelectedValue(), null });
+										.getSelectedValue(),null});
 				tempList.add(opdracht);
-				aantalToegevoegdeOpdrachten++;
+				aantalToegevoegdeOpdrachten = tableModel.getRowCount();
+			
 				quizCreatieView.getAantalToegevoegdeOpdr().setText(
 						Integer.toString(aantalToegevoegdeOpdrachten));
 			}
 		} else {
-			throw new IllegalArgumentException(
-					"Geen opdracht geselecteerd. Selecteer een opdracht");
+			quizCreatieView.getFoutboodschap();
+			JOptionPane.showMessageDialog(null, "Geen opdracht geselecteerd. Selecteer een opdracht");
 		}
 	}
 
@@ -122,7 +123,8 @@ public class QuizCreatieController extends QuizController implements
 				.getSelectedRow();
 		if (selectedRow != -1) {
 			quizCreatieView.getTableModel().removeRow(selectedRow);
-			aantalToegevoegdeOpdrachten--;
+			aantalToegevoegdeOpdrachten = tableModel.getRowCount();
+		
 			quizCreatieView.getAantalToegevoegdeOpdr().setText(
 					Integer.toString(aantalToegevoegdeOpdrachten));
 		}
@@ -142,19 +144,34 @@ public class QuizCreatieController extends QuizController implements
 
 	}
 
-	private void registreerNieuweQuiz() throws IllegalArgumentException {
+	private void registreerNieuweQuiz(){
 		boolean isQuizOk = true;
+		boolean puntenVergeten= false;
 		geselecteerdeOpdrachten = new ArrayList<Opdracht>();
 		for (Quiz q : quizCatalogusModel.getQuizzen()) {
 			if (q.getOnderwerp().equals(quizCreatieView.getOnderwerpText())) {
 				isQuizOk = false;
-				throw new IllegalArgumentException(
-						"Quiz bestaat al, kies een andere naam");
+				JOptionPane.showMessageDialog(null,"Quiz bestaat al, kies een andere naam");
 			}
 		}
-		if (quizCreatieView.getTableModel().getRowCount() == -1) {
+		if (quizCreatieView.getTableModel().getRowCount() == -1 || quizCreatieView.getTableModel().getRowCount() == 0) {
 			isQuizOk = false;
-			throw new IllegalArgumentException("Voeg eerst opdrachten toe.");
+			JOptionPane.showMessageDialog(null,"Voeg eerst opdrachten toe.");
+		}
+		if(quizCreatieView.getOnderwerpText().getText().trim().equals("")){
+			isQuizOk = false;
+			JOptionPane.showMessageDialog(null, "Een quiz moet een onderwerp hebben!");
+		}
+		for (int i = 0; i < quizCreatieView.getTableModel().getRowCount(); i++) {
+			
+			if(quizCreatieView.getTableModel()
+			.getValueAt(i, 1) == null){
+				puntenVergeten=true;
+			}
+		}
+		if(puntenVergeten){
+			JOptionPane.showMessageDialog(null, "Vergeet de punten niet in te vullen!\nAls je geen punten wilt ingeven, geef dan 0 in.");
+			isQuizOk=false;
 		}
 		/*
 		 * if(!quizCreatieView.getQuizStatus().getSelectedItem().toString().equals
@@ -180,8 +197,6 @@ public class QuizCreatieController extends QuizController implements
 			for (int i = 0; i < quizCreatieView.getTableModel().getRowCount(); i++) {
 				Opdracht opdr = (Opdracht) quizCreatieView.getTableModel()
 						.getValueAt(i, 0);
-				System.out.println(quizCreatieView.getTableModel().getValueAt(
-						i, 1));
 				opdr.setMaxAantalPunten(Integer
 						.parseInt((String) quizCreatieView.getTableModel()
 								.getValueAt(i, 1)));
@@ -193,6 +208,9 @@ public class QuizCreatieController extends QuizController implements
 
 			quizCatalogusModel.addQuizToList(quiz);
 			facade.getPersistable().slaQuizOp(quizCatalogusModel, quiz);
+			JOptionPane.showMessageDialog(null, "Quiz is succesvol toegevoegd!");
+			quizCreatieView.resetWaarden();
+			tempList.clear();
 		}
 	}
 

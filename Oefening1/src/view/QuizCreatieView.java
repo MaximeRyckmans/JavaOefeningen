@@ -14,6 +14,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -56,6 +57,8 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 	private JTable geselecteerdeOpdrachten;
 	
 	JScrollPane pane;
+	
+	JOptionPane foutboodschap;
 	/**
 	 * 
 	 */
@@ -178,6 +181,18 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 		this.tableModel = tableModel;
 		this.getGeselecteerdeOpdrachten().setModel(tableModel);
 
+	}
+	
+	public void resetWaarden(){
+		this.getKlas().setSelectedIndex(0);
+		this.getSorteerOpdr().setSelectedIndex(0);
+		this.getCategorie().setSelectedIndex(0);
+		this.getQuizStatus().setSelectedIndex(0);
+		this.getAuteur().setSelectedIndex(0);
+		
+		tableModel.setRowCount(0);
+		this.getAantalToegevoegdeOpdr().setText("0");
+		
 	}
 		
 	public void buttonActionListener(ActionListener al) {
@@ -529,6 +544,14 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 
 	public void setPane(JScrollPane pane) {
 		this.pane = pane;
+	}
+
+	public JOptionPane getFoutboodschap() {
+		return foutboodschap;
+	}
+
+	public void setFoutboodschap(JOptionPane foutboodschap) {
+		this.foutboodschap = foutboodschap;
 	}
 
 	@Override

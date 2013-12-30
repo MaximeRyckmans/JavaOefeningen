@@ -31,6 +31,7 @@ public class MySQLPersistency implements Persistable {
 	Connection con = null;
 	Statement st = null;
 	ResultSet rs = null;
+	ResultSet rs2= null;
 	PreparedStatement pst = null;
 
 	@Override
@@ -118,12 +119,15 @@ public class MySQLPersistency implements Persistable {
 			QuizCatalogus quizCatalogus) {
 		con = createConnection();
 
-		List<Opdracht> opdrachten = new ArrayList<Opdracht>();
+		
 		try {
+			
 			pst = con
 					.prepareStatement("SELECT quizzen.idquizzen, quizzen.onderwerp, quizzen.aantalDeelnames, klassen.klassenNaam, leraren.voornaam, leraren.naam, quizstatussen.quizStatus FROM quizzen left join (klassen, leraren, quizstatussen) on (klassen.idklassen= quizzen.klassenID and leraren.idleraren = quizzen.lerarenId and quizstatussen.idquizStatussen= quizzen.quizStatusID);");
 			rs = pst.executeQuery();
+
 			while (rs.next()) {
+				List<Opdracht> opdrachten = new ArrayList<Opdracht>();
 				int quizID = rs.getInt(1);
 				String onderwerp = rs.getString(2);
 				int aantalDeelnames = rs.getInt(3);
@@ -133,16 +137,16 @@ public class MySQLPersistency implements Persistable {
 				Leraar leraar = Leraar.valueOf(lerarenNaam);
 				String quizStatusString = rs.getString(7);
 				QuizStatus quizStatus = QuizStatus.valueOf(quizStatusString);
-
+				
 				PreparedStatement pst2 = con
 						.prepareStatement("select idOpdracht, maxAantalPunten from quizzen_opdrachten where idQuiz=?");
 				pst2.setInt(1, quizID);
-				rs = pst2.executeQuery();
-				while (rs.next()) {
+				rs2 = pst2.executeQuery();
+				while (rs2.next()) {
 
-					Opdracht opdracht = this.getBepaaldeOpdracht(rs.getInt(1),
+					Opdracht opdracht = this.getBepaaldeOpdracht(rs2.getInt(1),
 							opdrachtCatalogus);
-					opdracht.setMaxAantalPunten(rs.getInt(2));
+					opdracht.setMaxAantalPunten(rs2.getInt(2));
 					opdrachten.add(opdracht);
 				}
 
@@ -150,7 +154,6 @@ public class MySQLPersistency implements Persistable {
 						onderwerp, quizStatus, opdrachten);
 				quizCatalogus.addQuizToList(quiz);
 
-				opdrachten.clear();
 			}
 		} catch (SQLException e) {
 
@@ -308,12 +311,15 @@ public class MySQLPersistency implements Persistable {
 				}
 
 				pst = con
-						.prepareStatement("insert into quizzen_opdrachten(idQuiz,idOpdracht) values(?,?)");
+						.prepareStatement("insert into quizzen_opdrachten(idQuiz,idOpdracht,maxAantalPunten) values(?,?,?)");
 				for (int opdrIDs : ids) {
 					pst.setInt(1, keyId);
 					pst.setInt(2, opdrIDs);
+					pst.setInt(3, getMaxaantalPuntenVoorBepaaldeOpdracht(quiz, opdrIDs));
 					pst.executeUpdate();
 				}
+				pst= con.prepareStatement("insert into quizzen_opdrachten(maxAantalPunten) values(?) where idQuiz=? and idOpdracht=?");
+				
 			}
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
@@ -394,6 +400,16 @@ public class MySQLPersistency implements Persistable {
 
 			e.printStackTrace();
 		}
+	}
+	
+	private int getMaxaantalPuntenVoorBepaaldeOpdracht(Quiz quiz, int opdrachtId){
+		int maxAantalPunten=0;
+		for(Opdracht opdr: quiz.getOpdrachten()){
+			if(opdr.getId() == opdrachtId){
+				maxAantalPunten=opdr.getMaxAantalPunten();
+			}
+		}
+		return maxAantalPunten;
 	}
 
 	private Connection createConnection() {

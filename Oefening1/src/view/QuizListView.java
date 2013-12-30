@@ -107,7 +107,6 @@ public class QuizListView extends JFrame implements ActionListener{
 		
 				for (Opdracht opdr : q.getOpdrachten()) {
 					String nameOpdracht = opdr.toString();
-			
 					opdracht = new DefaultMutableTreeNode(nameOpdracht);
 					quiz.add(opdracht);
 				}

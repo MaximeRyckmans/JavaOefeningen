@@ -185,9 +185,12 @@ public class TekstPersistency implements Persistable {
 				Quiz quiz = quizCatalogus.getQuizzen().get(i);
 				String lijn = quiz.getId() + "," + quiz.getAantalDeelnames()
 						+ "," + quiz.getLeerjaar() + ","
-						+ quiz.getLeraar() + ","
+						+ quiz.getLeraar().getVoorNaam()+"," +quiz.getLeraar().getFamilieNaam()+ ","
 						+ quiz.getOnderwerp() + ","
-						+ quiz.getQuizStatus()+","+quiz.getOpdrachten();
+						+ quiz.getQuizStatus();
+				for (Opdracht opdr :quiz.getOpdrachten()){
+					lijn+=","+opdr.getId();
+				}
 				writer.println(lijn);
 			}
 			if (writer != null)
