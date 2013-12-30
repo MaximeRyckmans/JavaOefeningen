@@ -3,6 +3,7 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import persistency.PersistencyFacade;
 import model.OpdrachtCatalogus;
 import model.QuizCatalogus;
 import view.QuizCreatieView;
@@ -22,13 +23,15 @@ public class QuizListController implements ActionListener{
 	private QuizListView quizListView;
 	private QuizCatalogus quizCatalogus;
 	private OpdrachtCatalogus opdrachtCatalogus;
+	private PersistencyFacade facade;
 
 	public QuizListController() {}
 	
-	public QuizListController(QuizListView quizListView, QuizCatalogus quizCatalogus, OpdrachtCatalogus opdrachtCatalogus) {
+	public QuizListController(QuizListView quizListView, QuizCatalogus quizCatalogus, OpdrachtCatalogus opdrachtCatalogus, PersistencyFacade facade) {
 		this.quizListView = quizListView;
 		this.quizCatalogus = quizCatalogus;
 		this.opdrachtCatalogus = opdrachtCatalogus;
+		this.facade = facade;
 		
 		quizListView.createNodes(quizCatalogus);
 		quizListView.buttonActionListener(this);
@@ -38,7 +41,7 @@ public class QuizListController implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equals("Creëer nieuwe quiz")) {
 			QuizCreatieView quizCreatieView = new QuizCreatieView();
-			QuizCreatieController quizCreatieController = new QuizCreatieController(opdrachtCatalogus, quizCatalogus, quizCreatieView);
+			QuizCreatieController quizCreatieController = new QuizCreatieController(opdrachtCatalogus, quizCatalogus, quizCreatieView, facade);
 		}else if (e.getActionCommand().equals("Wijzigen van een quiz")) {
 			QuizWijzigenView quizWijzigenView = new QuizWijzigenView("Wijzig quiz");
 			QuizWijzigenController quizWijzigenController = new QuizWijzigenController(quizWijzigenView, quizCatalogus, opdrachtCatalogus);

@@ -43,7 +43,7 @@ public class MenuViewController implements ActionListener {
 		if (action.equals("Lijst van Quizzen")) {
 			QuizListView view = new QuizListView();
 			QuizListController controller = new QuizListController(view, qCat,
-					opdrachtCatalogus);
+					opdrachtCatalogus, facade);
 			/*
 			 * QuizCreatieView view = new QuizCreatieView(); new
 			 * QuizCreatieController(cat, qcat, view);
