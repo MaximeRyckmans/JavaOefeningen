@@ -75,6 +75,18 @@ public class TekstPersistency implements Persistable {
 		
 	}
 	
+	@Override
+	public void wijzigQuiz(Quiz quiz, QuizCatalogus quizCatalogus) {
+		schrijfQuizzenNaarBestand(quizCatalogus);
+		
+	}
+
+	@Override
+	public void wijzigOpdracht(Opdracht opdracht, OpdrachtCatalogus opdrachtCatalogus) {
+		schrijfOpdrachtenNaarBestand(opdrachtCatalogus);
+		
+	}
+	
 
 	public void schrijfOpdrachtenNaarBestand(OpdrachtCatalogus opdrachtCatalogus) {
 		File fileWrite = new File("bestanden/opdrachten");
@@ -213,10 +225,10 @@ public class TekstPersistency implements Persistable {
 			  String leerjaarNaam=velden[2];
 			  Klas leerjaar= Klas.valueOf(leerjaarNaam);
 			
-			  String onderwerp=velden[3];
-			  String quizStatusNaam = velden[4];
+			  String onderwerp=velden[5];
+			  String quizStatusNaam = velden[6];
 			  QuizStatus quizStatus= QuizStatus.valueOf(quizStatusNaam);
-			  String leraarNaam=velden[5]+velden[6];
+			  String leraarNaam=velden[3]+velden[4];
 			  Leraar leraar = Leraar.valueOf(leraarNaam);
 			  List<Integer>ids = new ArrayList<Integer>();
 			  

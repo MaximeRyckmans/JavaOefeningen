@@ -357,6 +357,18 @@ public class MySQLPersistency implements Persistable {
 		}
 
 	}
+	
+	@Override
+	public void wijzigQuiz(Quiz quiz, QuizCatalogus quizCatalogus) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void wijzigOpdracht(Opdracht opdracht, OpdrachtCatalogus opdrachtCatalogus) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	@Override
 	public Opdracht getBepaaldeOpdracht(Integer i,
@@ -436,5 +448,4 @@ public class MySQLPersistency implements Persistable {
 		}
 
 	}
-
 }

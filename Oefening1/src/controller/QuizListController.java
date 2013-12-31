@@ -44,7 +44,7 @@ public class QuizListController implements ActionListener{
 			QuizCreatieController quizCreatieController = new QuizCreatieController(opdrachtCatalogus, quizCatalogus, quizCreatieView, facade);
 		}else if (e.getActionCommand().equals("Wijzigen van een quiz")) {
 			QuizWijzigenView quizWijzigenView = new QuizWijzigenView("Wijzig quiz");
-			QuizWijzigenController quizWijzigenController = new QuizWijzigenController(quizWijzigenView, quizCatalogus, opdrachtCatalogus);
+			QuizWijzigenController quizWijzigenController = new QuizWijzigenController(quizWijzigenView, quizCatalogus, opdrachtCatalogus, facade);
 		}else if (e.getActionCommand().equals("Verwijder quiz")) {
 			QuizDeleteView quizDeleteView = new QuizDeleteView();
 		}

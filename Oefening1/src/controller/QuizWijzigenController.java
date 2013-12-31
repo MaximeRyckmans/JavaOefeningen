@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
+import persistency.PersistencyFacade;
 import model.Klas;
 import model.Leraar;
 import model.Opdracht;
@@ -26,16 +27,17 @@ public class QuizWijzigenController extends QuizController {
 	private QuizCatalogus quizCatalogus;
 	private OpdrachtCatalogus opdrachtCatalogus;
 	private Quiz quiz, copyQuizOld;
+	private PersistencyFacade facade;
 
 	public QuizWijzigenController() {
 	}
 
 	public QuizWijzigenController(QuizWijzigenView quizWijzigenView,
-			QuizCatalogus quizCatalogus, OpdrachtCatalogus opdrachtCatalogus) {
+			QuizCatalogus quizCatalogus, OpdrachtCatalogus opdrachtCatalogus, PersistencyFacade facade) {
 		this.quizWijzigenView = quizWijzigenView;
 		this.quizCatalogus = quizCatalogus;
 		this.opdrachtCatalogus = opdrachtCatalogus;
-
+		this.facade = facade;
 		quizWijzigenView.setInitiëleWaarden(quizCatalogus.getQuizzen(),
 				opdrachtCatalogus.getOpdrachten());
 		quizWijzigenView.buttonActionListener(this);
@@ -115,7 +117,7 @@ public class QuizWijzigenController extends QuizController {
 					quiz.setQuizStatus(quizStatus);
 				}
 			}
-
+			facade.getPersistable().wijzigQuiz(quiz, quizCatalogus);
 			quizWijzigenView.closeWindow();
 		}
 	}

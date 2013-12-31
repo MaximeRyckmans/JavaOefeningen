@@ -20,5 +20,7 @@ public interface Persistable {
 	public void verwijderQuiz(Quiz quiz, QuizCatalogus quizCatalogus);
 	public void verwijderOpdracht(Opdracht opdracht, OpdrachtCatalogus opdrachtCatalogus);
 	public Opdracht getBepaaldeOpdracht(Integer i,OpdrachtCatalogus opdrachtCatalogus);
+	public void wijzigQuiz(Quiz quiz,QuizCatalogus quizCatalogus);
+	public void wijzigOpdracht(Opdracht opdracht, OpdrachtCatalogus opdrachtCatalogus);
 
 }
