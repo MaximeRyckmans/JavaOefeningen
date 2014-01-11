@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import utils.JDBCConnection;
 import model.Klas;
 import model.Leraar;
 import model.Meerkeuze;
@@ -37,7 +39,7 @@ public class MySQLPersistency implements Persistable {
 	@Override
 	public void getAlleOpdrachten(OpdrachtCatalogus opdrachtCatalogus) {
 		try {
-			con = createConnection();
+			con = JDBCConnection.getConnection();
 			String query = "select opdrachten.idopdrachten, opdrachten.vraag,opdrachten.antwoord,opdrachten.maxAantalpogingen,opdrachten.antwoordHint,opdrachten.maxAntwoordTijd, opdrachtcategorieën.opdrachtCategorieNaam,meerkeuzeopdrachten.alleKeuzes from opdrachten left join (`opdrachtcategorieën`, opdrachtsoorten, meerkeuzeopdrachten) ON (`opdrachtcategorieën`.`idopdrachtCategorieën` = opdrachten.opdrachtenCategorie and opdrachtsoorten.idOpdrachtSoorten = opdrachten.soortOpdracht and meerkeuzeopdrachten.idmeerkeuzeOpdrachten= opdrachten.idopdrachten) where opdrachtsoorten.OpdrachtSoortenNaam='Meerkeuze'";
 			st = con.createStatement();
 			rs = st.executeQuery(query);
@@ -117,9 +119,8 @@ public class MySQLPersistency implements Persistable {
 	@Override
 	public void getAlleQuizzen(OpdrachtCatalogus opdrachtCatalogus,
 			QuizCatalogus quizCatalogus) {
-		con = createConnection();
-
-		
+		con = JDBCConnection.getConnection();
+	
 		try {
 			
 			pst = con
@@ -174,7 +175,7 @@ public class MySQLPersistency implements Persistable {
 			OpdrachtCategorie opdrachtCategorie = opdracht
 					.getOpdrachtCategorie();
 			int opdrachtCategorieID = 0;
-			con = createConnection();
+			con = JDBCConnection.getConnection();
 
 			pst = con
 					.prepareStatement("select idopdrachtCategorieën from opdrachtcategorieën where opdrachtCategorieNaam=?");
@@ -184,22 +185,6 @@ public class MySQLPersistency implements Persistable {
 				opdrachtCategorieID = rs.getInt(1);
 			}
 
-//			pst = con
-//					.prepareStatement(
-//							"insert into opdrachten(vraag, antwoord, maxAantalpogingen, antwoordHint, maxAntwoordTijd,opdrachtenCategorie) values (?,?,?,?,?,?)",
-//							Statement.RETURN_GENERATED_KEYS);
-//			pst.setString(1, vraag);
-//			pst.setString(2, antwoord);
-//			pst.setInt(3, maxAantalPogingen);
-//			pst.setString(4, antwoordHint);
-//			pst.setInt(5, maxAntwoordTijd);
-//			pst.setInt(6, opdrachtCategorieID);
-//			pst.executeUpdate();
-//			rs = pst.getGeneratedKeys();
-//			int opdrachtID = 0;
-//			while (rs.next()) {
-//				opdrachtID = rs.getInt(1);
-//			}
 			String opdrachtClass = opdracht.getClass().getSimpleName();
 			if (opdrachtClass.equals("Meerkeuze")) {
 				int opdrachtSoortId = zoekOpdrachtsoortID("Meerkeuze");
@@ -249,7 +234,7 @@ public class MySQLPersistency implements Persistable {
 	@Override
 	public void slaQuizOp(QuizCatalogus quizCatalogus, Quiz quiz) {
 
-		con = createConnection();
+		con = JDBCConnection.getConnection();
 		ResultSet rs = null;
 
 		try {
@@ -333,7 +318,7 @@ public class MySQLPersistency implements Persistable {
 	@Override
 	public void verwijderQuiz(Quiz quiz, QuizCatalogus quizCatalogus) {
 
-		con = createConnection();
+		con = JDBCConnection.getConnection();
 		try {
 			pst = con.prepareStatement("delete from quizzen where idquizzen=?");
 			pst.setInt(1, quiz.getId());
@@ -348,7 +333,7 @@ public class MySQLPersistency implements Persistable {
 	@Override
 	public void verwijderOpdracht(Opdracht opdracht,
 			OpdrachtCatalogus opdrachtCatalogus) {
-		con = createConnection();
+		con = JDBCConnection.getConnection();
 		try {
 			pst = con
 					.prepareStatement("delete from opdrachten where idopdrachten=?");
@@ -403,20 +388,6 @@ public class MySQLPersistency implements Persistable {
 		return opdrachtSoortId;
 	}
 
-//	private void vulSoortOpdrachtIn(int opdrachtSoortId, int opdrachtID) {
-//		try {
-//			pst = con
-//					.prepareStatement("insert into opdrachten(soortOpdracht) values(?) where idopdrachten=?");
-//
-//			pst.setInt(1, opdrachtSoortId);
-//			pst.setInt(2, opdrachtID);
-//			pst.executeUpdate();
-//		} catch (SQLException e) {
-//
-//			e.printStackTrace();
-//		}
-//	}
-	
 	private int maakOpdrachtAan(String vraag, String antwoord, int maxAantalPogingen,String antwoordHint, int maxAntwoordTijd, int opdrachtCategorieID, int opdrachtSoortId) throws SQLException{
 		pst = con
 				.prepareStatement(
@@ -448,19 +419,6 @@ public class MySQLPersistency implements Persistable {
 		return maxAantalPunten;
 	}
 
-	private Connection createConnection() {
-		try {
-			String url = "jdbc:mysql://localhost:3306/quizdb2";
-			String user = "root";
-			String password = "root";
-
-			con = DriverManager.getConnection(url, user, password);
-
-		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-		}
-		return con;
-	}
 
 	private void closeConnection() {
 		try {
