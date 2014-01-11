@@ -184,7 +184,7 @@ public class TekstPersistency implements Persistable {
 				return opdracht;
 			}
 		}
-		opdracht = null;
+		//opdracht = null;
 		return opdracht;
 	}
 	
@@ -214,10 +214,11 @@ public class TekstPersistency implements Persistable {
 	public void leesQuizzenVanBestand(OpdrachtCatalogus opdrachtCatalogus, QuizCatalogus quizCatalogus){
 		
 		  File file = new File("bestanden/quizzen");
-		  List<Opdracht> opdrachten = new ArrayList<Opdracht>();
+//		 
 		  try{
 			Scanner scanner = new Scanner(file);
 			while (scanner.hasNext()){
+				 List<Opdracht> opdrachten = new ArrayList<Opdracht>();
 		          String lijn = scanner.nextLine();
 			  String [] velden = lijn.split(",");
 			  int id = Integer.parseInt(velden[0]);
@@ -233,7 +234,7 @@ public class TekstPersistency implements Persistable {
 			  List<Integer>ids = new ArrayList<Integer>();
 			  
 			  for(int i=7; i< velden.length;i++){
-				  ids.add(Integer.parseInt(velden[i]));
+				  ids.add(Integer.parseInt(velden[i]));  
 			  }
 			  
 			  for(int i = 0; i< ids.size(); i++){
@@ -242,6 +243,7 @@ public class TekstPersistency implements Persistable {
 			
 			  Quiz quiz = new Quiz(id,aantalDeelnames, leerjaar, leraar, onderwerp, quizStatus, opdrachten);
 			  quizCatalogus.getQuizzen().add(quiz);
+			  
 			}
 			if (scanner!=null){
 			  scanner.close();

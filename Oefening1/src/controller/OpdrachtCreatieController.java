@@ -30,46 +30,52 @@ public class OpdrachtCreatieController implements ActionListener {
 		this.opdrCreatieView = opdrCreatieView;
 		this.opdrachtCatalogus = opdrachtCatalogus;
 		this.opdrCreatieView.buttonActionListener(this);
-		this.facade=facade;
+		this.facade = facade;
 	}
 
 	public void createOpdracht() {
 		try {
-			if (Categorie.Reproductie.toString() == opdrCreatieView
-					.getCategorie().getSelectedItem().toString()) {
-				opdracht = new Reproductie(opdrCreatieView.getVraagT()
-						.toString(), opdrCreatieView.getAntwoordT().toString(),
-						Integer.parseInt(opdrCreatieView
-								.getMaxAantalPogingenC().toString()),
-						opdrCreatieView.getAntwoordHintT().toString(),
-						Integer.parseInt(opdrCreatieView.getMaxAntwoordTijdC()
-								.toString()),
-						(OpdrachtCategorie) opdrCreatieView
-								.getOpdrachtCategorie().getSelectedItem());
-			} else if (Categorie.Meerkeuze.toString() == opdrCreatieView
-					.getCategorie().getSelectedItem().toString()) {
-				/*
-				 * OpdrachtCategorie categorie = (OpdrachtCategorie)
-				 * opdrCreatieView .getOpdrachtCategorie().getSelectedItem();
-				 * int aantalPogingen = Integer.parseInt(opdrCreatieView
-				 * .getMaxAantalPogingenC().getSelectedItem().toString());
-				 */
-				opdracht = new Meerkeuze(opdrCreatieView.getVraagT().getText(),
-						opdrCreatieView.getAntwoordT().getText(),
-						Integer.parseInt(opdrCreatieView
-								.getMaxAantalPogingenC().getSelectedItem()
-								.toString()), opdrCreatieView.getAlleKeuzesT().getText(),
-						(OpdrachtCategorie) opdrCreatieView
-								.getOpdrachtCategorie().getSelectedItem());
-			} else if (Categorie.Opsomming.toString() == opdrCreatieView
-					.getCategorie().getSelectedItem().toString()) {
-				opdracht = new Opsomming(opdrCreatieView.getVraagT().getText(),
-						opdrCreatieView.getAntwoordT().getText(),
-						Integer.parseInt(opdrCreatieView
-								.getMaxAantalPogingenC().getSelectedItem()
-								.toString()), "één;twee;drie;vier",
-						(OpdrachtCategorie) opdrCreatieView
-								.getOpdrachtCategorie().getSelectedItem());
+			String vraag = opdrCreatieView.getVraagT().getText();
+			String antwoord = opdrCreatieView.getAntwoordT().getText();
+			int maxAantalPogingen = Integer.valueOf((String) opdrCreatieView
+					.getMaxAantalPogingenC().getSelectedItem());
+			String antwoordHint = opdrCreatieView.getAntwoordHintT().getText();
+			int maxAntwoordTijd = Integer.valueOf((String) opdrCreatieView
+					.getMaxAntwoordTijdC().getSelectedItem());
+			String opdrachtCategorieString = opdrCreatieView
+					.getOpdrachtCategorie().getSelectedItem().toString();
+			OpdrachtCategorie opdrachtCategorie = OpdrachtCategorie
+					.valueOf(opdrachtCategorieString);
+			String soortOpdrachtString = opdrCreatieView.getCategorie()
+					.getSelectedItem().toString();
+			Categorie categorie = Categorie.valueOf(soortOpdrachtString);
+
+			if (Categorie.Reproductie.equals(categorie)) {
+				String trefwoorden = opdrCreatieView.getTrefwoordenT()
+						.getText();
+				int minAantalJuisteTrefwoorden = Integer
+						.valueOf((String) opdrCreatieView
+								.getMinAantalJuisteTrefwoordenC()
+								.getSelectedItem());
+			
+				opdracht = new Reproductie(vraag, antwoordHint,
+						maxAantalPogingen, antwoordHint, maxAntwoordTijd,
+						trefwoorden, minAantalJuisteTrefwoorden,
+						opdrachtCategorie);
+
+			} else if (Categorie.Meerkeuze.equals(categorie)) {
+
+				String alleKeuzes = opdrCreatieView.getAlleKeuzesT().getText();
+
+				opdracht = new Meerkeuze(vraag, antwoord, maxAantalPogingen,
+						alleKeuzes, antwoordHint, maxAntwoordTijd,
+						opdrachtCategorie);
+
+			} else if (Categorie.Opsomming.equals(categorie)) {
+
+				opdracht = new Opsomming(vraag, antwoord, maxAantalPogingen,
+						antwoordHint, maxAntwoordTijd, opdrachtCategorie);
+
 			}
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
@@ -83,25 +89,22 @@ public class OpdrachtCreatieController implements ActionListener {
 			opdrCreatieView.getOpsommingPanel().setVisible(true);
 			opdrCreatieView.getMeerKeuzePanel().setVisible(false);
 			opdrCreatieView.getReproductiePanel().setVisible(false);
-			System.out.println(opdrCreatieView.getCategorie().getSelectedItem().toString());
+
 		}
 		if (opdrCreatieView.getCategorie().getSelectedItem().toString() == "Meerkeuze") {
 			opdrCreatieView.getOpsommingPanel().setVisible(false);
 			opdrCreatieView.getMeerKeuzePanel().setVisible(true);
 			opdrCreatieView.getReproductiePanel().setVisible(false);
-			System.out.println(opdrCreatieView.getCategorie().getSelectedItem().toString());
+
 		}
 		if (opdrCreatieView.getCategorie().getSelectedItem().toString() == "Reproductie") {
 			opdrCreatieView.getOpsommingPanel().setVisible(false);
 			opdrCreatieView.getMeerKeuzePanel().setVisible(false);
 			opdrCreatieView.getReproductiePanel().setVisible(true);
-			System.out.println(opdrCreatieView.getCategorie().getSelectedItem().toString());
+
 		}
 		if (action.equals("Toevoegen")) {
-			System.out.println("here");
 			createOpdracht();
-//			opdrachtCatalogus.addOpdrachtToList(opdracht);
-			//opdrachtCatalogus.schrijfOpdrachtenNaarBestand();
 			facade.getPersistable().slaOpdrachtOp(opdrachtCatalogus, opdracht);
 
 			opdrCreatieView.getAntwoordHintT().setText("");

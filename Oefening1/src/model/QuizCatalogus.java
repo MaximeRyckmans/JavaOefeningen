@@ -9,10 +9,16 @@ import java.util.List;
  * @version 1.0
  *
  */
-public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iterable<Quiz> {
+public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iterable<Quiz>, Subject {
 	private int id;
-	private List<Quiz> quizzen = new	ArrayList<Quiz>();
+	private ArrayList<Observer> observers;
+	private List<Quiz> quizzen = new ArrayList<Quiz>();
 
+	public QuizCatalogus(){
+		observers = new ArrayList<Observer>();
+	}
+	
+	
 	public List<Quiz> getQuizzen() {
 		return quizzen;
 	}
@@ -23,11 +29,13 @@ public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iter
 	public void addQuizToList(Quiz quiz){
 		if(!quizzen.equals(null) || !quizzen.contains(quiz)){
 			this.quizzen.add(quiz);
+			notifieerObservers();
 		}
 	}
 	public void removeQuizFromList(Quiz quiz){
 		if(quizzen.contains(quiz)){
 			this.quizzen.remove(quiz);
+			notifieerObservers();
 		}
 	}
 	
@@ -44,7 +52,7 @@ public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iter
 	public Iterator<Quiz> iterator() {
 		return quizzen.iterator();
 	}
-	//Compares different catalogi to eachother, but I don't know if this is necessary
+	//Compares different catalogi to each other, but I don't know if this is necessary
 	@Override
 	public int compareTo(QuizCatalogus o) {
 		if(this.id == o.id){
@@ -93,68 +101,29 @@ public class QuizCatalogus implements Comparable<QuizCatalogus>, Cloneable, Iter
 	public String toString() {
 		return "QuizCatalogus [id=" + id + ", quizzen=" + quizzen + "]";
 	}
-//	
-//	public void schrijfQuizzenNaarBestand() {
-//		File file = new File("bestanden/quizzen");
-//		try {
-//			PrintWriter writer = new PrintWriter(file);
-//			for (int i = 0; i < this.getQuizzen().size(); i++) {
-//				Quiz quiz = quizzen.get(i);
-//				String lijn = quiz.getId() + "," + quiz.getAantalDeelnames()
-//						+ "," + quiz.getLeerjaar() + ","
-//						+ quiz.getLeraar() + ","
-//						+ quiz.getOnderwerp() + ","
-//						+ quiz.getQuizStatus()+","+quiz.getOpdrachten();
-//				writer.println(lijn);
-//			}
-//			if (writer != null)
-//				writer.close();
-//		} catch (Exception ex) {
-//			System.out.println(ex.getMessage());
-//		}
-//	}
-//	public void leesQuizzenVanBestand(OpdrachtCatalogus opdrachtCatalogus){
-//		OpdrachtCatalogus opdrc = opdrachtCatalogus;
-//		  File file = new File("bestanden/quizzen");
-//		  List<Opdracht> opdrachten = new ArrayList<Opdracht>();
-//		  try{
-//			Scanner scanner = new Scanner(file);
-//			while (scanner.hasNext()){
-//		          String lijn = scanner.nextLine();
-//			  String [] velden = lijn.split(",");
-//			  int id = Integer.parseInt(velden[0]);
-//			  int aantalDeelnames=Integer.parseInt(velden[1]);
-//			  String leerjaarNaam=velden[2];
-//			  Klas leerjaar= Klas.valueOf(leerjaarNaam);
-//			
-//			  String onderwerp=velden[3];
-//			  String quizStatusNaam = velden[4];
-//			  QuizStatus quizStatus= QuizStatus.valueOf(quizStatusNaam);
-//			  String leraarNaam=velden[5]+velden[6];
-//			  Leraar leraar = Leraar.valueOf(leraarNaam);
-//			  List<Integer>ids = new ArrayList<Integer>();
-//			  
-//			  for(int i=7; i< velden.length;i++){
-//				  ids.add(Integer.parseInt(velden[i]));
-//			  }
-//			  
-//			  for(int i = 0; i< ids.size(); i++){
-//				  opdrachten.add(opdrc.getBepaaldeOpdrachten(ids.get(i)));
-//			  }
-//			//  List<Opdracht> opdrachten = opdrc.LeesBepaaldeOpdrachtenVanBestand(ids);
-//			  Quiz quiz = new Quiz(id,aantalDeelnames, leerjaar, leraar, onderwerp, quizStatus, opdrachten);
-//			  quizzen.add(quiz);
-//			}
-//			if (scanner!=null){
-//			  scanner.close();
-//			}
-//		  }
-//		  catch(FileNotFoundException ex){
-//		    System.out.println("bestand niet gevonden");
-//		  }
-//		  catch(Exception ex){
-//		    System.out.println(ex.getMessage());
-//		  }
-//		}
-	
+
+	//register an observer to receive the latest list of quizzes
+	@Override
+	public void registreerObserver(Observer o) {
+		observers.add(o);
+		
+	}
+
+	//remover an observer from the notifications
+	@Override
+	public void verwijderObserver(Observer o) {
+		int i= observers.indexOf(o);
+		if(i>=0){
+			observers.remove(i);
+		}
+		
+	}
+
+	//notifies all the registerd observers to the changes that happened
+	@Override
+	public void notifieerObservers() {
+		for(Observer obs : observers){
+			obs.update(this);
+		}	
+	}
 }

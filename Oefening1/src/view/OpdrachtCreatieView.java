@@ -105,6 +105,8 @@ public class OpdrachtCreatieView extends JFrame implements ActionListener {
 		defaultPanel.setVisible(true);
 		return defaultPanel;
 	}
+
+
 	public JPanel createOpsommingPanel() {
 		opsommingPanel = new JPanel();
 		opsommingPanel.setLayout(new GridLayout(2, 1));  
@@ -318,6 +320,46 @@ public class OpdrachtCreatieView extends JFrame implements ActionListener {
 
 	public void setToevoegen(JButton toevoegen) {
 		this.toevoegen = toevoegen;
+	}
+	
+	public JLabel getTrefwoordenL() {
+		return trefwoordenL;
+	}
+
+	public void setTrefwoordenL(JLabel trefwoordenL) {
+		this.trefwoordenL = trefwoordenL;
+	}
+
+	public JLabel getMinAantalJuisteTrefwoordenL() {
+		return minAantalJuisteTrefwoordenL;
+	}
+
+	public void setMinAantalJuisteTrefwoordenL(JLabel minAantalJuisteTrefwoordenL) {
+		this.minAantalJuisteTrefwoordenL = minAantalJuisteTrefwoordenL;
+	}
+
+	public JTextField getTrefwoordenT() {
+		return trefwoordenT;
+	}
+
+	public void setTrefwoordenT(JTextField trefwoordenT) {
+		this.trefwoordenT = trefwoordenT;
+	}
+
+	public JComboBox getMinAantalJuisteTrefwoordenC() {
+		return minAantalJuisteTrefwoordenC;
+	}
+
+	public void setMinAantalJuisteTrefwoordenC(JComboBox minAantalJuisteTrefwoordenC) {
+		this.minAantalJuisteTrefwoordenC = minAantalJuisteTrefwoordenC;
+	}
+
+	public String[] getMinAantalJuisteTrefwoorden() {
+		return minAantalJuisteTrefwoorden;
+	}
+
+	public void setMinAantalJuisteTrefwoorden(String[] minAantalJuisteTrefwoorden) {
+		this.minAantalJuisteTrefwoorden = minAantalJuisteTrefwoorden;
 	}
 
 	public void buttonActionListener(ActionListener al) {

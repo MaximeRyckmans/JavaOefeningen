@@ -184,27 +184,26 @@ public class MySQLPersistency implements Persistable {
 				opdrachtCategorieID = rs.getInt(1);
 			}
 
-			pst = con
-					.prepareStatement(
-							"insert into opdrachten(vraag, antwoord, maxAantalpogingen, antwoordHint, maxAntwoordTijd,opdrachtenCategorie) values (?,?,?,?,?,?",
-							Statement.RETURN_GENERATED_KEYS);
-			pst.setString(1, vraag);
-			pst.setString(2, antwoord);
-			pst.setInt(3, maxAantalPogingen);
-			pst.setString(4, antwoordHint);
-			pst.setInt(5, maxAntwoordTijd);
-			pst.setInt(6, opdrachtCategorieID);
-			pst.executeUpdate();
-			rs = pst.getGeneratedKeys();
-			int opdrachtID = 0;
-			while (rs.next()) {
-				opdrachtID = rs.getInt(1);
-			}
+//			pst = con
+//					.prepareStatement(
+//							"insert into opdrachten(vraag, antwoord, maxAantalpogingen, antwoordHint, maxAntwoordTijd,opdrachtenCategorie) values (?,?,?,?,?,?)",
+//							Statement.RETURN_GENERATED_KEYS);
+//			pst.setString(1, vraag);
+//			pst.setString(2, antwoord);
+//			pst.setInt(3, maxAantalPogingen);
+//			pst.setString(4, antwoordHint);
+//			pst.setInt(5, maxAntwoordTijd);
+//			pst.setInt(6, opdrachtCategorieID);
+//			pst.executeUpdate();
+//			rs = pst.getGeneratedKeys();
+//			int opdrachtID = 0;
+//			while (rs.next()) {
+//				opdrachtID = rs.getInt(1);
+//			}
 			String opdrachtClass = opdracht.getClass().getSimpleName();
 			if (opdrachtClass.equals("Meerkeuze")) {
 				int opdrachtSoortId = zoekOpdrachtsoortID("Meerkeuze");
-				vulSoortOpdrachtIn(opdrachtSoortId, opdrachtID);
-
+				int opdrachtID= maakOpdrachtAan(vraag, antwoord, maxAantalPogingen, antwoordHint, maxAntwoordTijd, opdrachtCategorieID, opdrachtSoortId);
 				String alleKeuzes = ((Meerkeuze) opdracht).getAlleKeuzes();
 				pst = con
 						.prepareStatement("insert into meerkeuzeopdrachten (idmeerkeuzeOpdrachten,alleKeuzes) values(?,?)");
@@ -213,15 +212,19 @@ public class MySQLPersistency implements Persistable {
 				pst.executeUpdate();
 
 			} else if (opdrachtClass.equals("Opsomming")) {
-
+				
 				int opdrachtSoortId = zoekOpdrachtsoortID("Opsomming");
-				vulSoortOpdrachtIn(opdrachtSoortId, opdrachtID);
+				int opdrachtID= maakOpdrachtAan(vraag, antwoord, maxAantalPogingen, antwoordHint, maxAntwoordTijd, opdrachtCategorieID, opdrachtSoortId);
+				pst = con
+						.prepareStatement("insert into opsommingsopdrachten (idopsommingsOpdrachten) values(?)");
+				pst.setInt(1, opdrachtID);
+				pst.executeUpdate();
 
 			} else if (opdrachtClass.equals("Reproductie")) {
 
 				int opdrachtSoortId = zoekOpdrachtsoortID("Reproductie");
-				vulSoortOpdrachtIn(opdrachtSoortId, opdrachtID);
-
+				int opdrachtID= maakOpdrachtAan(vraag, antwoord, maxAantalPogingen, antwoordHint, maxAntwoordTijd, opdrachtCategorieID, opdrachtSoortId);
+	
 				String trefwoorden = ((Reproductie) opdracht).getTrefwoorden();
 				int minAantalTrefwoorden = ((Reproductie) opdracht)
 						.getMinAantalJuisteTrefwoorden();
@@ -234,7 +237,7 @@ public class MySQLPersistency implements Persistable {
 				pst.executeUpdate();
 
 			}
-
+			opdrachtCatalogus.addOpdrachtToList(opdracht);
 		} catch (SQLException sqlex) {
 			System.out.println(sqlex.getMessage());
 		} catch (Exception e) {
@@ -400,18 +403,39 @@ public class MySQLPersistency implements Persistable {
 		return opdrachtSoortId;
 	}
 
-	private void vulSoortOpdrachtIn(int opdrachtSoortId, int opdrachtID) {
-		try {
-			pst = con
-					.prepareStatement("insert into opdrachten(soortOpdracht) values(?) where idopdrachten=?");
-
-			pst.setInt(1, opdrachtSoortId);
-			pst.setInt(2, opdrachtID);
-			pst.executeUpdate();
-		} catch (SQLException e) {
-
-			e.printStackTrace();
+//	private void vulSoortOpdrachtIn(int opdrachtSoortId, int opdrachtID) {
+//		try {
+//			pst = con
+//					.prepareStatement("insert into opdrachten(soortOpdracht) values(?) where idopdrachten=?");
+//
+//			pst.setInt(1, opdrachtSoortId);
+//			pst.setInt(2, opdrachtID);
+//			pst.executeUpdate();
+//		} catch (SQLException e) {
+//
+//			e.printStackTrace();
+//		}
+//	}
+	
+	private int maakOpdrachtAan(String vraag, String antwoord, int maxAantalPogingen,String antwoordHint, int maxAntwoordTijd, int opdrachtCategorieID, int opdrachtSoortId) throws SQLException{
+		pst = con
+				.prepareStatement(
+						"insert into opdrachten(vraag, antwoord, maxAantalpogingen, antwoordHint, maxAntwoordTijd,opdrachtenCategorie, soortOpdracht) values (?,?,?,?,?,?,?)",
+						Statement.RETURN_GENERATED_KEYS);
+		pst.setString(1, vraag);
+		pst.setString(2, antwoord);
+		pst.setInt(3, maxAantalPogingen);
+		pst.setString(4, antwoordHint);
+		pst.setInt(5, maxAntwoordTijd);
+		pst.setInt(6, opdrachtCategorieID);
+		pst.setInt(7, opdrachtSoortId);
+		pst.executeUpdate();
+		rs = pst.getGeneratedKeys();
+		int opdrachtID = 0;
+		while (rs.next()) {
+			opdrachtID = rs.getInt(1);
 		}
+		return opdrachtID;
 	}
 	
 	private int getMaxaantalPuntenVoorBepaaldeOpdracht(Quiz quiz, int opdrachtId){

@@ -18,14 +18,16 @@ import java.util.Scanner;
  * 
  */
 public class OpdrachtCatalogus implements Cloneable,
-		Comparable<OpdrachtCatalogus>, Iterable<Opdracht> {
+		Comparable<OpdrachtCatalogus>, Iterable<Opdracht>, Subject {
 
 	private List<Opdracht> opdrachten;
 	private int id;
-	private File file = new File("bestanden/opdrachten");
+	private ArrayList<Observer> observers;
+//	private File file = new File("bestanden/opdrachten");
 
 	public OpdrachtCatalogus() {
 		opdrachten = new ArrayList<Opdracht>();
+		observers = new ArrayList<Observer>();
 	}
 
 	public List<Opdracht> getOpdrachten() {
@@ -55,6 +57,7 @@ public class OpdrachtCatalogus implements Cloneable,
 				opdracht.setId(opdrachten.size() + 1);
 			}
 			this.opdrachten.add(opdracht);
+			notifieerObservers();
 		} catch (Exception ex) {
 			System.out.println(ex.getMessage());
 		}
@@ -63,6 +66,7 @@ public class OpdrachtCatalogus implements Cloneable,
 	public void removeOpdrachtFromList(Opdracht opdracht) {
 		if (opdrachten.contains(opdracht)) {
 			this.opdrachten.remove(opdracht);
+			notifieerObservers();
 		}
 	}
 
@@ -114,157 +118,25 @@ public class OpdrachtCatalogus implements Cloneable,
 	public Iterator<Opdracht> iterator() {
 		return opdrachten.iterator();
 	}
-//
-//	public void schrijfOpdrachtenNaarBestand() {
-//		File fileWrite = new File("bestanden/opdrachten");
-//		try {
-//			// Wegschrijven
-//			FileWriter writer = new FileWriter(fileWrite, false);
-//			for (int i = 0; i < this.getOpdrachten().size(); i++) {
-//				Opdracht opdracht = opdrachten.get(i);
-//				String typeOpdracht = opdracht.getClass().getSimpleName();
-//				String lijn = opdracht.getId() + "," + opdracht.getVraag()
-//						+ "," + opdracht.getAntwoord() + ","
-//						+ opdracht.getMaxAantalPogingen() + ","
-//						+ opdracht.getAntwoordHint() + ","
-//						+ opdracht.getmaxAntwoordTijd() + "," + typeOpdracht
-//						+ "," + opdracht.getOpdrachtCategorie();
-//				if (typeOpdracht.equals("Meerkeuze")) {
-//					lijn += "," + ((Meerkeuze) opdracht).getAlleKeuzes();
-//				} else if (opdracht.equals("Reproductie")) {
-//					lijn += ","
-//							+ ((Reproductie) opdracht).getTrefwoorden()
-//							+ ","
-//							+ ((Reproductie) opdracht)
-//									.getMinAantalJuisteTrefwoorden();
-//				}
-//
-//				writer.write(lijn + "\n");
-//			}
-//			if (writer != null)
-//				writer.close();
-//		} catch (Exception ex) {
-//			System.out.println(ex.getMessage());
-//		}
-//	}
-//
-//	public void leesOpdrachtenVanBestand() {
-//		//file = new File("bestanden/opdrachten");
-//		if (file.exists() == true) {
-//			try {
-//				Scanner scanner = new Scanner(file);
-//				while (scanner.hasNext()) {
-//					String lijn = scanner.nextLine();
-//					String[] velden = lijn.split(",");
-//					int id = Integer.parseInt(velden[0]);
-//					String vraag = velden[1];
-//					String antwoord = velden[2];
-//					int maxAantalPogingen = Integer.parseInt(velden[3]);
-//					String antwoordHint = velden[4];
-//					int maxAntwoordTijd = Integer.parseInt(velden[5]);
-//					String soortOpdracht = velden[6];
-//					String opdrachtCategorieString = velden[7];
-//					OpdrachtCategorie opdrachtCategorie = OpdrachtCategorie
-//							.valueOf(opdrachtCategorieString);
-//					Opdracht opdracht = null;
-//					if (soortOpdracht.equals("Meerkeuze")) {
-//						String alleKeuzes = velden[8];
-//						opdracht = new Meerkeuze(vraag, antwoord,
-//								maxAantalPogingen, alleKeuzes, antwoordHint,
-//								maxAntwoordTijd, opdrachtCategorie);
-//						opdracht.setId(id);
-//					} else if (soortOpdracht.equals("Reproductie")) {
-//						String trefwoorden = velden[8];
-//						int minAantalJuisteTrefwoorden = Integer
-//								.parseInt(velden[9]);
-//						opdracht = new Reproductie(vraag, antwoordHint,
-//								maxAantalPogingen, antwoordHint,
-//								maxAntwoordTijd, trefwoorden,
-//								minAantalJuisteTrefwoorden, opdrachtCategorie);
-//					} else if (soortOpdracht.equals("Opsomming")) {
-//						opdracht = new Opsomming(vraag, antwoord,
-//								maxAantalPogingen, antwoordHint,
-//								maxAntwoordTijd, opdrachtCategorie);
-//					}
-//					this.opdrachten.add(opdracht);
-//				}
-//				if (scanner != null) {
-//					scanner.close();
-//				}
-//			} catch (FileNotFoundException ex) {
-//				System.out.println("bestand niet gevonden");
-//			} catch (NullPointerException ex) {
-//				System.out.println(ex.getMessage());
-//			} catch (Exception ex) {
-//				System.out.println("here");
-//				System.out.println(ex.getMessage());
-//			}
-//		}
-//	}
-//
-//	public Opdracht getBepaaldeOpdrachten(Integer i) {
-//		
-//		Opdracht opdracht = null;
-//		for (Opdracht opdr : getOpdrachten()) {
-//			if (i.equals(opdr.getId())) {
-//				opdracht = opdr;
-//				
-//			}
-//		}
-//		return opdracht;
-//	}
-//		opdracht = null;
-//		return opdracht;
-		/*File file = new File("bestanden/opdrachten");
-		Opdracht opdracht = null;
-		try {
-			Scanner scanner = new Scanner(file);
-			while (scanner.hasNext()) {
-				String lijn = scanner.nextLine();
-				String[] velden = lijn.split(",");
-				if (ids.contains(Integer.parseInt(velden[0]))) {
-					int id = Integer.parseInt(velden[0]);
-					String vraag = velden[1];
-					String antwoord = velden[2];
-					int maxAantalPogingen = Integer.parseInt(velden[3]);
-					String antwoordHint = velden[4];
-					int maxAntwoordTijd = Integer.parseInt(velden[5]);
-					String klasNaam = velden[6];
-					String opdrachtCategorieString = velden[7];
-					OpdrachtCategorie opdrachtCategorie = OpdrachtCategorie
-							.valueOf(opdrachtCategorieString);
-					if (klasNaam.equals("Meerkeuze")) {
-						String alleKeuzes = velden[8];
-						opdracht = new Meerkeuze(vraag, antwoord,
-								maxAantalPogingen, alleKeuzes, antwoordHint,
-								maxAntwoordTijd, opdrachtCategorie);
-						opdracht.setId(id);
-					} else if (klasNaam.equals("Reproductie")) {
-						String trefwoorden = velden[8];
-						int minAantalJuisteTrefwoorden = Integer
-								.parseInt(velden[9]);
-						opdracht = new Reproductie(vraag, antwoordHint,
-								maxAantalPogingen, antwoordHint,
-								maxAntwoordTijd, trefwoorden,
-								minAantalJuisteTrefwoorden, opdrachtCategorie);
-					} else if (klasNaam.equals("Opsomming")) {
-						opdracht = new Opsomming(vraag, antwoord,
-								maxAantalPogingen, antwoordHint,
-								maxAntwoordTijd, opdrachtCategorie);
-					}
 
-				}
-			}
-			if (scanner != null) {
-				scanner.close();
-			}
+	@Override
+	public void registreerObserver(Observer o) {
+		observers.add(o);
+		
+	}
 
-		} catch (FileNotFoundException ex) {
-			System.out.println("bestand niet gevonden");
-		} catch (NullPointerException ex) {
-			System.out.println(ex.getMessage());
-		} catch (Exception ex) {
-			System.out.println(ex.getMessage());
-		}*/
-//	}
+	@Override
+	public void verwijderObserver(Observer o) {
+		int i= observers.indexOf(o);
+		if(i>=0){
+			observers.remove(i);
+		}	
+	}
+
+	@Override
+	public void notifieerObservers() {
+		for(Observer obs : observers){
+			obs.update(this);
+		}	
+	}
 }

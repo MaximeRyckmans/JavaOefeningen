@@ -192,6 +192,7 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 		
 		tableModel.setRowCount(0);
 		this.getAantalToegevoegdeOpdr().setText("0");
+		this.getOnderwerpText().setText("");
 		
 	}
 		

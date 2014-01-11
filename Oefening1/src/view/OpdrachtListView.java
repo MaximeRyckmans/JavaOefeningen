@@ -14,6 +14,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
 import model.Opdracht;
@@ -33,6 +35,7 @@ public class OpdrachtListView extends JFrame implements ActionListener{
 	 */
 	private static final long serialVersionUID = 1L;
 	private JTree tree;
+	private TreeModel treeModel;
 	private DefaultMutableTreeNode top;
 	private JPanel content;
 	private JButton btnCreatieOpdracht, btnWijzigOpdracht;
@@ -51,8 +54,8 @@ public class OpdrachtListView extends JFrame implements ActionListener{
 		gbc.gridy = 0;
 		
 		top = new DefaultMutableTreeNode("Lijst van opdrachten");
-		
-		tree = new JTree(top);
+		treeModel = new DefaultTreeModel(top);
+		tree = new JTree(treeModel);
 		tree.expandPath(tree.getPathForRow(0));
 		JScrollPane pane = new JScrollPane(tree);
 		pane.setPreferredSize(new Dimension(450, 600));
@@ -83,7 +86,8 @@ public class OpdrachtListView extends JFrame implements ActionListener{
 	}
 	
 	public void createNodes(OpdrachtCatalogus opdrachtCatalogus){
-		try {
+		top.removeAllChildren();
+		try {		
 			DefaultMutableTreeNode opdracht = null;
 			List<Opdracht> opdrachten = opdrachtCatalogus.getOpdrachten();
 			for(Opdracht o : opdrachten){
@@ -110,6 +114,14 @@ public class OpdrachtListView extends JFrame implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public JTree getTree() {
+		return tree;
+	}
+
+	public void setTree(JTree tree) {
+		this.tree = tree;
 	}
 	
 	

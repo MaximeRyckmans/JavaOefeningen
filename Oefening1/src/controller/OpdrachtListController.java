@@ -4,7 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import persistency.PersistencyFacade;
+import model.Observer;
 import model.OpdrachtCatalogus;
+import model.Subject;
 import view.OpdrachtCreatieView;
 import view.OpdrachtListView;
 import view.QuizCreatieView;
@@ -17,7 +19,7 @@ import view.QuizWijzigenView;
  *
  */
 
-public class OpdrachtListController implements ActionListener{
+public class OpdrachtListController implements ActionListener, Observer{
 
 	private OpdrachtListView opdrachtListView;
 	private OpdrachtCatalogus opdrachtCatalogus;
@@ -28,7 +30,7 @@ public class OpdrachtListController implements ActionListener{
 	public OpdrachtListController(OpdrachtListView opdrachtListView, OpdrachtCatalogus opdrachtCatalogus, PersistencyFacade facade) {
 		this.opdrachtListView = opdrachtListView;
 		this.opdrachtCatalogus = opdrachtCatalogus;
-		
+		this.opdrachtCatalogus.registreerObserver(this);
 		opdrachtListView.createNodes(opdrachtCatalogus);
 		opdrachtListView.buttonActionListener(this);
 		
@@ -44,6 +46,13 @@ public class OpdrachtListController implements ActionListener{
 			
 		}
 		
+	}
+
+	@Override
+	public void update(Subject subject) {
+		this.opdrachtCatalogus = (OpdrachtCatalogus)subject;
+		opdrachtListView.createNodes(this.opdrachtCatalogus);
+		opdrachtListView.getTree().updateUI();	
 	}
 
 }

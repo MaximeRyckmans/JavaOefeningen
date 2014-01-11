@@ -19,6 +19,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 
 import model.Opdracht;
@@ -39,6 +41,7 @@ public class QuizListView extends JFrame implements ActionListener{
 	private DefaultMutableTreeNode top;
 	private JPanel content;
 	private JButton btnCreatieQuiz, btnWijzigQuiz, btnDeleteQuiz;
+
 	
 	public QuizListView(){
 		super("Lijst van quizzen");
@@ -54,7 +57,6 @@ public class QuizListView extends JFrame implements ActionListener{
 		gbc.gridy = 0;
 		
 		top = new DefaultMutableTreeNode("Lijst van Quizen");
-		
 		tree = new JTree(top);
 		tree.expandPath(tree.getPathForRow(0));
 		JScrollPane pane = new JScrollPane(tree);
@@ -95,6 +97,7 @@ public class QuizListView extends JFrame implements ActionListener{
 	}
 	
 	public void createNodes(QuizCatalogus quizCatalogus){
+		top.removeAllChildren();
 		try {
 			DefaultMutableTreeNode quiz = null;
 			DefaultMutableTreeNode opdracht = null;
