@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import utils.JDBCConnection;
+import model.Categorie;
 import model.Klas;
 import model.Leraar;
 import model.Meerkeuze;
@@ -306,7 +307,7 @@ public class MySQLPersistency implements Persistable {
 					pst.setInt(3, getMaxaantalPuntenVoorBepaaldeOpdracht(quiz, opdrIDs));
 					pst.executeUpdate();
 				}
-				pst= con.prepareStatement("insert into quizzen_opdrachten(maxAantalPunten) values(?) where idQuiz=? and idOpdracht=?");
+				pst= con.prepareStatement("update quizzen_opdrachten set maxAantalPunten=? where idQuiz=? and idOpdracht=?");
 				
 			}
 		} catch (Exception ex) {
@@ -348,14 +349,120 @@ public class MySQLPersistency implements Persistable {
 	
 	@Override
 	public void wijzigQuiz(Quiz quiz, QuizCatalogus quizCatalogus) {
-		// TODO Auto-generated method stub
+		int quizID = quiz.getId();
+		String onderwerp = quiz.getOnderwerp();
+		String leerjaar = quiz.getLeerjaar().toString();
+		String voornaam = quiz.getLeraar().getVoorNaam();
+		String familienaam = quiz.getLeraar().getFamilieNaam();
+		int aantalDeelnames = quiz.getAantalDeelnames();
+		String quizStatus= quiz.getQuizStatus().toString();
+		
+		try {
+			wijzigQuiz(onderwerp, leerjaar, voornaam, familienaam, aantalDeelnames, quizStatus, quizID);
+			
+			con=JDBCConnection.getConnection();
+			
+			pst= con.prepareStatement("select idOpdracht from quizzen_opdrachten where idQuiz=?");
+			pst.setInt(1, quizID);
+			pst.execute();
+			rs= pst.getResultSet();
+			ArrayList<Integer> opdrachtIDList = new ArrayList<Integer>();
+			while(rs.next()){
+				opdrachtIDList.add(rs.getInt(1));
+			}
+			
+			ArrayList<Integer> insertIDList = new ArrayList<Integer>();
+			ArrayList<Integer> removeList = new ArrayList<Integer>();
+			ArrayList<Integer> newIDList = new ArrayList<Integer>();
+			
+			for(Opdracht opdr : quiz.getOpdrachten()){
+				newIDList.add(opdr.getId());
+			}
+			
+			for (Integer i : opdrachtIDList){
+				if(newIDList.contains(i)){
+					insertIDList.add(i);
+					newIDList.remove(i);
+					
+				}else{
+					removeList.add(i);
+				}
+			}
+			for(int i : removeList){
+				verwijderOpdrachtVanQuiz(quizID, i);
+			}
+			for(int i: insertIDList){
+				
+				wijzigQuizOpdracht(quizID, i, quiz);
+			
+			}
+			for(int i: newIDList){
+				
+				voegOpdrachtToeAanQuiz(quizID, i, quiz);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		
 	}
 
 	@Override
 	public void wijzigOpdracht(Opdracht opdracht, OpdrachtCatalogus opdrachtCatalogus) {
-		// TODO Auto-generated method stub
+		try {
+		opdrachtCatalogus.removeOpdrachtFromList(opdracht);
+		int idOpdracht = opdracht.getId();
+		String vraag = opdracht.getVraag();
+		String antwoord = opdracht.getAntwoord();
+		int maxAantalPogingen = opdracht.getMaxAantalPogingen();
+		String antwoordHint = opdracht.getAntwoordHint();
+		int maxAntwoordTijd = opdracht.getmaxAntwoordTijd();
+		OpdrachtCategorie opdrachtCategorie = opdracht.getOpdrachtCategorie();
+		String soortOpdracht = opdracht.getClass().getSimpleName();
 		
+		int opdrachtCategorieID = zoekOpdrachtCategorieID(opdrachtCategorie.toString());	
+		int opdrachtSoortId = zoekOpdrachtsoortID(soortOpdracht);
+		
+		wijzigOpdracht(vraag, antwoord, maxAantalPogingen, antwoordHint, maxAntwoordTijd, opdrachtCategorieID, opdrachtSoortId, idOpdracht);
+		
+		if (soortOpdracht.equals("Meerkeuze")) {
+
+			String alleKeuzes = ((Meerkeuze) opdracht).getAlleKeuzes();
+			pst = con
+					.prepareStatement("insert into meerkeuzeopdrachten (idmeerkeuzeOpdrachten,alleKeuzes) values(?,?)");
+			pst.setInt(1, idOpdracht);
+			pst.setString(2, alleKeuzes);
+			pst.executeUpdate();
+
+		} else if (soortOpdracht.equals("Opsomming")) {
+			
+			pst = con
+					.prepareStatement("insert into opsommingsopdrachten (idopsommingsOpdrachten) values(?)");
+			pst.setInt(1, idOpdracht);
+			pst.executeUpdate();
+
+		} else if (soortOpdracht.equals("Reproductie")) {
+
+			String trefwoorden = ((Reproductie) opdracht).getTrefwoorden();
+			int minAantalTrefwoorden = ((Reproductie) opdracht)
+					.getMinAantalJuisteTrefwoorden();
+
+			pst = con
+					.prepareStatement("insert into reproductieopdrachten (idreproductieOpdrachten,trefwoorden,minAantalTrefwoorden) values(?,?,?)");
+			pst.setInt(1, idOpdracht);
+			pst.setString(2, trefwoorden);
+			pst.setInt(3, minAantalTrefwoorden);
+			pst.executeUpdate();
+
+		}
+		
+		opdrachtCatalogus.addOpdrachtToList(opdracht);
+		
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -371,6 +478,77 @@ public class MySQLPersistency implements Persistable {
 		return opdracht;
 	}
 
+	private void wijzigQuiz(String onderwerp, String leerjaar, String voornaam, String familienaam, int aantalDeelnames, String quizStatus, int quizID) throws SQLException{
+		con=JDBCConnection.getConnection();
+		int leerjaarID=zoekLeerjaarID(leerjaar);
+		int leraarID=zoekLeraarID(voornaam, familienaam);
+		int quizStatusID=zoekQuizStatusID(quizStatus);
+		
+		pst=con.prepareStatement("update quizzen set onderwerp=?,aantalDeelnames=?,klassenID=?,lerarenId=?,quizStatusID=? where idquizzen=?");
+		pst.setString(1, onderwerp);
+		pst.setInt(2, aantalDeelnames);
+		pst.setInt(3, leerjaarID);
+		pst.setInt(4, leraarID);
+		pst.setInt(5, quizStatusID);
+		pst.setInt(6, quizID);
+		pst.executeUpdate();
+		
+	}
+	
+	private int zoekQuizStatusID(String quizStatus) throws SQLException{
+		con=JDBCConnection.getConnection();
+		int quizStatusID= 0;
+		pst=con.prepareStatement("select idquizStatussen from quizstatussen where quizStatus=?");
+		pst.setString(1, quizStatus);
+		pst.execute();
+		rs=pst.getResultSet();
+		while(rs.next()){
+			quizStatusID=rs.getInt(1);
+		}
+		return quizStatusID;
+	}
+	
+	private int zoekLeraarID(String voornaam, String familienaam) throws SQLException{
+		con=JDBCConnection.getConnection();
+		int leraarID= 0;
+		
+		pst=con.prepareStatement("select idleraren from leraren where voornaam=? and naam=?");
+		pst.setString(1, voornaam);
+		pst.setString(2, familienaam);
+		pst.execute();
+		rs=pst.getResultSet();
+		while(rs.next()){
+			leraarID=rs.getInt(1);
+		}
+		return leraarID;
+	}
+	
+	private int zoekLeerjaarID(String leerjaar) throws SQLException{
+		int leerjaarID= 0;
+		pst=con.prepareStatement("select idklassen from klassen where klassenNaam=?");
+		pst.setString(1, leerjaar);
+		pst.execute();
+		rs=pst.getResultSet();
+		while(rs.next()){
+			leerjaarID=rs.getInt(1);
+		}
+		return leerjaarID;
+	}
+	
+	private int zoekOpdrachtCategorieID(String opdrachtCategorie) throws SQLException{
+		int opdrachtCategorieID=0;
+		con= JDBCConnection.getConnection();
+		pst = con
+				.prepareStatement("select idopdrachtCategorieën from opdrachtcategorieën where opdrachtCategorieNaam=?");
+		pst.setString(1, opdrachtCategorie.toString());
+		rs = pst.executeQuery();
+		
+		while (rs.next()) {
+			opdrachtCategorieID = rs.getInt(1);
+		}
+		return opdrachtCategorieID;
+	}
+	
 	private int zoekOpdrachtsoortID(String soortOpdracht) {
 		int opdrachtSoortId = 0;
 		try {
@@ -407,6 +585,55 @@ public class MySQLPersistency implements Persistable {
 			opdrachtID = rs.getInt(1);
 		}
 		return opdrachtID;
+	}
+	
+	private void verwijderOpdrachtVanQuiz(int quizID, int opdrachtID) throws SQLException{
+		JDBCConnection.getConnection();
+		
+		pst = con.prepareStatement("delete from quizzen_opdrachten where idQuiz=? and idOpdracht=?");
+		pst.setInt(1, quizID);
+		pst.setInt(2, opdrachtID);
+		
+		pst.executeUpdate();
+	}
+	
+	private void voegOpdrachtToeAanQuiz(int quizID, int opdrachtID, Quiz quiz) throws SQLException{
+		JDBCConnection.getConnection();
+		for(Opdracht opdr : quiz.getOpdrachten()){
+			if(opdr.getId() == opdrachtID){
+		pst=con.prepareStatement("insert into quizzen_opdrachten (idQuiz,idOpdracht, maxAantalPunten) values(?,?,?)");
+		pst.setInt(1, quizID);
+		pst.setInt(2, opdrachtID);
+		pst.setInt(3, opdr.getMaxAantalPunten());
+		pst.executeUpdate();
+			}
+		}
+	}
+	private void wijzigQuizOpdracht(int quizID, int opdrachtID, Quiz quiz) throws SQLException{
+		JDBCConnection.getConnection();
+		for(Opdracht opdr : quiz.getOpdrachten()){
+			if(opdr.getId() == opdrachtID){
+		pst=con.prepareStatement("update quizzen_opdrachten set maxAantalPunten=? where idQuiz=? and idOpdracht=?");
+		pst.setInt(1, opdr.getMaxAantalPunten());
+		pst.setInt(2, quizID);
+		pst.setInt(3, opdrachtID);
+		pst.executeUpdate();
+			}
+		}
+	}
+	private void wijzigOpdracht(String vraag, String antwoord, int maxAantalPogingen,String antwoordHint, int maxAntwoordTijd, int opdrachtCategorieID, int opdrachtSoortId, int opdrachtID) throws SQLException{
+		pst = con
+				.prepareStatement(
+						"update opdrachten set vraag=?, antwoord=?, maxAantalpogingen=?, antwoordHint=?, maxAntwoordTijd=?,opdrachtenCategorie=?, soortOpdracht=? where idopdrachten=?");
+		pst.setString(1, vraag);
+		pst.setString(2, antwoord);
+		pst.setInt(3, maxAantalPogingen);
+		pst.setString(4, antwoordHint);
+		pst.setInt(5, maxAntwoordTijd);
+		pst.setInt(6, opdrachtCategorieID);
+		pst.setInt(7, opdrachtSoortId);
+		pst.setInt(8, opdrachtID);
+		pst.executeUpdate();
 	}
 	
 	private int getMaxaantalPuntenVoorBepaaldeOpdracht(Quiz quiz, int opdrachtId){
