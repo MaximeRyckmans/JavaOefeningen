@@ -136,7 +136,7 @@ public class QuizCreatieView extends JFrame implements ActionListener {
 		lowerPanel.add(sorteerOpdrL);
 		lowerPanel.add(sorteerOpdr);
 		lowerPanel.add(opdrachten);
-		lowerPanel.add(opdrachten);	
+	//	lowerPanel.add(opdrachten);	
 		lowerPanel.add(naarRechts);
 		lowerPanel.add(naarLinks);
 		lowerPanel.add(naarBoven);

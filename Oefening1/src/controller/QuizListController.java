@@ -49,8 +49,9 @@ public class QuizListController implements ActionListener, Observer{
 			QuizWijzigenView quizWijzigenView = new QuizWijzigenView("Wijzig quiz");
 			QuizWijzigenController quizWijzigenController = new QuizWijzigenController(quizWijzigenView, quizCatalogus, opdrachtCatalogus, facade);
 		}else if (e.getActionCommand().equals("Verwijder quiz")) {
+
 			QuizDeleteView quizDeleteView = new QuizDeleteView();
-			QuizDeleteController quizDeleteController = new QuizDeleteController(quizDeleteView, quizCatalogus);
+			QuizDeleteController quizDeleteController = new QuizDeleteController(quizDeleteView, quizCatalogus, facade);
 		}
 	}
 	//updates the tree with the new information

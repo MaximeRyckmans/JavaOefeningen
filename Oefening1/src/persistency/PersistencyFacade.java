@@ -35,8 +35,9 @@ public class PersistencyFacade {
 					tel++;
 					String fout = scanner.nextLine();
 					if (tel == 2) {
-
+						
 						juist = scanner.nextLine();
+					
 					}
 				}
 				juist = juist.substring(20);

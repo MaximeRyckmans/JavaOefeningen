@@ -4,13 +4,14 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.List;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.util.List;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JPanel;
 
 import model.Quiz;
@@ -31,6 +32,7 @@ public class QuizDeleteView extends QuizWijzigenView {
 	
 	private JButton btnDeleteQuiz, btnCancelChanges, btnSaveChanges;
 	private DefaultListModel<Quiz> qModel;
+	
 
 	public QuizDeleteView(){
 		this.setTitle("Verwijder quiz");
@@ -39,7 +41,7 @@ public class QuizDeleteView extends QuizWijzigenView {
 		this.setLayout(new FlowLayout());
 		
 		this.setPnlBackground(new JPanel());
-		this.btnDeleteQuiz = new JButton("Verwijder quiz");
+		this.btnDeleteQuiz = new JButton("Quiz verwijderen");
 		Dimension dimension = new Dimension(435, 800);
 		
 		this.CreateLeftPanel(btnDeleteQuiz, dimension);
@@ -73,7 +75,7 @@ public class QuizDeleteView extends QuizWijzigenView {
 		btnSaveChanges.addActionListener(al);
 	}
 	
-	public void setList(java.util.List<Quiz> list){
+	public void setList(List<Quiz> list){
 		qModel = new DefaultListModel<Quiz>();
 		for (Quiz quiz : list) {
 			qModel.addElement(quiz);

@@ -25,6 +25,7 @@ public class MenuViewController implements ActionListener {
 
 	public MenuViewController(MenuView menuView, QuizCatalogus quizCatalogus,
 			OpdrachtCatalogus opdrachtCatalogus, PersistencyFacade facade) {
+		
 		this.menuView = menuView;
 	//	this.qCat = quizCatalogus;
 		this.opdrachtCatalogus = opdrachtCatalogus;
@@ -44,6 +45,7 @@ public class MenuViewController implements ActionListener {
 			QuizListView view = new QuizListView();
 			QuizListController controller = new QuizListController(view, qCat,
 					opdrachtCatalogus, facade);
+			
 			/*
 			 * QuizCreatieView view = new QuizCreatieView(); new
 			 * QuizCreatieController(cat, qcat, view);
