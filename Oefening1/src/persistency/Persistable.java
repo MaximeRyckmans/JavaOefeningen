@@ -18,7 +18,7 @@ public interface Persistable {
 	public void slaOpdrachtOp (OpdrachtCatalogus opdrachtCatalogus, Opdracht opdracht);
 	public void slaQuizOp (QuizCatalogus quizCatalogus,Quiz quiz);
 	public void verwijderQuiz(Quiz quiz, QuizCatalogus quizCatalogus);
-	public void verwijderOpdracht(Opdracht opdracht, OpdrachtCatalogus opdrachtCatalogus);
+	public void verwijderOpdracht(Opdracht opdracht, OpdrachtCatalogus opdrachtCatalogus, QuizCatalogus quizCatalogus);
 	public Opdracht getBepaaldeOpdracht(Integer i,OpdrachtCatalogus opdrachtCatalogus);
 	public void wijzigQuiz(Quiz quiz,QuizCatalogus quizCatalogus);
 	public void wijzigOpdracht(Opdracht opdracht, OpdrachtCatalogus opdrachtCatalogus);

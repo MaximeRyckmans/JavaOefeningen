@@ -333,7 +333,7 @@ public class MySQLPersistency implements Persistable {
 
 	@Override
 	public void verwijderOpdracht(Opdracht opdracht,
-			OpdrachtCatalogus opdrachtCatalogus) {
+			OpdrachtCatalogus opdrachtCatalogus, QuizCatalogus quizCatalogus) {
 		con = JDBCConnection.getConnection();
 		try {
 			pst = con

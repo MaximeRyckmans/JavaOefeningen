@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -69,9 +70,24 @@ public class TekstPersistency implements Persistable {
 	
 	@Override
 	public void verwijderOpdracht(Opdracht opdracht,
-			OpdrachtCatalogus opdrachtCatalogus) {
+			OpdrachtCatalogus opdrachtCatalogus, QuizCatalogus quizCatalogus) {
 		opdrachtCatalogus.removeOpdrachtFromList(opdracht);
+		Iterator<Quiz> qit = quizCatalogus.getQuizzen().iterator();
+		
+		while(qit.hasNext()){
+			Quiz quiz = qit.next();
+			Iterator<Opdracht> opit = quiz.getOpdrachten().iterator();
+			while(opit.hasNext()){
+				Opdracht teVerwijderenOpdracht = opit.next();
+				
+				if(teVerwijderenOpdracht == opdracht){
+					opit.remove();
+				}
+			}
+			
+		}
 		schrijfOpdrachtenNaarBestand(opdrachtCatalogus);
+		schrijfQuizzenNaarBestand(quizCatalogus);
 		
 	}
 	
