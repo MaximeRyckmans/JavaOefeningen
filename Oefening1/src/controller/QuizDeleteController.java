@@ -58,6 +58,8 @@ public class QuizDeleteController implements ActionListener{
 		if (quizDeleteView.isTrueIndicator()) {
 			quizDeleteView.closeWindow();
 		}
+		
+		System.out.println("check");
 	}
 	
 	public void saveChanges() {
