@@ -31,6 +31,7 @@ import model.Opdracht;
 import model.Quiz;
 import model.QuizStatus;
 
+import java.awt.Button;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
@@ -81,8 +82,10 @@ public class QuizWijzigenView extends JFrame implements ActionListener {
 		pnlRightBackground = new JPanel();
 		pnlRightBackground.setLayout(new GridBagLayout());
 		pnlRightBot = new JPanel();
+		btnWijzigQuiz = new JButton("Wijzig quiz");
+		Dimension dimension = new Dimension(435, 857);
 
-		CreateLeftPanel(nameButton);
+		CreateLeftPanel(btnWijzigQuiz, dimension);
 		CreateMiddlePanel();
 		CreateRightPanel();
 
@@ -160,14 +163,14 @@ public class QuizWijzigenView extends JFrame implements ActionListener {
 		pnlMiddle.add(cmbbxQuizStatus, gbc);
 	}
 
-	protected void CreateLeftPanel(String nameButton) {
+	protected void CreateLeftPanel(JButton btn, Dimension dimension) {
 		lblLijstVanQuizzen = new JLabel("Lijst van quizzen");
 		pnlListQuizzen = new JPanel();
 		listQuizzen = new JList<Quiz>();
-		btnWijzigQuiz = new JButton(nameButton);
+		//btnWijzigQuiz = new JButton(nameButton);
 
 		pnlLeft = new JPanel();
-		pnlLeft.setPreferredSize(new Dimension(435, 857));
+		pnlLeft.setPreferredSize(dimension);	
 		pnlLeft.setBorder(BorderFactory.createLineBorder(Color.black));
 		pnlLeft.setLayout(new GridBagLayout());
 
@@ -184,7 +187,7 @@ public class QuizWijzigenView extends JFrame implements ActionListener {
 		pnlLeft.add(pnlListQuizzen, gbc);
 
 		gbc.gridy = 2;
-		pnlLeft.add(btnWijzigQuiz, gbc);
+		pnlLeft.add(btn, gbc);
 
 	}
 
@@ -362,7 +365,8 @@ public class QuizWijzigenView extends JFrame implements ActionListener {
 	}
 
 	public void closeWindow() {
-		this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSED));
+		//this.dispatchEvent(new WindowEvent(this, WindowEvent.WINDOW_CLOSED));
+		this.dispose();
 	}
 
 	public void popUpWindow() {

@@ -62,7 +62,7 @@ public class QuizWijzigenController extends QuizController {
 			wijzigQuiz();
 		} else if (e.getActionCommand().equals("Annuleer")) {
 			annuleer();
-		}
+		} 
 	}
 
 	private void annuleer() {
