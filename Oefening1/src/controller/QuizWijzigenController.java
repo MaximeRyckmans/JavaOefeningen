@@ -117,6 +117,25 @@ public class QuizWijzigenController extends QuizController {
 					quiz.setQuizStatus(quizStatus);
 				}
 			}
+		
+			quiz.getOpdrachten().removeAll(quiz.getOpdrachten());
+			for (int i = 0; i < quizWijzigenView.getTableOpdrachtenInQuiz().getModel().getRowCount(); i++) {
+				String vraag  = (String) quizWijzigenView.getTableOpdrachtenInQuiz().getModel()
+						.getValueAt(i, 0);
+				Opdracht opdracht=null;
+				for(Opdracht opdr: opdrachtCatalogus.getOpdrachten()){
+					if(opdr.getVraag().equals(vraag)){
+						opdracht = opdr;
+					}
+				}
+				String maxPunten = quizWijzigenView.getTableOpdrachtenInQuiz().getModel()
+						.getValueAt(i, 1).toString();
+				int maxAantalPunten = Integer.valueOf(maxPunten);
+				opdracht.setMaxAantalPunten(maxAantalPunten);
+
+				quiz.getOpdrachten().add(opdracht);
+			}
+
 			facade.getPersistable().wijzigQuiz(quiz, quizCatalogus);
 			quizWijzigenView.closeWindow();
 		}
