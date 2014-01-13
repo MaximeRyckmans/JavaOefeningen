@@ -45,99 +45,115 @@ public class QuizWijzigenController extends QuizController {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		if (e.getActionCommand().equals("Voeg opdracht toe aan quiz")) {
-			voegOpdrachtToeAanQuiz();
-		} else if (e.getActionCommand().equals(" Verwijder opdracht in quiz ")) {
-			verwijderOpdrachtInQuiz();
-		} else if (e.getActionCommand().equals("Alle wijzigingen opslaan")) {
-			if (!quizWijzigenView.getCmbbxLeraar().getSelectedItem()
-					.equals(quizWijzigenView.getNotSelectableOption())
-					|| !quizWijzigenView.getCmbbxQuizStatus().getSelectedItem()
-							.equals(quizWijzigenView.getNotSelectableOption())) {
-				wijzigingQuizOpslaan();
-			} else {
-				quizWijzigenView.popUpWindow();
-			}
-		} else if (e.getActionCommand().equals("Wijzig quiz")) {
-			wijzigQuiz();
-		} else if (e.getActionCommand().equals("Annuleer")) {
-			annuleer();
-		} 
+		try {
+			if (e.getActionCommand().equals("Voeg opdracht toe aan quiz")) {
+				voegOpdrachtToeAanQuiz();
+			} else if (e.getActionCommand().equals(" Verwijder opdracht in quiz ")) {
+				verwijderOpdrachtInQuiz();
+			} else if (e.getActionCommand().equals("Alle wijzigingen opslaan")) {
+				if (!quizWijzigenView.getCmbbxLeraar().getSelectedItem()
+						.equals(quizWijzigenView.getNotSelectableOption())
+						|| !quizWijzigenView.getCmbbxQuizStatus().getSelectedItem()
+								.equals(quizWijzigenView.getNotSelectableOption())) {
+					wijzigingQuizOpslaan();
+				} else {
+					quizWijzigenView.popUpWindow();
+				}
+			} else if (e.getActionCommand().equals("Wijzig quiz")) {
+				wijzigQuiz();
+			} else if (e.getActionCommand().equals("Annuleer")) {
+				annuleer();
+			} 
+		} catch (Exception e2) {
+			System.out.println(e);
+		}
 	}
 
 	private void annuleer() {
-		quizWijzigenView.confirmationWindow(
-				"Ben je zeker dat je de wijzigingen wilt annuleren?",
-				"Annuleer wijzigingen");
+		try {
+			quizWijzigenView.confirmationWindow(
+					"Ben je zeker dat je de wijzigingen wilt annuleren?",
+					"Annuleer wijzigingen");
 
-		if (quizWijzigenView.isTrueIndicator()) {
-			for (Quiz q : quizCatalogus.getQuizzen()) {
-				if (q.getId() == copyQuizOld.getId()) {
-					q = copyQuizOld;
+			if (quizWijzigenView.isTrueIndicator()) {
+				for (Quiz q : quizCatalogus.getQuizzen()) {
+					if (q.getId() == copyQuizOld.getId()) {
+						q = copyQuizOld;
+					}
 				}
+				quizWijzigenView.closeWindow();
 			}
-			quizWijzigenView.closeWindow();
+		} catch (Exception e) {
+			System.out.println(e);
 		}
 	}
 
 	private void wijzigQuiz() {
-		quiz = quizWijzigenView.getListQuizzen().getSelectedValue();
-		copyQuizOld = quiz.clone();
-		quizWijzigenView.setOpdrachtenInQuiz(quiz);
+		try {
+			quiz = quizWijzigenView.getListQuizzen().getSelectedValue();
+			copyQuizOld = quiz.clone();
+			quizWijzigenView.setOpdrachtenInQuiz(quiz);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 
 	private void wijzigingQuizOpslaan() {
-		quizWijzigenView.confirmationWindow(
-				"Ben je zeker dat je deze wijzigingen wilt opslaan?",
-				"Opslaan wijzigingen");
-		if (quizWijzigenView.isTrueIndicator()) {
-			String parse = quizWijzigenView.getTxtAantalDeelnames().getText();
-			quiz.setAantalDeelnames(Integer.parseInt(parse));
+		try {
+			quizWijzigenView.confirmationWindow(
+					"Ben je zeker dat je deze wijzigingen wilt opslaan?",
+					"Opslaan wijzigingen");
+			if (quizWijzigenView.isTrueIndicator()) {
+				String parse = quizWijzigenView.getTxtAantalDeelnames().getText();
+				quiz.setAantalDeelnames(Integer.parseInt(parse));
 
-			for (Klas klas : Klas.values()) {
-				if (klas.toString().equals(
-						quizWijzigenView.getCmbbxLeerjaar().getSelectedItem())) {
-					quiz.setLeerjaar(klas);
-				}
-			}
-
-			for (Leraar leraar : Leraar.values()) {
-				if (leraar.toString().equals(
-						quizWijzigenView.getCmbbxLeraar().getSelectedItem())) {
-					quiz.setLeraar(leraar);
-				}
-			}
-
-			quiz.setOnderwerp(quizWijzigenView.getTxtOnderwerp().getText());
-
-			for (QuizStatus quizStatus : QuizStatus.values()) {
-				if (quizStatus.toString()
-						.equals(quizWijzigenView.getCmbbxQuizStatus()
-								.getSelectedItem())) {
-					quiz.setQuizStatus(quizStatus);
-				}
-			}
-		
-			quiz.getOpdrachten().removeAll(quiz.getOpdrachten());
-			for (int i = 0; i < quizWijzigenView.getTableOpdrachtenInQuiz().getModel().getRowCount(); i++) {
-				String vraag  = (String) quizWijzigenView.getTableOpdrachtenInQuiz().getModel()
-						.getValueAt(i, 0);
-				Opdracht opdracht=null;
-				for(Opdracht opdr: opdrachtCatalogus.getOpdrachten()){
-					if(opdr.getVraag().equals(vraag)){
-						opdracht = opdr;
+				for (Klas klas : Klas.values()) {
+					if (klas.toString().equals(
+							quizWijzigenView.getCmbbxLeerjaar().getSelectedItem())) {
+						quiz.setLeerjaar(klas);
 					}
 				}
-				String maxPunten = quizWijzigenView.getTableOpdrachtenInQuiz().getModel()
-						.getValueAt(i, 1).toString();
-				int maxAantalPunten = Integer.valueOf(maxPunten);
-				opdracht.setMaxAantalPunten(maxAantalPunten);
 
-				quiz.getOpdrachten().add(opdracht);
+				for (Leraar leraar : Leraar.values()) {
+					if (leraar.toString().equals(
+							quizWijzigenView.getCmbbxLeraar().getSelectedItem())) {
+						quiz.setLeraar(leraar);
+					}
+				}
+
+				quiz.setOnderwerp(quizWijzigenView.getTxtOnderwerp().getText());
+
+				for (QuizStatus quizStatus : QuizStatus.values()) {
+					if (quizStatus.toString()
+							.equals(quizWijzigenView.getCmbbxQuizStatus()
+									.getSelectedItem())) {
+						quiz.setQuizStatus(quizStatus);
+					}
+				}
+			
+				quiz.getOpdrachten().removeAll(quiz.getOpdrachten());
+				for (int i = 0; i < quizWijzigenView.getTableOpdrachtenInQuiz().getModel().getRowCount(); i++) {
+					String vraag  = (String) quizWijzigenView.getTableOpdrachtenInQuiz().getModel()
+							.getValueAt(i, 0);
+					Opdracht opdracht=null;
+					for(Opdracht opdr: opdrachtCatalogus.getOpdrachten()){
+						if(opdr.getVraag().equals(vraag)){
+							opdracht = opdr;
+						}
+					}
+					String maxPunten = quizWijzigenView.getTableOpdrachtenInQuiz().getModel()
+							.getValueAt(i, 1).toString();
+					int maxAantalPunten = Integer.valueOf(maxPunten);
+					opdracht.setMaxAantalPunten(maxAantalPunten);
+
+					quiz.getOpdrachten().add(opdracht);
+				}
+
+				facade.getPersistable().wijzigQuiz(quiz, quizCatalogus);
+				quizWijzigenView.closeWindow();
 			}
-
-			facade.getPersistable().wijzigQuiz(quiz, quizCatalogus);
-			quizWijzigenView.closeWindow();
+		} catch (Exception e) {
+			System.out.println(e);
 		}
 	}
 

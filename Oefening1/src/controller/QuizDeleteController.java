@@ -60,7 +60,8 @@ public class QuizDeleteController implements ActionListener {
 
 				verwijderdeQuizzen.add(quiz);
 				quizDeleteView.getqModel().removeElement(quiz);
-				qit.remove();
+				//qit.remove();
+				quizCatalogus.removeQuizFromList(quiz);
 			}
 		}
 	}
@@ -70,6 +71,9 @@ public class QuizDeleteController implements ActionListener {
 				"Ben je zeker dat je de wijzigingen wilt annuleren?",
 				"Annuleer wijzigingen");
 		if (quizDeleteView.isTrueIndicator()) {
+			for (Quiz quiz : verwijderdeQuizzen) {
+				quizCatalogus.addQuizToList(quiz);
+			}
 			quizDeleteView.closeWindow();
 		}
 
